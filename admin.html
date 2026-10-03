@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BidMatch AI · Platform Admin</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body class="admin-app-body">
+  <div id="adminLoginGate" class="auth-gate">
+    <div class="auth-card admin-login-card">
+      <div class="brand auth-brand"><div class="brandmark">BM</div><div><strong>BidMatch AI</strong><span>Platform administration</span></div></div>
+      <div class="auth-panel">
+        <p class="eyebrow">SEPARATE ADMIN CONSOLE</p>
+        <h2>Platform owner sign in</h2>
+        <p class="muted">This login is separate from every construction-company workspace account.</p>
+        <form id="adminLoginForm" class="auth-form">
+          <label>Admin email<input id="adminEmail" type="email" autocomplete="username" required /></label>
+          <label>Admin password<input id="adminPassword" type="password" autocomplete="current-password" required /></label>
+          <button class="btn primary" type="submit">Open admin console</button>
+        </form>
+        <div id="adminLoginError" class="warning hidden"></div>
+        <a class="admin-client-link" href="/">← Client portal</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="adminShell" class="shell admin-shell hidden">
+    <aside class="sidebar admin-sidebar">
+      <div class="brand"><div class="brandmark">BM</div><div><strong>BidMatch AI</strong><span>Platform operations</span></div></div>
+      <nav>
+        <p class="nav-label admin-label">PLATFORM ADMIN</p>
+        <button class="nav active" data-admin-view="overview">Overview</button>
+        <button class="nav" data-admin-view="organizations">Organizations</button>
+        <button class="nav" data-admin-view="users">Users</button>
+        <button class="nav" data-admin-view="activity">Audit activity</button>
+      </nav>
+      <div class="workspace-card"><span class="workspace-label">CONSOLE</span><strong>BidMatch Operations</strong><small>V6.1.1 separate admin app</small></div>
+      <div class="account-card"><div><strong id="adminAccountEmail">—</strong><span>PLATFORM OWNER</span></div><button class="btn tiny ghost" id="adminLogoutBtn">Log out</button></div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <div><p class="eyebrow">PLATFORM OPERATIONS</p><h1 id="adminViewTitle">Admin Command Center</h1></div>
+        <div class="header-actions"><a class="btn ghost" href="/" target="_blank" rel="noreferrer">Open client portal ↗</a><button class="btn primary" id="adminRefreshBtn">Refresh metrics</button></div>
+      </header>
+
+      <section id="adminOverviewView" class="view active">
+        <div class="admin-hero">
+          <div><span class="pill">ADMIN · ISOLATED LOGIN</span><h2>Platform-wide operations without entering a client workspace.</h2><p>Monitor organizations, users, projects, bids, subscriptions, integrations, and recent activity across the BidMatch platform.</p></div>
+          <div class="admin-mode-badge"><span>ACCESS</span><strong>Platform owner only</strong></div>
+        </div>
+        <div class="metric-grid" id="adminMetricGrid"></div>
+        <div class="grid admin-grid">
+          <div class="card admin-span-2"><div class="card-head"><div><p class="eyebrow">CLIENT WORKSPACES</p><h3>Organizations</h3></div><span class="chip good">Tenant isolated</span></div><div id="adminOrganizations"></div></div>
+          <div class="card"><div class="card-head"><div><p class="eyebrow">PLATFORM HEALTH</p><h3>Services</h3></div></div><div id="adminSystem"></div></div>
+          <div class="card admin-span-2"><div class="card-head"><div><p class="eyebrow">ACCESS CONTROL</p><h3>Users</h3></div></div><div id="adminUsers"></div></div>
+          <div class="card"><div class="card-head"><div><p class="eyebrow">AUDIT</p><h3>Recent activity</h3></div></div><div id="adminActivity"></div></div>
+        </div>
+      </section>
+
+      <section id="adminOrganizationsView" class="view">
+        <div class="card"><div class="card-head"><div><p class="eyebrow">TENANTS</p><h3>All client organizations</h3></div></div><div id="adminOrganizationsFull"></div></div>
+      </section>
+      <section id="adminUsersView" class="view">
+        <div class="card"><div class="card-head"><div><p class="eyebrow">ACCOUNTS</p><h3>All client users</h3></div></div><div id="adminUsersFull"></div></div>
+      </section>
+      <section id="adminActivityView" class="view">
+        <div class="card"><div class="card-head"><div><p class="eyebrow">AUDIT TRAIL</p><h3>Recent platform activity</h3></div></div><div id="adminActivityFull"></div></div>
+      </section>
+    </main>
+  </div>
+  <script type="module" src="/admin.js"></script>
+</body>
+</html>
