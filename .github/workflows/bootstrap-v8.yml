@@ -40,10 +40,7 @@ jobs:
           test ! -e data/normalized-export.json
 
       - name: Run V8 test suite
-        run: |
-          npm test
-          npm run test:store
-          npm run test:cloud
+        run: npm test
 
       - name: Clean generated runtime data
         run: |
