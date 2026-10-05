@@ -1,0 +1,57 @@
+name: Apply BidMatch V8 Cloud Runtime
+on:
+  push:
+    branches: [v8-cloud-runtime]
+    paths:
+      - '.bootstrap/**'
+      - '.github/workflows/bootstrap-v8.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply-v8:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify V8 payload
+        run: echo "dbc24125627b4d1911bfa769c1daf54bef4862813fb0c6ca5a885b5ea6b83350  .bootstrap/v8.zip" | sha256sum -c -
+
+      - name: Replace old repository with V8 source
+        run: |
+          rm -rf /tmp/bidmatch-v8
+          mkdir -p /tmp/bidmatch-v8
+          unzip -q .bootstrap/v8.zip -d /tmp/bidmatch-v8
+          find . -mindepth 1 -maxdepth 1 ! -name .git ! -name .bootstrap -exec rm -rf {} +
+          cp -a /tmp/bidmatch-v8/bidmatch-ai-v8-cloud-runtime/. .
+          rm -rf .bootstrap
+          rm -f data/db.json data/auth.json data/normalized-export.json
+          rm -rf data/uploads backups
+          mkdir -p data/uploads backups
+          touch data/.gitkeep data/uploads/.gitkeep backups/.gitkeep
+
+      - name: Verify no private runtime secrets
+        run: |
+          test ! -e .env
+          test ! -e data/auth.json
+          test ! -e data/normalized-export.json
+
+      - name: Run V8 test suite
+        run: npm test
+
+      - name: Clean generated runtime data
+        run: |
+          rm -f data/db.json data/auth.json data/normalized-export.json
+          find data/uploads -type f ! -name .gitkeep -delete 2>/dev/null || true
+          find backups -type f ! -name .gitkeep -delete 2>/dev/null || true
+
+      - name: Commit V8 source tree
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Upgrade BidMatch to V8 Cloud Runtime"
+          git push
