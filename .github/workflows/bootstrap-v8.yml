@@ -1,10 +1,7 @@
 name: Apply BidMatch V8 Cloud Runtime
+
 on:
-  push:
-    branches: [v8-cloud-runtime]
-    paths:
-      - '.bootstrap/**'
-      - '.github/workflows/bootstrap-v8.yml'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -20,12 +17,12 @@ jobs:
       - name: Verify V8 payload
         run: echo "dbc24125627b4d1911bfa769c1daf54bef4862813fb0c6ca5a885b5ea6b83350  .bootstrap/v8.zip" | sha256sum -c -
 
-      - name: Replace old repository with V8 source
+      - name: Replace repository with V8 source
         run: |
           rm -rf /tmp/bidmatch-v8
           mkdir -p /tmp/bidmatch-v8
           unzip -q .bootstrap/v8.zip -d /tmp/bidmatch-v8
-          find . -mindepth 1 -maxdepth 1 ! -name .git ! -name .bootstrap -exec rm -rf {} +
+          find . -mindepth 1 -maxdepth 1 ! -name .git ! -name .github ! -name .bootstrap -exec rm -rf {} +
           cp -a /tmp/bidmatch-v8/bidmatch-ai-v8-cloud-runtime/. .
           rm -rf .bootstrap
           rm -f data/db.json data/auth.json data/normalized-export.json
@@ -33,7 +30,7 @@ jobs:
           mkdir -p data/uploads backups
           touch data/.gitkeep data/uploads/.gitkeep backups/.gitkeep
 
-      - name: Verify no private runtime secrets
+      - name: Verify no private runtime data
         run: |
           test ! -e .env
           test ! -e data/auth.json
