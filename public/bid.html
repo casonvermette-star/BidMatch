@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BidMatch AI · Secure Bid Invitation</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body class="bid-portal-body">
+  <main class="bid-portal-shell">
+    <header class="bid-portal-header">
+      <div class="brand"><div class="brandmark">BM</div><div><strong>BidMatch AI</strong><span>Secure bid invitation</span></div></div>
+      <span class="chip" id="portalStatus">Loading…</span>
+    </header>
+
+    <section id="portalError" class="bid-portal-error hidden"></section>
+    <section id="portalContent" class="hidden">
+      <div class="bid-portal-hero">
+        <p class="eyebrow">INVITATION TO BID</p>
+        <h1 id="portalProjectName">Project</h1>
+        <p id="portalLocation" class="muted"></p>
+        <div class="bid-portal-metrics">
+          <div><span>Bid package</span><strong id="portalTrade">—</strong></div>
+          <div><span>Bid due</span><strong id="portalDue">—</strong></div>
+          <div><span>Invited company</span><strong id="portalContractor">—</strong></div>
+        </div>
+        <p id="portalSummary" class="bid-portal-summary"></p>
+      </div>
+
+      <div class="bid-portal-grid">
+        <section class="card">
+          <div class="card-head"><div><p class="eyebrow">SCOPE</p><h3>Package requirements</h3></div></div>
+          <p id="portalScopeSummary"></p>
+          <ul id="portalRequirements" class="bid-requirements"></ul>
+          <div class="bid-response-actions">
+            <button class="btn primary" id="acceptInvite" type="button">Plan to bid</button>
+            <button class="btn ghost" id="declineInvite" type="button">Decline</button>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-head"><div><p class="eyebrow">DOCUMENTS</p><h3>Project files</h3></div></div>
+          <div id="portalDocuments"></div>
+        </section>
+      </div>
+
+      <section class="card bid-submit-card">
+        <div class="card-head"><div><p class="eyebrow">PROPOSAL</p><h3>Submit your bid</h3></div><span class="chip" id="submissionChip">Not submitted</span></div>
+        <form id="bidSubmitForm" class="bid-submit-form">
+          <div class="form-grid">
+            <label>Base bid ($)<input id="bidAmount" type="number" min="1" step="1" required placeholder="1250000" /></label>
+            <label>Schedule / duration<input id="bidSchedule" placeholder="Per project schedule" /></label>
+            <label>Bond included?<select id="bidBond"><option value="unspecified">Unspecified</option><option value="yes">Yes</option><option value="no">No</option></select></label>
+            <label>Tax included?<select id="bidTax"><option value="unspecified">Unspecified</option><option value="yes">Yes</option><option value="no">No</option></select></label>
+            <label class="wide">Inclusions <span class="muted">one per line</span><textarea id="bidInclusions" rows="4" placeholder="Labor and material\nEquipment\nDelivery"></textarea></label>
+            <label class="wide">Exclusions <span class="muted">one per line</span><textarea id="bidExclusions" rows="4" placeholder="Temporary power\nPermit fees"></textarea></label>
+            <label class="wide">Alternates <span class="muted">one per line</span><textarea id="bidAlternates" rows="3" placeholder="Alternate 1: +$25,000"></textarea></label>
+            <label class="wide">Proposal notes<textarea id="bidProposalText" rows="5" placeholder="Clarifications, qualifications, or proposal notes"></textarea></label>
+            <label class="wide">Proposal PDF or attachment <input id="bidFile" type="file" accept=".pdf,.txt,.doc,.docx,.xls,.xlsx,image/*" /></label>
+          </div>
+          <div class="bid-submit-footer"><p class="muted">Submitting this form sends the proposal to the GC workspace associated with this private invitation link.</p><button class="btn primary large" type="submit">Submit bid</button></div>
+        </form>
+        <div id="bidSubmitResult" class="hidden"></div>
+      </section>
+
+      <footer class="bid-portal-footer">Private invitation link · Do not forward outside your estimating team.</footer>
+    </section>
+  </main>
+  <script type="module" src="/bid.js"></script>
+</body>
+</html>

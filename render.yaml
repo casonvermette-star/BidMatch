@@ -2,7 +2,7 @@ services:
   - type: web
     name: bidmatch-ai
     runtime: docker
-    plan: free
+    plan: starter
     healthCheckPath: /api/health
     envVars:
       - key: APP_ENV
@@ -11,5 +11,33 @@ services:
         value: true
       - key: ALLOW_SELF_SIGNUP
         value: false
-      - key: SECURE_COOKIES
-        value: true
+      - key: APP_URL
+        sync: false
+      - key: TRUSTED_ORIGINS
+        sync: false
+      - key: PLATFORM_ADMIN_EMAIL
+        sync: false
+      - key: PLATFORM_ADMIN_PASSWORD_HASH
+        sync: false
+      - key: PLATFORM_ADMIN_SESSION_SECRET
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: DATA_BACKEND
+        value: supabase
+      - key: SUPABASE_SECRET_KEY
+        sync: false
+      - key: SUPABASE_STORAGE_BUCKET
+        value: bidmatch-documents
+      - key: RESEND_API_KEY
+        sync: false
+      - key: EMAIL_FROM
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: STRIPE_PRICE_ID
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false

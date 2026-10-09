@@ -2,10 +2,11 @@ import http from 'node:http';
 import { readFile, writeFile, mkdir, rm } from 'node:fs/promises';
 import { existsSync, readFileSync } from 'node:fs';
 import { extname, join, normalize } from 'node:path';
-import { randomUUID, createHmac, timingSafeEqual } from 'node:crypto';
+import { randomUUID, randomBytes, createHash, createHmac, timingSafeEqual } from 'node:crypto';
 import { createAuthStore, roleAtLeast } from './lib/auth.mjs';
 import { createPlatformAdminAuth } from './lib/admin-auth.mjs';
-import { integrationConfig, sendEmail, createCheckoutSession, supabaseHealth, loadCloudState, saveCloudState, loadCloudAuthState, saveCloudAuthState, uploadSupabaseObject, downloadSupabaseObject, createBackupManager } from './lib/integrations.mjs';
+import { integrationConfig, sendEmail, createCheckoutSession, supabaseHealth, uploadSupabaseObject, downloadSupabaseObject, createBackupManager } from './lib/integrations.mjs';
+import { createNormalizedSupabaseStore } from './lib/supabase-normalized.mjs';
 
 const ROOT = process.cwd();
 const DATA_DIR = join(ROOT, 'data');
@@ -23,9 +24,11 @@ const OPENAI_EMBEDDING_MODEL = process.env.OPENAI_EMBEDDING_MODEL || 'text-embed
 const AUTO_SEND_INVITES = String(process.env.AUTO_SEND_INVITES || 'false').toLowerCase() === 'true';
 const OUTREACH_WEBHOOK_URL = process.env.OUTREACH_WEBHOOK_URL || '';
 const TOP_MATCHES_PER_SCOPE = clamp(Number(process.env.TOP_MATCHES_PER_SCOPE || 5), 1, 10);
-const MAX_BODY_BYTES = 32 * 1024 * 1024;
-const MAX_FILE_BYTES = 12 * 1024 * 1024;
-const MAX_PROJECT_FILES = 8;
+const MAX_BODY_MB = clamp(Number(process.env.MAX_BODY_MB || 80), 1, 500);
+const MAX_FILE_MB = clamp(Number(process.env.MAX_FILE_MB || 50), 1, 250);
+const MAX_BODY_BYTES = MAX_BODY_MB * 1024 * 1024;
+const MAX_FILE_BYTES = MAX_FILE_MB * 1024 * 1024;
+const MAX_PROJECT_FILES = clamp(Number(process.env.MAX_PROJECT_FILES || 30), 1, 100);
 const REQUIRE_LOGIN = String(process.env.REQUIRE_LOGIN ?? 'true').toLowerCase() !== 'false';
 const ALLOW_SELF_SIGNUP = String(process.env.ALLOW_SELF_SIGNUP || 'false').toLowerCase() === 'true';
 const PLATFORM_ADMIN_EMAIL = process.env.PLATFORM_ADMIN_EMAIL || '';
@@ -34,8 +37,16 @@ const PLATFORM_ADMIN_SESSION_SECRET = process.env.PLATFORM_ADMIN_SESSION_SECRET 
 const APP_ENV = process.env.APP_ENV || 'development';
 const HOST = process.env.HOST || (APP_ENV === 'production' ? '0.0.0.0' : '127.0.0.1');
 const INTEGRATIONS = integrationConfig(process.env);
-const CLOUD_AUTH_STATE = INTEGRATIONS.supabase.configured ? await loadCloudAuthState(INTEGRATIONS.supabase).catch(()=>null) : null;
-const AUTH = await createAuthStore(AUTH_FILE,{secureCookies:APP_ENV==='production',loginRequired:REQUIRE_LOGIN,initialData:CLOUD_AUTH_STATE,onSave:INTEGRATIONS.supabase.configured?(payload)=>saveCloudAuthState(INTEGRATIONS.supabase,payload):null});
+const DATA_BACKEND = INTEGRATIONS.supabase.dataBackend;
+const TRUSTED_ORIGINS = new Set([INTEGRATIONS.appUrl,...String(process.env.TRUSTED_ORIGINS||'').split(',')].map(v=>String(v||'').trim()).filter(Boolean).map(v=>{try{return new URL(v).origin;}catch{return ''}}).filter(Boolean));
+if(DATA_BACKEND==='supabase'&&!INTEGRATIONS.supabase.configured) throw new Error('DATA_BACKEND=supabase requires SUPABASE_URL and SUPABASE_SECRET_KEY.');
+let NORMALIZED_STORE=null;
+let CLOUD_RUNTIME=null;
+if(DATA_BACKEND==='supabase'){
+  NORMALIZED_STORE=await createNormalizedSupabaseStore(INTEGRATIONS.supabase);
+  CLOUD_RUNTIME=NORMALIZED_STORE.runtime;
+}
+const AUTH = await createAuthStore(AUTH_FILE,{secureCookies:APP_ENV==='production',loginRequired:REQUIRE_LOGIN,initialData:CLOUD_RUNTIME?.auth||null,onSave:NORMALIZED_STORE?(payload)=>NORMALIZED_STORE.saveAuth(payload):null,strictExternalSave:!!NORMALIZED_STORE});
 const ADMIN_AUTH = createPlatformAdminAuth({email:PLATFORM_ADMIN_EMAIL,passwordHash:PLATFORM_ADMIN_PASSWORD_HASH,sessionSecret:PLATFORM_ADMIN_SESSION_SECRET,secureCookies:APP_ENV==='production'});
 const BACKUPS = createBackupManager({rootDir:ROOT,dataFile:DB_FILE,authFile:AUTH_FILE});
 const RATE_LIMIT = new Map();
@@ -117,10 +128,12 @@ const STATE_NAMES = {
 
 await mkdir(DATA_DIR, { recursive: true });
 await mkdir(UPLOAD_DIR, { recursive: true });
-let integrationHealth={supabase:INTEGRATIONS.supabase.configured?'ready':'disabled',supabaseError:'',email:INTEGRATIONS.resend.configured?'ready':'disabled',billing:INTEGRATIONS.stripe.configured?'ready':'disabled'};
-let db = await loadDatabase();
-if(INTEGRATIONS.supabase.configured){
-  try{const cloud=await loadCloudState(INTEGRATIONS.supabase);if(cloud){db=ensureV5(cloud);await writeFile(DB_FILE,JSON.stringify(db,null,2));integrationHealth.supabase='live';}else{const h=await supabaseHealth(INTEGRATIONS.supabase);integrationHealth.supabase=h.ok?'ready':'error';integrationHealth.supabaseError=h.error||'';}}catch(error){integrationHealth.supabase='error';integrationHealth.supabaseError=error.message;}
+let integrationHealth={supabase:INTEGRATIONS.supabase.configured?(DATA_BACKEND==='supabase'?'live':'ready'):'disabled',supabaseError:'',email:INTEGRATIONS.resend.configured?'ready':'disabled',billing:INTEGRATIONS.stripe.configured?'ready':'disabled'};
+let db = DATA_BACKEND==='supabase' ? ensureV5(CLOUD_RUNTIME?.db||{}) : await loadDatabase();
+if(DATA_BACKEND==='supabase') await writeFile(DB_FILE,JSON.stringify(db,null,2));
+else if(INTEGRATIONS.supabase.configured){
+  const h=await supabaseHealth(INTEGRATIONS.supabase).catch(error=>({ok:false,error:error.message}));
+  integrationHealth.supabase=h.ok?'ready':'error';integrationHealth.supabaseError=h.error||'';
 }
 
 function loadDotEnv(path) {
@@ -292,7 +305,7 @@ function enrichContractor(c,i,now){
 function futureDate(days){const d=new Date();d.setUTCDate(d.getUTCDate()+days);return d.toISOString().slice(0,10);}
 function recommendationLabel(score){return score>=86?'Strong fit':score>=77?'Recommended':score>=68?'Consider':'Watch';}
 
-async function persist(){ await writeFile(DB_FILE, JSON.stringify(db, null, 2)); if(INTEGRATIONS.supabase.configured){const result=await saveCloudState(INTEGRATIONS.supabase,db).catch(error=>({ok:false,error:error.message}));integrationHealth.supabase=result.ok?'live':'error';integrationHealth.supabaseError=result.ok?'':result.error||'';} }
+async function persist(){ await writeFile(DB_FILE, JSON.stringify(db, null, 2)); if(NORMALIZED_STORE){try{const result=await NORMALIZED_STORE.saveDb(db);integrationHealth.supabase='live';integrationHealth.supabaseError='';return result;}catch(error){integrationHealth.supabase='error';integrationHealth.supabaseError=error.message;throw error;}} return {ok:true,local:true}; }
 function clamp(n,min,max){ return Math.max(min,Math.min(max,Number(n)||0)); }
 function slug(v){ return String(v).toLowerCase().replace(/[^a-z0-9]+/g,'').slice(0,32); }
 function titleCase(v){ return String(v||'').replace(/\b\w/g,c=>c.toUpperCase()); }
@@ -344,23 +357,27 @@ async function readDocumentBuffer(doc){
   return readFile(join(UPLOAD_DIR,doc.diskName));
 }
 
-async function storeDocuments(projectId,files=[]){
-  const current=db.documents.filter(d=>d.projectId===projectId).length;
-  if(current+files.length>MAX_PROJECT_FILES) throw new Error(`A project can have up to ${MAX_PROJECT_FILES} files.`);
+async function storeDocuments(projectId,files=[],extra={}){
+  const current=db.documents.filter(d=>d.projectId===projectId&&d.kind!=='bid-proposal').length;
+  if(extra.kind!=='bid-proposal'&&current+files.length>MAX_PROJECT_FILES) throw new Error(`A project can have up to ${MAX_PROJECT_FILES} project files.`);
   const created=[]; const project=db.projects.find(p=>p.id===projectId);
   for(const file of files){
     if(!file?.name||!file?.data) continue;
     const buffer=Buffer.from(file.data,'base64');
-    if(buffer.length>MAX_FILE_BYTES) throw new Error(`${file.name} is larger than 12 MB.`);
+    if(buffer.length>MAX_FILE_BYTES) throw new Error(`${file.name} is larger than ${MAX_FILE_MB} MB.`);
     const id=randomUUID(); const safeExt=extname(file.name).slice(0,10); const diskName=`${id}${safeExt}`; const mime=file.mime||'application/octet-stream';
     let storageProvider='local', storagePath='';
     if(INTEGRATIONS.supabase.configured){
       const cloudPath=`${project?.orgId||'unclaimed'}/${projectId}/${id}-${String(file.name).replace(/[^a-zA-Z0-9._-]+/g,'-').slice(-100)}`;
       const upload=await uploadSupabaseObject(INTEGRATIONS.supabase,{path:cloudPath,buffer,mime}).catch(error=>({ok:false,error:error.message}));
       if(upload.ok){storageProvider='supabase';storagePath=cloudPath;integrationHealth.supabase='live';}
-      else{integrationHealth.supabase='error';integrationHealth.supabaseError=upload.error||'Storage upload failed.';await writeFile(join(UPLOAD_DIR,diskName),buffer);}
+      else{
+        integrationHealth.supabase='error';integrationHealth.supabaseError=upload.error||'Storage upload failed.';
+        if(DATA_BACKEND==='supabase') throw new Error(`Cloud document upload failed for ${file.name}: ${integrationHealth.supabaseError}`);
+        await writeFile(join(UPLOAD_DIR,diskName),buffer);
+      }
     }else await writeFile(join(UPLOAD_DIR,diskName),buffer);
-    const doc={id,projectId,name:file.name,mime,size:buffer.length,diskName:storageProvider==='local'?diskName:'',storageProvider,storagePath,createdAt:new Date().toISOString()};
+    const doc={id,projectId,name:file.name,mime,size:buffer.length,diskName:storageProvider==='local'?diskName:'',storageProvider,storagePath,kind:extra.kind||'project-document',bidId:extra.bidId||null,invitationId:extra.invitationId||null,contractorId:extra.contractorId||null,createdAt:new Date().toISOString()};
     db.documents.push(doc); created.push(doc);
   }
   return created;
@@ -505,6 +522,28 @@ function scoreContractor(project,scope,contractor,semantic=null){
   const recommendation=qualification.status==='ineligible'?'Ineligible':qualification.status==='conditional'?'Conditional':recommendationLabel(score);
   return {eligible:qualification.status!=='ineligible',qualificationStatus:qualification.status,qualification,score,components,reasons,risks,recommendation};
 }
+
+function invitationTokenHash(token){return createHash('sha256').update(String(token||'')).digest('hex');}
+function invitationExpiry(project){
+  const due=project?.analysis?.bidDue||project?.bidDue;const base=due?new Date(`${due}T23:59:59Z`):new Date();
+  const ms=Number.isNaN(base.getTime())?Date.now()+30*86400000:Math.max(Date.now()+7*86400000,base.getTime()+14*86400000);
+  return new Date(ms).toISOString();
+}
+function rotateInvitationAccess(inv){
+  const project=db.projects.find(p=>p.id===inv.projectId);const token=randomBytes(32).toString('hex');
+  inv.publicTokenHash=invitationTokenHash(token);inv.publicTokenExpiresAt=invitationExpiry(project);inv.updatedAt=new Date().toISOString();return token;
+}
+function publicInvitation(token){
+  const hash=invitationTokenHash(token);const inv=db.invitations.find(i=>i.publicTokenHash===hash&&new Date(i.publicTokenExpiresAt||0).getTime()>Date.now());
+  if(!inv)return null;const project=db.projects.find(p=>p.id===inv.projectId),scope=db.scopes.find(s=>s.id===inv.scopeId),contractor=db.contractors.find(c=>c.id===inv.contractorId);if(!project||!scope||!contractor)return null;return {inv,project,scope,contractor};
+}
+function invitationPortalUrl(req,token){const base=`${req.headers['x-forwarded-proto']||'http'}://${req.headers.host||'localhost:'+PORT}`;return `${base}/bid/${token}`;}
+
+function publicInvitationBundle(entry){
+  const {inv,project,scope,contractor}=entry;const documents=db.documents.filter(d=>d.projectId===project.id&&d.kind!=='bid-proposal').map(d=>({id:d.id,name:d.name,mime:d.mime,size:d.size,createdAt:d.createdAt}));
+  return {invitation:{id:inv.id,status:inv.status,expiresAt:inv.publicTokenExpiresAt},project:{name:project.name,location:project.location,projectType:project.projectType,bidDue:project.analysis?.bidDue||project.bidDue||'',summary:project.analysis?.summary||project.description||''},scope:{trade:scope.trade,division:scope.division||scope.csiDivision||'',summary:scope.summary||'',requirements:scope.requirements||[]},contractor:{name:contractor.name},documents};
+}
+function cleanStringArray(value,max=40){return (Array.isArray(value)?value:[]).map(v=>String(v||'').trim().slice(0,500)).filter(Boolean).slice(0,max);}
 
 async function createInvitations(project,scopes,matches){
   const created=[];
@@ -676,10 +715,13 @@ async function answerQuestion(project,question){
 
 const SECURITY_HEADERS={
   'X-Content-Type-Options':'nosniff',
+  'X-Frame-Options':'DENY',
   'Referrer-Policy':'same-origin',
   'Permissions-Policy':'camera=(), microphone=(), geolocation=()',
+  'Cross-Origin-Resource-Policy':'same-origin',
   'Content-Security-Policy':"default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
 };
+if(APP_ENV==='production') SECURITY_HEADERS['Strict-Transport-Security']='max-age=31536000; includeSubDomains';
 function writeHeaders(res,status,headers={}){res.writeHead(status,{...SECURITY_HEADERS,...headers});}
 function rateLimit(req,key,limit=30,windowMs=60000){
   const ip=String(req.socket.remoteAddress||'local'),now=Date.now(),bucket=`${ip}:${key}`,row=RATE_LIMIT.get(bucket)||{count:0,reset:now+windowMs};
@@ -707,8 +749,9 @@ function importContractorRows(orgId,rows){
 async function sendInvitationNow(inv){
   const project=db.projects.find(p=>p.id===inv.projectId),scope=db.scopes.find(s=>s.id===inv.scopeId),contractor=db.contractors.find(c=>c.id===inv.contractorId);if(!project||!scope||!contractor)return {ok:false,error:'Invitation data is incomplete.'};
   if(!contractor.email||contractor.email.endsWith('.example'))return {ok:false,skipped:true,error:'Demo or missing contractor email; no real message sent.'};
-  const subject=`Invitation to bid: ${project.name} — ${scope.trade}`;const html=`<p>${contractor.name},</p><p>You are invited to bid the <strong>${scope.trade}</strong> package for <strong>${project.name}</strong> in ${project.location}.</p><p>Bid due: <strong>${project.analysis?.bidDue||project.bidDue||'TBD'}</strong></p><p>Log in to your normal bid workflow or contact the estimator for project documents and clarifications.</p>`;
-  let result=await sendEmail(INTEGRATIONS.resend,{to:contractor.email,subject,html,text:`${contractor.name}, you are invited to bid ${scope.trade} for ${project.name}. Bid due ${project.analysis?.bidDue||project.bidDue||'TBD'}.`,idempotencyKey:`invite-${inv.id}`});
+  const accessToken=rotateInvitationAccess(inv);const portalUrl=`${INTEGRATIONS.appUrl.replace(/\/$/,'')}/bid/${accessToken}`;
+  const subject=`Invitation to bid: ${project.name} — ${scope.trade}`;const html=`<p>${contractor.name},</p><p>You are invited to bid the <strong>${scope.trade}</strong> package for <strong>${project.name}</strong> in ${project.location}.</p><p>Bid due: <strong>${project.analysis?.bidDue||project.bidDue||'TBD'}</strong></p><p><a href="${portalUrl}">Open secure bid invitation</a></p><p>This private link provides project documents for this invitation and allows your team to accept, decline, or submit a bid.</p>`;
+  let result=await sendEmail(INTEGRATIONS.resend,{to:contractor.email,subject,html,text:`${contractor.name}, you are invited to bid ${scope.trade} for ${project.name}. Bid due ${project.analysis?.bidDue||project.bidDue||'TBD'}. Open your secure invitation: ${portalUrl}`,idempotencyKey:`invite-${inv.id}`});
   if(!result.ok&&OUTREACH_WEBHOOK_URL){try{const r=await fetch(OUTREACH_WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'bid_invitation',project,scope,contractor,invitation:inv})});if(r.ok)result={ok:true,id:`webhook:${inv.id}`};}catch{}}
   if(result.ok){inv.status='sent';inv.sentExternally=true;inv.sentAt=new Date().toISOString();inv.externalMessageId=result.id||null;queueFollowups(inv,project.orgId);integrationHealth.email='live';}else if(!result.skipped){integrationHealth.email='error';}
   return result;
@@ -761,16 +804,17 @@ function platformAdminSummary(){
   const orgNameById=new Map((auth.organizations||[]).map(o=>[o.id,o.name]));
   const users=(auth.users||[]).map(u=>({id:u.id,orgId:u.orgId,organization:orgNameById.get(u.orgId)||'Unknown',name:u.name,email:u.email,role:u.role,active:u.active!==false,createdAt:u.createdAt,lastLoginAt:u.lastLoginAt||null}));
   const projectMap=new Map(db.projects.map(p=>[p.id,p]));
-  const recentActivity=db.events.slice().sort((a,b)=>new Date(b.createdAt||0)-new Date(a.createdAt||0)).slice(0,40).map(e=>{const project=projectMap.get(e.projectId);return {...e,projectName:project?.name||'System',orgId:project?.orgId||null,organization:orgNameById.get(project?.orgId)||'—'};});
+  const recentActivity=db.events.slice().sort((a,b)=>new Date(b.createdAt||0)-new Date(a.createdAt||0)).slice(0,40).map(e=>{const project=projectMap.get(e.projectId),eventOrgId=project?.orgId||e.meta?.orgId||null;return {...e,projectName:project?.name||'System',orgId:eventOrgId,organization:orgNameById.get(eventOrgId)||'—'};});
   return {
     metrics:{organizations:orgs.length,users:users.length,projects:db.projects.length,documents:db.documents.length,invitations:db.invitations.length,bids:db.bids.length},
     organizations:orgs.sort((a,b)=>new Date(b.lastActivity||0)-new Date(a.lastActivity||0)),
     users:users.sort((a,b)=>new Date(b.lastLoginAt||b.createdAt||0)-new Date(a.lastLoginAt||a.createdAt||0)),
     recentActivity,
     system:{
-      version:'6.1.2',
+      version:'8.0.0',
       ai:aiHealth.status,
       supabase:INTEGRATIONS.supabase.configured?integrationHealth.supabase:'local',
+      dataBackend:DATA_BACKEND,
       email:INTEGRATIONS.resend.configured?integrationHealth.email:'disabled',
       billing:INTEGRATIONS.stripe.configured?integrationHealth.billing:'disabled',
       directoryContractors:db.contractors.filter(c=>!c.orgId).length,
@@ -782,8 +826,12 @@ function platformAdminSummary(){
 const server=http.createServer(async(req,res)=>{
   try{
     const url=new URL(req.url,`http://${req.headers.host||'localhost'}`), pathname=url.pathname;
+    if(APP_ENV==='production'&&['POST','PUT','PATCH','DELETE'].includes(req.method||'')&&pathname.startsWith('/api/')&&pathname!=='/api/stripe/webhook'){
+      let origin='';try{origin=req.headers.origin?new URL(String(req.headers.origin)).origin:'';}catch{}
+      if(!origin||!TRUSTED_ORIGINS.has(origin))return json(res,403,{error:'REQUEST_ORIGIN_NOT_ALLOWED'});
+    }
 
-    if(pathname==='/api/health'&&req.method==='GET') return json(res,200,{ok:true,version:'6.1.2',app:'BidMatch AI',time:new Date().toISOString()});
+    if(pathname==='/api/health'&&req.method==='GET') return json(res,200,{ok:true,version:'8.0.0',app:'BidMatch AI',dataBackend:DATA_BACKEND,supabaseKeyType:INTEGRATIONS.supabase.keyType,time:new Date().toISOString()});
 
     if(pathname==='/api/admin/auth/status'&&req.method==='GET') return json(res,200,ADMIN_AUTH.status(req));
     if(pathname==='/api/admin/auth/login'&&req.method==='POST'){
@@ -794,6 +842,24 @@ const server=http.createServer(async(req,res)=>{
     if(pathname==='/api/admin/summary'&&req.method==='GET'){
       if(!ADMIN_AUTH.require(req))return json(res,401,{error:'ADMIN_AUTH_REQUIRED'});
       return json(res,200,platformAdminSummary());
+    }
+
+    if(pathname==='/api/admin/organizations'&&req.method==='POST'){
+      if(!ADMIN_AUTH.require(req))return json(res,401,{error:'ADMIN_AUTH_REQUIRED'});
+      if(!rateLimit(req,'admin-org-create',10,60000))return json(res,429,{error:'Too many organization creation attempts. Try again shortly.'});
+      const body=await readJson(req);
+      const created=await AUTH.createOrganizationInvite({orgName:body.orgName,email:body.ownerEmail,createdBy:'platform-admin'});
+      const settings=settingsForOrg(created.org.id);settings.organizationName=created.org.name;
+      const base=`${req.headers['x-forwarded-proto']||'http'}://${req.headers.host||'localhost:'+PORT}`;
+      const inviteUrl=`${base}/?invite=${created.invite.token}`;
+      let delivered=false,emailError='';
+      if(INTEGRATIONS.resend.configured&&!created.invite.email.endsWith('.example')){
+        const result=await sendEmail(INTEGRATIONS.resend,{to:created.invite.email,subject:`You're invited to ${created.org.name} on BidMatch AI`,html:`<p>A BidMatch AI workspace has been created for <strong>${created.org.name}</strong>.</p><p><a href="${inviteUrl}">Create your owner account</a></p><p>This invitation expires ${new Date(created.invite.expiresAt).toLocaleDateString()}.</p>`,text:`A BidMatch AI workspace has been created for ${created.org.name}. Create your owner account: ${inviteUrl}`,idempotencyKey:`platform-org-invite-${created.invite.id}`});
+        delivered=result.ok;emailError=result.error||'';
+      }
+      addEvent('organization_created',null,`Platform admin created workspace ${created.org.name}.`,{orgId:created.org.id,ownerEmail:created.invite.email});
+      await persist();
+      return json(res,201,{org:created.org,ownerEmail:created.invite.email,inviteUrl,expiresAt:created.invite.expiresAt,delivered,emailError});
     }
 
     if(pathname==='/api/stripe/webhook'&&req.method==='POST'){
@@ -810,12 +876,44 @@ const server=http.createServer(async(req,res)=>{
     if(pathname==='/api/auth/login'&&req.method==='POST'){
       if(!rateLimit(req,'login',10,60000))return json(res,429,{error:'Too many login attempts. Try again shortly.'});const body=await readJson(req);return json(res,200,await AUTH.login(body,res));
     }
+    if(pathname==='/api/auth/forgot-password'&&req.method==='POST'){
+      if(!rateLimit(req,'forgot-password',5,60000))return json(res,429,{error:'Too many reset requests. Try again shortly.'});
+      const body=await readJson(req);const reset=await AUTH.createPasswordReset(body.email||'');let resetUrl='',delivered=false;
+      if(reset){const base=`${req.headers['x-forwarded-proto']||'http'}://${req.headers.host||'localhost:'+PORT}`;resetUrl=`${base}/?reset=${reset.token}`;if(INTEGRATIONS.resend.configured&&!reset.email.endsWith('.example')){const result=await sendEmail(INTEGRATIONS.resend,{to:reset.email,subject:'Reset your BidMatch AI password',html:`<p>A password reset was requested for your BidMatch AI account.</p><p><a href="${resetUrl}">Reset password</a></p><p>This link expires in 60 minutes. If you did not request this, ignore this email.</p>`,text:`Reset your BidMatch AI password: ${resetUrl}
+This link expires in 60 minutes.`,idempotencyKey:`password-reset-${Date.now()}-${reset.email}`});delivered=result.ok;}}
+      return json(res,200,{ok:true,message:'If an active account exists for that email, a reset link has been prepared.',...(APP_ENV!=='production'&&resetUrl?{resetUrl,delivered}:{})});
+    }
+    if(pathname==='/api/auth/reset-password'&&req.method==='POST'){
+      if(!rateLimit(req,'reset-password',8,60000))return json(res,429,{error:'Too many reset attempts. Try again shortly.'});const body=await readJson(req);await AUTH.resetPassword(body);return json(res,200,{ok:true});
+    }
     if(pathname==='/api/auth/logout'&&req.method==='POST'){await AUTH.logout(req,res);return json(res,200,{ok:true});}
     if(pathname==='/api/auth/invite'&&req.method==='GET'){const token=url.searchParams.get('token')||'';const invite=AUTH.inspectInvite(token);return invite?json(res,200,invite):json(res,404,{error:'Invite not found or expired.'});}
     if(pathname==='/api/auth/accept-invite'&&req.method==='POST'){if(!rateLimit(req,'accept-invite',10,60000))return json(res,429,{error:'Too many attempts.'});const body=await readJson(req);return json(res,200,await AUTH.acceptInvite(body,res));}
 
+    let publicRoute=routeMatch(pathname,'/api/public/invitations/:token');
+    if(publicRoute&&req.method==='GET'){
+      if(!rateLimit(req,'public-invite-read',120,60000))return json(res,429,{error:'Too many requests.'});const entry=publicInvitation(publicRoute.token);return entry?json(res,200,publicInvitationBundle(entry)):json(res,404,{error:'Invitation link is invalid or expired.'});
+    }
+    publicRoute=routeMatch(pathname,'/api/public/invitations/:token/status');
+    if(publicRoute&&req.method==='POST'){
+      if(!rateLimit(req,'public-invite-status',20,60000))return json(res,429,{error:'Too many requests.'});const entry=publicInvitation(publicRoute.token);if(!entry)return json(res,404,{error:'Invitation link is invalid or expired.'});const body=await readJson(req);if(!['accepted','declined'].includes(body.status))return json(res,400,{error:'Status must be accepted or declined.'});entry.inv.status=body.status;entry.inv.updatedAt=new Date().toISOString();addEvent('subcontractor_response',entry.project.id,`${entry.contractor.name} ${body.status} the ${entry.scope.trade} invitation.`,{orgId:entry.project.orgId,contractorId:entry.contractor.id});await persist();return json(res,200,publicInvitationBundle(entry));
+    }
+    publicRoute=routeMatch(pathname,'/api/public/invitations/:token/documents/:documentId');
+    if(publicRoute&&req.method==='GET'){
+      if(!rateLimit(req,'public-document',90,60000))return json(res,429,{error:'Too many document requests.'});const entry=publicInvitation(publicRoute.token);if(!entry)return json(res,404,{error:'Invitation link is invalid or expired.'});const doc=db.documents.find(d=>d.id===publicRoute.documentId&&d.projectId===entry.project.id&&d.kind!=='bid-proposal');if(!doc)return json(res,404,{error:'Document not found.'});const buffer=await readDocumentBuffer(doc);const safeName=String(doc.name||'document').replace(/[\r\n"]/g,'_');writeHeaders(res,200,{'Content-Type':doc.mime||'application/octet-stream','Content-Length':buffer.length,'Content-Disposition':`attachment; filename="${safeName}"`,'Cache-Control':'private, no-store'});return res.end(buffer);
+    }
+    publicRoute=routeMatch(pathname,'/api/public/invitations/:token/submit');
+    if(publicRoute&&req.method==='POST'){
+      if(!rateLimit(req,'public-bid-submit',12,60000))return json(res,429,{error:'Too many submission attempts.'});const entry=publicInvitation(publicRoute.token);if(!entry)return json(res,404,{error:'Invitation link is invalid or expired.'});if(entry.inv.status==='declined')return json(res,409,{error:'This invitation is marked declined. Accept the invitation before submitting a bid.'});const body=await readJson(req);const amount=Number(body.amount);if(!Number.isFinite(amount)||amount<=0||amount>1000000000000)return json(res,400,{error:'Enter a valid base bid amount.'});
+      const parsed={amount,alternates:cleanStringArray(body.alternates),inclusions:cleanStringArray(body.inclusions),exclusions:cleanStringArray(body.exclusions),bondIncluded:String(body.bondIncluded||'unspecified').slice(0,30),taxIncluded:String(body.taxIncluded||'unspecified').slice(0,30),schedule:String(body.schedule||'').slice(0,1000),notes:cleanStringArray(body.notes)};
+      let bid=db.bids.find(b=>b.projectId===entry.project.id&&b.scopeId===entry.scope.id&&b.contractorId===entry.contractor.id);if(!bid){bid={id:randomUUID(),projectId:entry.project.id,scopeId:entry.scope.id,contractorId:entry.contractor.id,createdAt:new Date().toISOString()};db.bids.push(bid);}bid.parsed=parsed;bid.raw=String(body.proposalText||'').slice(0,100000);bid.updatedAt=new Date().toISOString();
+      if(body.file?.name&&body.file?.data){const docs=await storeDocuments(entry.project.id,[body.file],{kind:'bid-proposal',bidId:bid.id,invitationId:entry.inv.id,contractorId:entry.contractor.id});if(docs[0])bid.proposalDocumentId=docs[0].id;}
+      entry.inv.status='submitted';entry.inv.updatedAt=new Date().toISOString();entry.project.workflowStage='leveling';addEvent('bid_received',entry.project.id,`Bid submitted through secure portal by ${entry.contractor.name} for ${entry.scope.trade}.`,{orgId:entry.project.orgId,contractorId:entry.contractor.id});await persist();return json(res,200,{ok:true,status:'submitted',submittedAt:bid.updatedAt});
+    }
+
     if(pathname==='/admin'||pathname==='/admin/') return serveStatic('/admin.html',res);
     if(pathname==='/admin.js') return serveStatic('/admin.js',res);
+    if(pathname.startsWith('/bid/')) return serveStatic('/bid.html',res);
     if(!pathname.startsWith('/api/')) return serveStatic(pathname,res);
 
     const ctx=await AUTH.context(req);if(!ctx.authenticated)return json(res,401,{error:'AUTH_REQUIRED'});
@@ -825,8 +923,8 @@ const server=http.createServer(async(req,res)=>{
 
     if(pathname==='/api/state'&&req.method==='GET'){
       const ids=orgProjectIds(orgId);const projects=db.projects.filter(p=>ids.has(p.id));const contractors=visibleContractors(orgId);
-      const launch={auth:REQUIRE_LOGIN?'configured':'local bypass',database:INTEGRATIONS.supabase.configured?integrationHealth.supabase:'local JSON',storage:INTEGRATIONS.supabase.configured?integrationHealth.supabase:'local disk',email:INTEGRATIONS.resend.configured?integrationHealth.email:'not configured',billing:INTEGRATIONS.stripe.configured?integrationHealth.billing:'not configured',ai:aiHealth.status,backup:'available'};
-      return json(res,200,{version:'6.1.2',auth:{user,org:ctx.org,loginRequired:REQUIRE_LOGIN},config:{aiEnabled:!!OPENAI_API_KEY,model:OPENAI_MODEL,aiHealth,autoSendInvites:AUTO_SEND_INVITES,outreachWebhookConfigured:!!OUTREACH_WEBHOOK_URL,integrations:{supabase:INTEGRATIONS.supabase.configured,resend:INTEGRATIONS.resend.configured,stripe:INTEGRATIONS.stripe.configured},integrationHealth,launch},billing:billingForOrg(orgId),settings,counts:orgScopedCounts(orgId),projects,contractors});
+      const launch={auth:REQUIRE_LOGIN?'configured':'local bypass',database:DATA_BACKEND==='supabase'?`Supabase normalized · ${integrationHealth.supabase}`:'local JSON',storage:INTEGRATIONS.supabase.configured?`Supabase private · ${integrationHealth.supabase}`:'local disk',email:INTEGRATIONS.resend.configured?integrationHealth.email:'not configured',billing:INTEGRATIONS.stripe.configured?integrationHealth.billing:'not configured',ai:aiHealth.status,backup:'available'};
+      return json(res,200,{version:'8.0.0',auth:{user,org:ctx.org,loginRequired:REQUIRE_LOGIN},config:{dataBackend:DATA_BACKEND,aiEnabled:!!OPENAI_API_KEY,model:OPENAI_MODEL,aiHealth,autoSendInvites:AUTO_SEND_INVITES,outreachWebhookConfigured:!!OUTREACH_WEBHOOK_URL,uploadLimits:{maxFileMB:MAX_FILE_MB,maxProjectFiles:MAX_PROJECT_FILES,maxBodyMB:MAX_BODY_MB},integrations:{supabase:INTEGRATIONS.supabase.configured,resend:INTEGRATIONS.resend.configured,stripe:INTEGRATIONS.stripe.configured},integrationHealth,launch},billing:billingForOrg(orgId),settings,counts:orgScopedCounts(orgId),projects,contractors});
     }
 
 
@@ -864,6 +962,13 @@ const server=http.createServer(async(req,res)=>{
     if(p&&req.method==='PATCH'){if(!need('estimator'))return;const project=findProject(p.id);if(!project)return json(res,404,{error:'Project not found.'});const body=await readJson(req);if(!PROJECT_STAGES.includes(body.stage))return json(res,400,{error:'Invalid workflow stage.'});project.workflowStage=body.stage;addEvent('stage_changed',project.id,`Workflow stage changed to ${body.stage}.`,{actorUserId:user.id});await persist();return json(res,200,getProjectBundle(project.id));}
     p=routeMatch(pathname,'/api/projects/:id/documents');
     if(p&&req.method==='POST'){if(!need('estimator'))return;const project=findProject(p.id);if(!project)return json(res,404,{error:'Project not found.'});const body=await readJson(req);const created=await storeDocuments(project.id,body.files||[]);addEvent('documents_added',project.id,`Added ${created.length} document${created.length===1?'':'s'}.`,{actorUserId:user.id});await persist();return json(res,200,getProjectBundle(project.id));}
+    p=routeMatch(pathname,'/api/projects/:projectId/documents/:documentId/download');
+    if(p&&req.method==='GET'){
+      const project=findProject(p.projectId);if(!project)return json(res,404,{error:'Project not found.'});
+      const doc=db.documents.find(d=>d.id===p.documentId&&d.projectId===project.id);if(!doc)return json(res,404,{error:'Document not found.'});
+      const buffer=await readDocumentBuffer(doc);const safeName=String(doc.name||'document').replace(/[\r\n"]/g,'_');
+      writeHeaders(res,200,{'Content-Type':doc.mime||'application/octet-stream','Content-Length':buffer.length,'Content-Disposition':`attachment; filename="${safeName}"`,'Cache-Control':'private, no-store'});return res.end(buffer);
+    }
     p=routeMatch(pathname,'/api/projects/:id/automation');
     if(p&&req.method==='POST'){if(!need('estimator'))return;const project=findProject(p.id);if(!project)return json(res,404,{error:'Project not found.'});return json(res,200,await runAutomation(project));}
     p=routeMatch(pathname,'/api/projects/:id/qa');
@@ -887,6 +992,8 @@ const server=http.createServer(async(req,res)=>{
     if(p&&req.method==='PATCH'){if(!need('estimator'))return;const project=findProject(p.projectId);if(!project)return json(res,404,{error:'Project not found.'});const bid=db.bids.find(b=>b.id===p.bidId&&b.projectId===p.projectId);if(!bid)return json(res,404,{error:'Bid not found.'});const body=await readJson(req);bid.manualAdjustment=Number(body.amount)||0;bid.manualAdjustmentReason=String(body.reason||'').trim();bid.updatedAt=new Date().toISOString();addEvent('leveling_adjustment',p.projectId,`Manual leveling adjustment updated for bid ${bid.id.slice(0,8)}.`,{actorUserId:user.id});await persist();return json(res,200,getProjectBundle(p.projectId));}
     p=routeMatch(pathname,'/api/projects/:projectId/invitations/:invitationId/status');
     if(p&&req.method==='POST'){if(!need('estimator'))return;const project=findProject(p.projectId);if(!project)return json(res,404,{error:'Project not found.'});const body=await readJson(req);const inv=db.invitations.find(i=>i.id===p.invitationId&&i.projectId===p.projectId);if(!inv)return json(res,404,{error:'Invitation not found.'});if(!['queued','sent','accepted','declined','submitted'].includes(body.status))return json(res,400,{error:'Invalid status.'});inv.status=body.status;inv.updatedAt=new Date().toISOString();addEvent('invitation_status',p.projectId,`Invitation marked ${body.status}.`,{actorUserId:user.id});await persist();return json(res,200,getProjectBundle(p.projectId));}
+    p=routeMatch(pathname,'/api/projects/:projectId/invitations/:invitationId/link');
+    if(p&&req.method==='POST'){if(!need('estimator'))return;const project=findProject(p.projectId);if(!project)return json(res,404,{error:'Project not found.'});const inv=db.invitations.find(i=>i.id===p.invitationId&&i.projectId===project.id);if(!inv)return json(res,404,{error:'Invitation not found.'});const token=rotateInvitationAccess(inv);await persist();return json(res,200,{url:invitationPortalUrl(req,token),expiresAt:inv.publicTokenExpiresAt});}
     p=routeMatch(pathname,'/api/projects/:projectId/bids/parse');
     if(p&&req.method==='POST'){if(!need('estimator'))return;const project=findProject(p.projectId),body=await readJson(req),scope=db.scopes.find(x=>x.id===body.scopeId&&x.projectId===p.projectId),contractor=visibleContractors(orgId).find(x=>x.id===body.contractorId);if(!project||!scope||!contractor)return json(res,400,{error:'Project, scope, or contractor was not found.'});const parsed=await parseBidProposal(body.proposalText);let bid=db.bids.find(b=>b.projectId===p.projectId&&b.scopeId===scope.id&&b.contractorId===contractor.id);if(bid){bid.parsed=parsed;bid.raw=body.proposalText;bid.updatedAt=new Date().toISOString();}else{bid={id:randomUUID(),projectId:p.projectId,scopeId:scope.id,contractorId:contractor.id,parsed,raw:body.proposalText,createdAt:new Date().toISOString()};db.bids.push(bid);}const inv=db.invitations.find(i=>i.projectId===p.projectId&&i.scopeId===scope.id&&i.contractorId===contractor.id);if(inv)inv.status='submitted';project.workflowStage='leveling';addEvent('bid_received',p.projectId,`Bid parsed from ${contractor.name} for ${scope.trade}.`,{actorUserId:user.id});await persist();return json(res,200,getProjectBundle(p.projectId));}
     p=routeMatch(pathname,'/api/projects/:projectId/bids/demo');
@@ -900,7 +1007,7 @@ const server=http.createServer(async(req,res)=>{
 
 setInterval(()=>processDueJobs().catch(error=>console.error('Job worker:',error.message)),JOB_INTERVAL_MS).unref();
 server.listen(PORT,HOST,()=>{
-  console.log(`BidMatch AI V6.1.2 running on ${HOST}:${PORT}`);
+  console.log(`BidMatch AI V8.0.0 running on ${HOST}:${PORT} · data=${DATA_BACKEND}`);
   console.log(`Local URL: http://localhost:${PORT}`);
   console.log(`Authentication: ${REQUIRE_LOGIN?'required':'local bypass'}`);
   console.log(`AI: ${OPENAI_API_KEY?`configured (${OPENAI_MODEL})`:'fallback mode'}`);

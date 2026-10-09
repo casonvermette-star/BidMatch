@@ -1,0 +1,6 @@
+.env
+.git
+.DS_Store
+backups/*
+data/auth.json
+data/uploads/*

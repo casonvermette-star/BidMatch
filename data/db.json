@@ -1,0 +1,4374 @@
+{
+  "version": 5,
+  "settings": {
+    "organizationName": "Demo General Contractor",
+    "defaultInsuranceRequirement": 2000000,
+    "defaultBondingThreshold": 500000,
+    "hardCapacityMultiplier": 1.25,
+    "topMatchesPerScope": 5,
+    "autoInviteEligibleOnly": true
+  },
+  "projects": [],
+  "documents": [],
+  "contractors": [
+    {
+      "id": "ctr-1",
+      "name": "Midwest Spark Electric",
+      "trades": [
+        "Electrical",
+        "Fire Alarm"
+      ],
+      "serviceStates": [
+        "MO",
+        "KS"
+      ],
+      "markets": [
+        "Multifamily",
+        "Commercial"
+      ],
+      "minPackage": 150000,
+      "maxPackage": 3500000,
+      "responseRate": 0.86,
+      "city": "Kansas City",
+      "employees": 38,
+      "insuranceLimit": 5500000,
+      "bondCapacity": 3000000,
+      "licenseStates": [
+        "MO",
+        "KS"
+      ],
+      "capabilities": [
+        "LEED coordination",
+        "Design-assist"
+      ],
+      "qualified": true,
+      "email": "estimating@midwestsparkelectric.example",
+      "yearsInBusiness": 8,
+      "description": "Midwest Spark Electric is a fictional demo subcontractor specializing in Electrical, Fire Alarm across MO, KS.",
+      "pastProjects": [
+        {
+          "name": "Multifamily Project A",
+          "type": "Multifamily",
+          "value": 2625000
+        },
+        {
+          "name": "Regional Electrical Package",
+          "type": "Commercial",
+          "value": 1925000
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "homeState": "MO",
+      "demoData": true,
+      "prequalStatus": "Conditional",
+      "safety": {
+        "emr": 0.72,
+        "trir": 0.7,
+        "dart": 0.3,
+        "incidents3yr": 0
+      },
+      "avgAnnualVolume": 9800000,
+      "currentBacklog": 2200000,
+      "backlogUtilization": 0.22,
+      "onTimeRate": 0.82,
+      "qualityScore": 78,
+      "relationshipScore": 0,
+      "avgResponseHours": 8,
+      "invitedLast12Months": 3,
+      "bidsLast12Months": 2,
+      "awardsLast12Months": 0,
+      "insuranceExpiry": "2026-12-04",
+      "bondingStatus": "Review",
+      "certifications": [
+        "OSHA 30 program",
+        "Minority / supplier credential demo"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-2",
+      "name": "Heartland Mechanical",
+      "trades": [
+        "HVAC"
+      ],
+      "serviceStates": [
+        "MO",
+        "KS",
+        "NE"
+      ],
+      "markets": [
+        "Multifamily",
+        "Commercial",
+        "Healthcare"
+      ],
+      "minPackage": 250000,
+      "maxPackage": 5000000,
+      "responseRate": 0.78,
+      "city": "Kansas City",
+      "employees": 54,
+      "insuranceLimit": 7000000,
+      "bondCapacity": 4000000,
+      "licenseStates": [
+        "MO",
+        "KS",
+        "NE"
+      ],
+      "capabilities": [
+        "BIM coordination",
+        "Commissioning support"
+      ],
+      "qualified": true,
+      "email": "estimating@heartlandmechanical.example",
+      "yearsInBusiness": 9,
+      "description": "Heartland Mechanical is a fictional demo subcontractor specializing in HVAC across MO, KS, NE.",
+      "pastProjects": [
+        {
+          "name": "Multifamily Project B",
+          "type": "Multifamily",
+          "value": 3750000
+        },
+        {
+          "name": "Regional HVAC Package",
+          "type": "Commercial",
+          "value": 2750000
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "homeState": "MO",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 0.77,
+        "trir": 1,
+        "dart": 0.5,
+        "incidents3yr": 1
+      },
+      "avgAnnualVolume": 16100000,
+      "currentBacklog": 4700000,
+      "backlogUtilization": 0.29,
+      "onTimeRate": 0.87,
+      "qualityScore": 85,
+      "relationshipScore": 0.2,
+      "avgResponseHours": 21,
+      "invitedLast12Months": 4,
+      "bidsLast12Months": 3,
+      "awardsLast12Months": 1,
+      "insuranceExpiry": "2026-12-23",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-3",
+      "name": "River City Plumbing",
+      "trades": [
+        "Plumbing"
+      ],
+      "serviceStates": [
+        "MO",
+        "KS"
+      ],
+      "markets": [
+        "Multifamily",
+        "Commercial"
+      ],
+      "minPackage": 120000,
+      "maxPackage": 3000000,
+      "responseRate": 0.83,
+      "city": "Independence",
+      "employees": 31,
+      "insuranceLimit": 4000000,
+      "bondCapacity": 2500000,
+      "licenseStates": [
+        "MO",
+        "KS"
+      ],
+      "capabilities": [
+        "Medical gas coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@rivercityplumbing.example",
+      "yearsInBusiness": 10,
+      "description": "River City Plumbing is a fictional demo subcontractor specializing in Plumbing across MO, KS.",
+      "pastProjects": [
+        {
+          "name": "Multifamily Project C",
+          "type": "Multifamily",
+          "value": 2250000
+        },
+        {
+          "name": "Regional Plumbing Package",
+          "type": "Commercial",
+          "value": 1650000
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "homeState": "MO",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 0.81,
+        "trir": 1.3,
+        "dart": 0.7,
+        "incidents3yr": 2
+      },
+      "avgAnnualVolume": 10900000,
+      "currentBacklog": 4000000,
+      "backlogUtilization": 0.37,
+      "onTimeRate": 0.92,
+      "qualityScore": 92,
+      "relationshipScore": 0.4,
+      "avgResponseHours": 34,
+      "invitedLast12Months": 5,
+      "bidsLast12Months": 4,
+      "awardsLast12Months": 2,
+      "insuranceExpiry": "2027-01-11",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-4",
+      "name": "Summit Concrete Group",
+      "trades": [
+        "Concrete"
+      ],
+      "serviceStates": [
+        "MO",
+        "KS",
+        "IA"
+      ],
+      "markets": [
+        "Multifamily",
+        "Commercial",
+        "Industrial"
+      ],
+      "minPackage": 200000,
+      "maxPackage": 6000000,
+      "responseRate": 0.74,
+      "city": "Columbia",
+      "employees": 72,
+      "insuranceLimit": 8000000,
+      "bondCapacity": 5000000,
+      "licenseStates": [
+        "MO",
+        "KS",
+        "IA"
+      ],
+      "capabilities": [
+        "Post-tension slabs",
+        "Tilt-up"
+      ],
+      "qualified": true,
+      "email": "estimating@summitconcretegroup.example",
+      "yearsInBusiness": 11,
+      "description": "Summit Concrete Group is a fictional demo subcontractor specializing in Concrete across MO, KS, IA.",
+      "pastProjects": [
+        {
+          "name": "Multifamily Project D",
+          "type": "Multifamily",
+          "value": 4500000
+        },
+        {
+          "name": "Regional Concrete Package",
+          "type": "Commercial",
+          "value": 3300000
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "homeState": "MO",
+      "demoData": true,
+      "prequalStatus": "Conditional",
+      "safety": {
+        "emr": 0.85,
+        "trir": 1.6,
+        "dart": 0.9,
+        "incidents3yr": 3
+      },
+      "avgAnnualVolume": 24400000,
+      "currentBacklog": 10900000,
+      "backlogUtilization": 0.45,
+      "onTimeRate": 0.82,
+      "qualityScore": 80,
+      "relationshipScore": 0.6,
+      "avgResponseHours": 47,
+      "invitedLast12Months": 6,
+      "bidsLast12Months": 5,
+      "awardsLast12Months": 3,
+      "insuranceExpiry": "2027-01-30",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-5",
+      "name": "Prairie Steel Erectors",
+      "trades": [
+        "Structural Steel"
+      ],
+      "serviceStates": [
+        "MO",
+        "KS",
+        "NE",
+        "IA"
+      ],
+      "markets": [
+        "Commercial",
+        "Industrial",
+        "Multifamily"
+      ],
+      "minPackage": 300000,
+      "maxPackage": 7000000,
+      "responseRate": 0.69,
+      "city": "Kansas City",
+      "employees": 61,
+      "insuranceLimit": 9000000,
+      "bondCapacity": 6000000,
+      "licenseStates": [
+        "MO",
+        "KS",
+        "NE",
+        "IA"
+      ],
+      "capabilities": [
+        "AISC certified"
+      ],
+      "qualified": true,
+      "email": "estimating@prairiesteelerectors.example",
+      "yearsInBusiness": 12,
+      "description": "Prairie Steel Erectors is a fictional demo subcontractor specializing in Structural Steel across MO, KS, NE, IA.",
+      "pastProjects": [
+        {
+          "name": "Commercial Project E",
+          "type": "Commercial",
+          "value": 5250000
+        },
+        {
+          "name": "Regional Structural Steel Package",
+          "type": "Industrial",
+          "value": 3850000
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "homeState": "MO",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 0.9,
+        "trir": 1.9,
+        "dart": 1.1,
+        "incidents3yr": 0
+      },
+      "avgAnnualVolume": 31400000,
+      "currentBacklog": 16300000,
+      "backlogUtilization": 0.52,
+      "onTimeRate": 0.87,
+      "qualityScore": 87,
+      "relationshipScore": 0.8,
+      "avgResponseHours": 60,
+      "invitedLast12Months": 7,
+      "bidsLast12Months": 6,
+      "awardsLast12Months": 4,
+      "insuranceExpiry": "2027-02-18",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-6",
+      "name": "KC Interior Systems",
+      "trades": [
+        "Drywall"
+      ],
+      "serviceStates": [
+        "MO",
+        "KS"
+      ],
+      "markets": [
+        "Multifamily",
+        "Commercial"
+      ],
+      "minPackage": 90000,
+      "maxPackage": 2400000,
+      "responseRate": 0.91,
+      "city": "Kansas City",
+      "employees": 44,
+      "insuranceLimit": 3500000,
+      "bondCapacity": 1800000,
+      "licenseStates": [
+        "MO",
+        "KS"
+      ],
+      "capabilities": [
+        "Acoustical ceilings",
+        "Cold-formed framing"
+      ],
+      "qualified": true,
+      "email": "estimating@kcinteriorsystems.example",
+      "yearsInBusiness": 13,
+      "description": "KC Interior Systems is a fictional demo subcontractor specializing in Drywall across MO, KS.",
+      "pastProjects": [
+        {
+          "name": "Multifamily Project F",
+          "type": "Multifamily",
+          "value": 1800000
+        },
+        {
+          "name": "Regional Drywall Package",
+          "type": "Commercial",
+          "value": 1320000
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "homeState": "MO",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 0.94,
+        "trir": 2.3,
+        "dart": 1.3,
+        "incidents3yr": 1
+      },
+      "avgAnnualVolume": 11800000,
+      "currentBacklog": 7000000,
+      "backlogUtilization": 0.59,
+      "onTimeRate": 0.92,
+      "qualityScore": 94,
+      "relationshipScore": 1,
+      "avgResponseHours": 73,
+      "invitedLast12Months": 8,
+      "bidsLast12Months": 7,
+      "awardsLast12Months": 0,
+      "insuranceExpiry": "2027-03-09",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "OSHA 30 program"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-7",
+      "name": "Blue Ridge Coatings",
+      "trades": [
+        "Painting"
+      ],
+      "serviceStates": [
+        "MO",
+        "KS"
+      ],
+      "markets": [
+        "Multifamily",
+        "Commercial"
+      ],
+      "minPackage": 50000,
+      "maxPackage": 1400000,
+      "responseRate": 0.8,
+      "city": "Columbia",
+      "employees": 27,
+      "insuranceLimit": 2500000,
+      "bondCapacity": 1200000,
+      "licenseStates": [
+        "MO",
+        "KS"
+      ],
+      "capabilities": [
+        "High-performance coatings"
+      ],
+      "qualified": true,
+      "email": "estimating@blueridgecoatings.example",
+      "yearsInBusiness": 14,
+      "description": "Blue Ridge Coatings is a fictional demo subcontractor specializing in Painting across MO, KS.",
+      "pastProjects": [
+        {
+          "name": "Multifamily Project A",
+          "type": "Multifamily",
+          "value": 1050000
+        },
+        {
+          "name": "Regional Painting Package",
+          "type": "Commercial",
+          "value": 770000
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "homeState": "MO",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 0.99,
+        "trir": 2.6,
+        "dart": 1.4,
+        "incidents3yr": 2
+      },
+      "avgAnnualVolume": 7400000,
+      "currentBacklog": 1600000,
+      "backlogUtilization": 0.22,
+      "onTimeRate": 0.82,
+      "qualityScore": 82,
+      "relationshipScore": 0,
+      "avgResponseHours": 20,
+      "invitedLast12Months": 9,
+      "bidsLast12Months": 8,
+      "awardsLast12Months": 1,
+      "insuranceExpiry": "2027-03-28",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation",
+        "Minority / supplier credential demo"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-8",
+      "name": "Gateway Flooring Works",
+      "trades": [
+        "Flooring"
+      ],
+      "serviceStates": [
+        "MO",
+        "IL",
+        "KS"
+      ],
+      "markets": [
+        "Multifamily",
+        "Commercial",
+        "Hospitality"
+      ],
+      "minPackage": 70000,
+      "maxPackage": 2000000,
+      "responseRate": 0.76,
+      "city": "St. Louis",
+      "employees": 35,
+      "insuranceLimit": 3000000,
+      "bondCapacity": 1500000,
+      "licenseStates": [
+        "MO",
+        "KS",
+        "IL"
+      ],
+      "capabilities": [
+        "Moisture mitigation",
+        "Carpet tile"
+      ],
+      "qualified": true,
+      "email": "estimating@gatewayflooringworks.example",
+      "yearsInBusiness": 15,
+      "description": "Gateway Flooring Works is a fictional demo subcontractor specializing in Flooring across MO, IL, KS.",
+      "pastProjects": [
+        {
+          "name": "Multifamily Project B",
+          "type": "Multifamily",
+          "value": 1500000
+        },
+        {
+          "name": "Regional Flooring Package",
+          "type": "Commercial",
+          "value": 1100000
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "homeState": "MO",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 1.03,
+        "trir": 2.9,
+        "dart": 0.3,
+        "incidents3yr": 3
+      },
+      "avgAnnualVolume": 5600000,
+      "currentBacklog": 1700000,
+      "backlogUtilization": 0.3,
+      "onTimeRate": 0.87,
+      "qualityScore": 89,
+      "relationshipScore": 0.2,
+      "avgResponseHours": 33,
+      "invitedLast12Months": 10,
+      "bidsLast12Months": 9,
+      "awardsLast12Months": 2,
+      "insuranceExpiry": "2027-04-16",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-9",
+      "name": "Plains Roofing Systems",
+      "trades": [
+        "Roofing",
+        "Waterproofing"
+      ],
+      "serviceStates": [
+        "MO",
+        "KS",
+        "NE"
+      ],
+      "markets": [
+        "Commercial",
+        "Multifamily",
+        "Industrial"
+      ],
+      "minPackage": 100000,
+      "maxPackage": 2600000,
+      "responseRate": 0.88,
+      "city": "Kansas City",
+      "employees": 42,
+      "insuranceLimit": 4500000,
+      "bondCapacity": 2200000,
+      "licenseStates": [
+        "MO",
+        "KS",
+        "NE"
+      ],
+      "capabilities": [
+        "TPO",
+        "EPDM",
+        "Fluid-applied waterproofing"
+      ],
+      "qualified": true,
+      "email": "estimating@plainsroofingsystems.example",
+      "yearsInBusiness": 16,
+      "description": "Plains Roofing Systems is a fictional demo subcontractor specializing in Roofing, Waterproofing across MO, KS, NE.",
+      "pastProjects": [
+        {
+          "name": "Commercial Project C",
+          "type": "Commercial",
+          "value": 1950000
+        },
+        {
+          "name": "Regional Roofing Package",
+          "type": "Multifamily",
+          "value": 1430000
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "homeState": "MO",
+      "demoData": true,
+      "prequalStatus": "Conditional",
+      "safety": {
+        "emr": 1.08,
+        "trir": 0.7,
+        "dart": 0.5,
+        "incidents3yr": 0
+      },
+      "avgAnnualVolume": 8400000,
+      "currentBacklog": 3100000,
+      "backlogUtilization": 0.37,
+      "onTimeRate": 0.92,
+      "qualityScore": 96,
+      "relationshipScore": 0.4,
+      "avgResponseHours": 46,
+      "invitedLast12Months": 11,
+      "bidsLast12Months": 10,
+      "awardsLast12Months": 3,
+      "insuranceExpiry": "2027-05-05",
+      "bondingStatus": "Review",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-10",
+      "name": "Metro Fire Systems",
+      "trades": [
+        "Fire Protection"
+      ],
+      "serviceStates": [
+        "MO",
+        "KS"
+      ],
+      "markets": [
+        "Multifamily",
+        "Commercial",
+        "Healthcare"
+      ],
+      "minPackage": 80000,
+      "maxPackage": 1800000,
+      "responseRate": 0.84,
+      "city": "Kansas City",
+      "employees": 29,
+      "insuranceLimit": 3000000,
+      "bondCapacity": 1800000,
+      "licenseStates": [
+        "MO",
+        "KS"
+      ],
+      "capabilities": [
+        "NFPA coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@metrofiresystems.example",
+      "yearsInBusiness": 17,
+      "description": "Metro Fire Systems is a fictional demo subcontractor specializing in Fire Protection across MO, KS.",
+      "pastProjects": [
+        {
+          "name": "Multifamily Project D",
+          "type": "Multifamily",
+          "value": 1350000
+        },
+        {
+          "name": "Regional Fire Protection Package",
+          "type": "Commercial",
+          "value": 990000
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "homeState": "MO",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 0.72,
+        "trir": 1,
+        "dart": 0.7,
+        "incidents3yr": 1
+      },
+      "avgAnnualVolume": 6600000,
+      "currentBacklog": 2900000,
+      "backlogUtilization": 0.44,
+      "onTimeRate": 0.82,
+      "qualityScore": 84,
+      "relationshipScore": 0.6,
+      "avgResponseHours": 59,
+      "invitedLast12Months": 12,
+      "bidsLast12Months": 11,
+      "awardsLast12Months": 4,
+      "insuranceExpiry": "2027-05-24",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-11",
+      "name": "SignalWorks Low Voltage",
+      "trades": [
+        "Low Voltage",
+        "Fire Alarm"
+      ],
+      "serviceStates": [
+        "MO",
+        "KS"
+      ],
+      "markets": [
+        "Multifamily",
+        "Commercial"
+      ],
+      "minPackage": 40000,
+      "maxPackage": 1300000,
+      "responseRate": 0.9,
+      "city": "Overland Park",
+      "employees": 26,
+      "insuranceLimit": 2500000,
+      "bondCapacity": 1200000,
+      "licenseStates": [
+        "MO",
+        "KS"
+      ],
+      "capabilities": [
+        "Structured cabling",
+        "Access control"
+      ],
+      "qualified": true,
+      "email": "estimating@signalworkslowvoltage.example",
+      "yearsInBusiness": 18,
+      "description": "SignalWorks Low Voltage is a fictional demo subcontractor specializing in Low Voltage, Fire Alarm across MO, KS.",
+      "pastProjects": [
+        {
+          "name": "Multifamily Project E",
+          "type": "Multifamily",
+          "value": 975000
+        },
+        {
+          "name": "Regional Low Voltage Package",
+          "type": "Commercial",
+          "value": 715000
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "homeState": "MO",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 0.77,
+        "trir": 1.3,
+        "dart": 0.9,
+        "incidents3yr": 2
+      },
+      "avgAnnualVolume": 5300000,
+      "currentBacklog": 2800000,
+      "backlogUtilization": 0.53,
+      "onTimeRate": 0.87,
+      "qualityScore": 91,
+      "relationshipScore": 0.8,
+      "avgResponseHours": 72,
+      "invitedLast12Months": 13,
+      "bidsLast12Months": 2,
+      "awardsLast12Months": 0,
+      "insuranceExpiry": "2027-06-12",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "OSHA 30 program"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-12",
+      "name": "Ozark Site & Civil",
+      "trades": [
+        "Sitework",
+        "Paving"
+      ],
+      "serviceStates": [
+        "MO",
+        "AR",
+        "KS"
+      ],
+      "markets": [
+        "Commercial",
+        "Multifamily",
+        "Industrial"
+      ],
+      "minPackage": 200000,
+      "maxPackage": 4500000,
+      "responseRate": 0.71,
+      "city": "Springfield",
+      "employees": 63,
+      "insuranceLimit": 6500000,
+      "bondCapacity": 4000000,
+      "licenseStates": [
+        "MO",
+        "AR",
+        "KS"
+      ],
+      "capabilities": [
+        "Utility installation",
+        "Mass grading"
+      ],
+      "qualified": true,
+      "email": "estimating@ozarksitecivil.example",
+      "yearsInBusiness": 19,
+      "description": "Ozark Site & Civil is a fictional demo subcontractor specializing in Sitework, Paving across MO, AR, KS.",
+      "pastProjects": [
+        {
+          "name": "Commercial Project F",
+          "type": "Commercial",
+          "value": 3375000
+        },
+        {
+          "name": "Regional Sitework Package",
+          "type": "Multifamily",
+          "value": 2475000
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "homeState": "MO",
+      "demoData": true,
+      "prequalStatus": "Conditional",
+      "safety": {
+        "emr": 0.81,
+        "trir": 1.6,
+        "dart": 1.1,
+        "incidents3yr": 3
+      },
+      "avgAnnualVolume": 20200000,
+      "currentBacklog": 12000000,
+      "backlogUtilization": 0.59,
+      "onTimeRate": 0.92,
+      "qualityScore": 79,
+      "relationshipScore": 1,
+      "avgResponseHours": 19,
+      "invitedLast12Months": 14,
+      "bidsLast12Months": 3,
+      "awardsLast12Months": 1,
+      "insuranceExpiry": "2027-07-01",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-13",
+      "name": "Greenline Landscape",
+      "trades": [
+        "Landscaping"
+      ],
+      "serviceStates": [
+        "MO",
+        "KS"
+      ],
+      "markets": [
+        "Multifamily",
+        "Commercial"
+      ],
+      "minPackage": 30000,
+      "maxPackage": 900000,
+      "responseRate": 0.73,
+      "city": "Columbia",
+      "employees": 18,
+      "insuranceLimit": 1500000,
+      "bondCapacity": 700000,
+      "licenseStates": [
+        "MO",
+        "KS"
+      ],
+      "capabilities": [
+        "Irrigation",
+        "Native planting"
+      ],
+      "qualified": true,
+      "email": "estimating@greenlinelandscape.example",
+      "yearsInBusiness": 20,
+      "description": "Greenline Landscape is a fictional demo subcontractor specializing in Landscaping across MO, KS.",
+      "pastProjects": [
+        {
+          "name": "Multifamily Project A",
+          "type": "Multifamily",
+          "value": 675000
+        },
+        {
+          "name": "Regional Landscaping Package",
+          "type": "Commercial",
+          "value": 495000
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "homeState": "MO",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 0.85,
+        "trir": 1.9,
+        "dart": 1.3,
+        "incidents3yr": 0
+      },
+      "avgAnnualVolume": 4400000,
+      "currentBacklog": 1000000,
+      "backlogUtilization": 0.23,
+      "onTimeRate": 0.82,
+      "qualityScore": 86,
+      "relationshipScore": 0,
+      "avgResponseHours": 32,
+      "invitedLast12Months": 15,
+      "bidsLast12Months": 4,
+      "awardsLast12Months": 2,
+      "insuranceExpiry": "2027-07-20",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation",
+        "Minority / supplier credential demo"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-14",
+      "name": "Crossroads Masonry",
+      "trades": [
+        "Masonry"
+      ],
+      "serviceStates": [
+        "MO",
+        "KS",
+        "IA"
+      ],
+      "markets": [
+        "Commercial",
+        "Multifamily"
+      ],
+      "minPackage": 80000,
+      "maxPackage": 2100000,
+      "responseRate": 0.77,
+      "city": "Kansas City",
+      "employees": 36,
+      "insuranceLimit": 3000000,
+      "bondCapacity": 1600000,
+      "licenseStates": [
+        "MO",
+        "KS",
+        "IA"
+      ],
+      "capabilities": [
+        "Architectural masonry"
+      ],
+      "qualified": true,
+      "email": "estimating@crossroadsmasonry.example",
+      "yearsInBusiness": 21,
+      "description": "Crossroads Masonry is a fictional demo subcontractor specializing in Masonry across MO, KS, IA.",
+      "pastProjects": [
+        {
+          "name": "Commercial Project B",
+          "type": "Commercial",
+          "value": 1575000
+        },
+        {
+          "name": "Regional Masonry Package",
+          "type": "Multifamily",
+          "value": 1155000
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "homeState": "MO",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 0.9,
+        "trir": 2.3,
+        "dart": 1.4,
+        "incidents3yr": 1
+      },
+      "avgAnnualVolume": 11200000,
+      "currentBacklog": 3300000,
+      "backlogUtilization": 0.29,
+      "onTimeRate": 0.87,
+      "qualityScore": 93,
+      "relationshipScore": 0.2,
+      "avgResponseHours": 45,
+      "invitedLast12Months": 16,
+      "bidsLast12Months": 5,
+      "awardsLast12Months": 3,
+      "insuranceExpiry": "2027-08-08",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-15",
+      "name": "Central Millwork & Carpentry",
+      "trades": [
+        "Carpentry"
+      ],
+      "serviceStates": [
+        "MO",
+        "KS"
+      ],
+      "markets": [
+        "Multifamily",
+        "Commercial",
+        "Hospitality"
+      ],
+      "minPackage": 75000,
+      "maxPackage": 1700000,
+      "responseRate": 0.82,
+      "city": "Columbia",
+      "employees": 32,
+      "insuranceLimit": 2500000,
+      "bondCapacity": 1300000,
+      "licenseStates": [
+        "MO",
+        "KS"
+      ],
+      "capabilities": [
+        "Casework",
+        "Finish carpentry"
+      ],
+      "qualified": true,
+      "email": "estimating@centralmillworkcarpentry.example",
+      "yearsInBusiness": 22,
+      "description": "Central Millwork & Carpentry is a fictional demo subcontractor specializing in Carpentry across MO, KS.",
+      "pastProjects": [
+        {
+          "name": "Multifamily Project C",
+          "type": "Multifamily",
+          "value": 1275000
+        },
+        {
+          "name": "Regional Carpentry Package",
+          "type": "Commercial",
+          "value": 935000
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "homeState": "MO",
+      "demoData": true,
+      "prequalStatus": "Conditional",
+      "safety": {
+        "emr": 0.94,
+        "trir": 2.6,
+        "dart": 0.3,
+        "incidents3yr": 2
+      },
+      "avgAnnualVolume": 4800000,
+      "currentBacklog": 1800000,
+      "backlogUtilization": 0.38,
+      "onTimeRate": 0.92,
+      "qualityScore": 81,
+      "relationshipScore": 0.4,
+      "avgResponseHours": 58,
+      "invitedLast12Months": 17,
+      "bidsLast12Months": 6,
+      "awardsLast12Months": 4,
+      "insuranceExpiry": "2027-08-27",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-16",
+      "name": "Access Door & Hardware",
+      "trades": [
+        "Doors & Hardware"
+      ],
+      "serviceStates": [
+        "MO",
+        "KS"
+      ],
+      "markets": [
+        "Commercial",
+        "Multifamily",
+        "Healthcare"
+      ],
+      "minPackage": 60000,
+      "maxPackage": 1500000,
+      "responseRate": 0.79,
+      "city": "Kansas City",
+      "employees": 24,
+      "insuranceLimit": 2300000,
+      "bondCapacity": 1000000,
+      "licenseStates": [
+        "MO",
+        "KS"
+      ],
+      "capabilities": [
+        "Division 08 coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@accessdoorhardware.example",
+      "yearsInBusiness": 23,
+      "description": "Access Door & Hardware is a fictional demo subcontractor specializing in Doors & Hardware across MO, KS.",
+      "pastProjects": [
+        {
+          "name": "Commercial Project D",
+          "type": "Commercial",
+          "value": 1125000
+        },
+        {
+          "name": "Regional Doors & Hardware Package",
+          "type": "Multifamily",
+          "value": 825000
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "homeState": "MO",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 0.99,
+        "trir": 2.9,
+        "dart": 0.5,
+        "incidents3yr": 3
+      },
+      "avgAnnualVolume": 4800000,
+      "currentBacklog": 2100000,
+      "backlogUtilization": 0.44,
+      "onTimeRate": 0.82,
+      "qualityScore": 88,
+      "relationshipScore": 0.6,
+      "avgResponseHours": 71,
+      "invitedLast12Months": 3,
+      "bidsLast12Months": 7,
+      "awardsLast12Months": 0,
+      "insuranceExpiry": "2026-12-09",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "OSHA 30 program"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-17",
+      "name": "Capital Electric Partners",
+      "trades": [
+        "Electrical",
+        "Low Voltage"
+      ],
+      "serviceStates": [
+        "MO",
+        "KS",
+        "IA",
+        "NE"
+      ],
+      "markets": [
+        "Commercial",
+        "Healthcare",
+        "Industrial"
+      ],
+      "minPackage": 400000,
+      "maxPackage": 8500000,
+      "responseRate": 0.67,
+      "city": "Kansas City",
+      "employees": 96,
+      "insuranceLimit": 12000000,
+      "bondCapacity": 7500000,
+      "licenseStates": [
+        "MO",
+        "KS",
+        "IA",
+        "NE"
+      ],
+      "capabilities": [
+        "Medium voltage",
+        "Generator systems",
+        "BIM coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@capitalelectricpartners.example",
+      "yearsInBusiness": 24,
+      "description": "Capital Electric Partners is a fictional demo subcontractor specializing in Electrical, Low Voltage across MO, KS, IA, NE.",
+      "pastProjects": [
+        {
+          "name": "Commercial Project E",
+          "type": "Commercial",
+          "value": 6375000
+        },
+        {
+          "name": "Regional Electrical Package",
+          "type": "Healthcare",
+          "value": 4675000
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "homeState": "MO",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 1.03,
+        "trir": 0.7,
+        "dart": 0.7,
+        "incidents3yr": 0
+      },
+      "avgAnnualVolume": 30900000,
+      "currentBacklog": 16100000,
+      "backlogUtilization": 0.52,
+      "onTimeRate": 0.87,
+      "qualityScore": 95,
+      "relationshipScore": 0.8,
+      "avgResponseHours": 18,
+      "invitedLast12Months": 4,
+      "bidsLast12Months": 8,
+      "awardsLast12Months": 1,
+      "insuranceExpiry": "2026-12-28",
+      "bondingStatus": "Review",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-18",
+      "name": "Northstar MEP",
+      "trades": [
+        "HVAC",
+        "Plumbing"
+      ],
+      "serviceStates": [
+        "MO",
+        "KS",
+        "IL"
+      ],
+      "markets": [
+        "Multifamily",
+        "Commercial",
+        "Healthcare"
+      ],
+      "minPackage": 400000,
+      "maxPackage": 7500000,
+      "responseRate": 0.72,
+      "city": "St. Louis",
+      "employees": 104,
+      "insuranceLimit": 10000000,
+      "bondCapacity": 7000000,
+      "licenseStates": [
+        "MO",
+        "KS",
+        "IL"
+      ],
+      "capabilities": [
+        "Design-build",
+        "BIM coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@northstarmep.example",
+      "yearsInBusiness": 25,
+      "description": "Northstar MEP is a fictional demo subcontractor specializing in HVAC, Plumbing across MO, KS, IL.",
+      "pastProjects": [
+        {
+          "name": "Multifamily Project F",
+          "type": "Multifamily",
+          "value": 5625000
+        },
+        {
+          "name": "Regional HVAC Package",
+          "type": "Commercial",
+          "value": 4125000
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "homeState": "MO",
+      "demoData": true,
+      "prequalStatus": "Conditional",
+      "safety": {
+        "emr": 1.08,
+        "trir": 1,
+        "dart": 0.9,
+        "incidents3yr": 1
+      },
+      "avgAnnualVolume": 30400000,
+      "currentBacklog": 18100000,
+      "backlogUtilization": 0.6,
+      "onTimeRate": 0.92,
+      "qualityScore": 83,
+      "relationshipScore": 1,
+      "avgResponseHours": 31,
+      "invitedLast12Months": 5,
+      "bidsLast12Months": 9,
+      "awardsLast12Months": 2,
+      "insuranceExpiry": "2027-01-16",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-19",
+      "name": "Foundation One",
+      "trades": [
+        "Concrete"
+      ],
+      "serviceStates": [
+        "MO",
+        "KS"
+      ],
+      "markets": [
+        "Multifamily",
+        "Commercial"
+      ],
+      "minPackage": 80000,
+      "maxPackage": 2600000,
+      "responseRate": 0.87,
+      "city": "Kansas City",
+      "employees": 34,
+      "insuranceLimit": 3800000,
+      "bondCapacity": 2000000,
+      "licenseStates": [
+        "MO",
+        "KS"
+      ],
+      "capabilities": [
+        "Foundations",
+        "Slabs-on-grade"
+      ],
+      "qualified": true,
+      "email": "estimating@foundationone.example",
+      "yearsInBusiness": 26,
+      "description": "Foundation One is a fictional demo subcontractor specializing in Concrete across MO, KS.",
+      "pastProjects": [
+        {
+          "name": "Multifamily Project A",
+          "type": "Multifamily",
+          "value": 1950000
+        },
+        {
+          "name": "Regional Concrete Package",
+          "type": "Commercial",
+          "value": 1430000
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "homeState": "MO",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 0.72,
+        "trir": 1.3,
+        "dart": 1.1,
+        "incidents3yr": 2
+      },
+      "avgAnnualVolume": 11600000,
+      "currentBacklog": 2600000,
+      "backlogUtilization": 0.22,
+      "onTimeRate": 0.82,
+      "qualityScore": 90,
+      "relationshipScore": 0,
+      "avgResponseHours": 44,
+      "invitedLast12Months": 6,
+      "bidsLast12Months": 10,
+      "awardsLast12Months": 3,
+      "insuranceExpiry": "2027-02-04",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation",
+        "Minority / supplier credential demo"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-20",
+      "name": "Interior Finish Alliance",
+      "trades": [
+        "Drywall",
+        "Painting",
+        "Flooring"
+      ],
+      "serviceStates": [
+        "MO",
+        "KS"
+      ],
+      "markets": [
+        "Multifamily",
+        "Commercial"
+      ],
+      "minPackage": 120000,
+      "maxPackage": 3800000,
+      "responseRate": 0.75,
+      "city": "Kansas City",
+      "employees": 68,
+      "insuranceLimit": 5500000,
+      "bondCapacity": 3200000,
+      "licenseStates": [
+        "MO",
+        "KS"
+      ],
+      "capabilities": [
+        "Turnkey interiors",
+        "Schedule acceleration"
+      ],
+      "qualified": true,
+      "email": "estimating@interiorfinishalliance.example",
+      "yearsInBusiness": 27,
+      "description": "Interior Finish Alliance is a fictional demo subcontractor specializing in Drywall, Painting, Flooring across MO, KS.",
+      "pastProjects": [
+        {
+          "name": "Multifamily Project B",
+          "type": "Multifamily",
+          "value": 2850000
+        },
+        {
+          "name": "Regional Drywall Package",
+          "type": "Commercial",
+          "value": 2090000
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "homeState": "MO",
+      "demoData": true,
+      "prequalStatus": "Conditional",
+      "safety": {
+        "emr": 0.77,
+        "trir": 1.6,
+        "dart": 1.3,
+        "incidents3yr": 3
+      },
+      "avgAnnualVolume": 18600000,
+      "currentBacklog": 5500000,
+      "backlogUtilization": 0.3,
+      "onTimeRate": 0.87,
+      "qualityScore": 78,
+      "relationshipScore": 0.2,
+      "avgResponseHours": 57,
+      "invitedLast12Months": 7,
+      "bidsLast12Months": 11,
+      "awardsLast12Months": 4,
+      "insuranceExpiry": "2027-02-23",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-21",
+      "name": "Atlas Concrete",
+      "trades": [
+        "Concrete"
+      ],
+      "serviceStates": [
+        "MO",
+        "KS"
+      ],
+      "markets": [
+        "Multifamily",
+        "Commercial",
+        "Healthcare"
+      ],
+      "minPackage": 35000,
+      "maxPackage": 450000,
+      "responseRate": 0.66,
+      "city": "Kansas City",
+      "homeState": "MO",
+      "employees": 16,
+      "insuranceLimit": 2000000,
+      "bondCapacity": 600000,
+      "licenseStates": [
+        "MO",
+        "KS"
+      ],
+      "capabilities": [
+        "Concrete estimating",
+        "Schedule coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@atlasconcrete.example",
+      "yearsInBusiness": 5,
+      "description": "Atlas Concrete is a fictional regional concrete subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Multifamily Concrete Package",
+          "type": "Multifamily",
+          "value": 279000
+        },
+        {
+          "name": "Regional Concrete Upgrade",
+          "type": "Commercial",
+          "value": 193500
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 0.81,
+        "trir": 1.9,
+        "dart": 1.4,
+        "incidents3yr": 0
+      },
+      "avgAnnualVolume": 2400000,
+      "currentBacklog": 900000,
+      "backlogUtilization": 0.38,
+      "onTimeRate": 0.92,
+      "qualityScore": 85,
+      "relationshipScore": 0.4,
+      "avgResponseHours": 70,
+      "invitedLast12Months": 8,
+      "bidsLast12Months": 2,
+      "awardsLast12Months": 0,
+      "insuranceExpiry": "2027-03-14",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "OSHA 30 program"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-22",
+      "name": "Frontier Concrete",
+      "trades": [
+        "Concrete"
+      ],
+      "serviceStates": [
+        "KS",
+        "MO"
+      ],
+      "markets": [
+        "Commercial",
+        "Multifamily",
+        "Healthcare"
+      ],
+      "minPackage": 90000,
+      "maxPackage": 880000,
+      "responseRate": 0.73,
+      "city": "Overland Park",
+      "homeState": "KS",
+      "employees": 33,
+      "insuranceLimit": 4000000,
+      "bondCapacity": 1400000,
+      "licenseStates": [
+        "KS",
+        "MO"
+      ],
+      "capabilities": [
+        "Concrete estimating",
+        "Schedule coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@frontierconcrete.example",
+      "yearsInBusiness": 10,
+      "description": "Frontier Concrete is a fictional regional concrete subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Commercial Concrete Package",
+          "type": "Commercial",
+          "value": 545600
+        },
+        {
+          "name": "Regional Concrete Upgrade",
+          "type": "Multifamily",
+          "value": 378400
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 0.85,
+        "trir": 2.3,
+        "dart": 0.3,
+        "incidents3yr": 1
+      },
+      "avgAnnualVolume": 2500000,
+      "currentBacklog": 1100000,
+      "backlogUtilization": 0.44,
+      "onTimeRate": 0.82,
+      "qualityScore": 92,
+      "relationshipScore": 0.6,
+      "avgResponseHours": 17,
+      "invitedLast12Months": 9,
+      "bidsLast12Months": 3,
+      "awardsLast12Months": 1,
+      "insuranceExpiry": "2027-04-02",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-23",
+      "name": "Cedar Masonry",
+      "trades": [
+        "Masonry"
+      ],
+      "serviceStates": [
+        "MO",
+        "KS"
+      ],
+      "markets": [
+        "Multifamily",
+        "Commercial",
+        "Industrial"
+      ],
+      "minPackage": 90000,
+      "maxPackage": 1140000,
+      "responseRate": 0.6950000000000001,
+      "city": "Columbia",
+      "homeState": "MO",
+      "employees": 27,
+      "insuranceLimit": 4000000,
+      "bondCapacity": 1800000,
+      "licenseStates": [
+        "MO",
+        "KS"
+      ],
+      "capabilities": [
+        "Masonry estimating",
+        "BIM coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@cedarmasonry.example",
+      "yearsInBusiness": 8,
+      "description": "Cedar Masonry is a fictional regional masonry subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Multifamily Masonry Package",
+          "type": "Multifamily",
+          "value": 706800
+        },
+        {
+          "name": "Regional Masonry Upgrade",
+          "type": "Commercial",
+          "value": 490200
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Conditional",
+      "safety": {
+        "emr": 0.9,
+        "trir": 2.6,
+        "dart": 0.5,
+        "incidents3yr": 2
+      },
+      "avgAnnualVolume": 3700000,
+      "currentBacklog": 1900000,
+      "backlogUtilization": 0.51,
+      "onTimeRate": 0.87,
+      "qualityScore": 80,
+      "relationshipScore": 0.8,
+      "avgResponseHours": 30,
+      "invitedLast12Months": 10,
+      "bidsLast12Months": 4,
+      "awardsLast12Months": 2,
+      "insuranceExpiry": "2027-04-21",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-24",
+      "name": "Granite Masonry",
+      "trades": [
+        "Masonry"
+      ],
+      "serviceStates": [
+        "MO",
+        "IL"
+      ],
+      "markets": [
+        "Commercial",
+        "Multifamily",
+        "Healthcare",
+        "Industrial"
+      ],
+      "minPackage": 165000,
+      "maxPackage": 1570000,
+      "responseRate": 0.765,
+      "city": "St. Louis",
+      "homeState": "MO",
+      "employees": 44,
+      "insuranceLimit": 6000000,
+      "bondCapacity": 3100000,
+      "licenseStates": [
+        "MO",
+        "IL"
+      ],
+      "capabilities": [
+        "Masonry estimating",
+        "BIM coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@granitemasonry.example",
+      "yearsInBusiness": 13,
+      "description": "Granite Masonry is a fictional regional masonry subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Commercial Masonry Package",
+          "type": "Commercial",
+          "value": 973400
+        },
+        {
+          "name": "Regional Masonry Upgrade",
+          "type": "Multifamily",
+          "value": 675100
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 0.94,
+        "trir": 2.9,
+        "dart": 0.7,
+        "incidents3yr": 3
+      },
+      "avgAnnualVolume": 5700000,
+      "currentBacklog": 3400000,
+      "backlogUtilization": 0.6,
+      "onTimeRate": 0.92,
+      "qualityScore": 87,
+      "relationshipScore": 1,
+      "avgResponseHours": 43,
+      "invitedLast12Months": 11,
+      "bidsLast12Months": 5,
+      "awardsLast12Months": 3,
+      "insuranceExpiry": "2027-05-10",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-25",
+      "name": "Crown Steelworks",
+      "trades": [
+        "Structural Steel"
+      ],
+      "serviceStates": [
+        "MO",
+        "AR",
+        "KS"
+      ],
+      "markets": [
+        "Commercial",
+        "Industrial",
+        "Multifamily"
+      ],
+      "minPackage": 145000,
+      "maxPackage": 1830000,
+      "responseRate": 0.73,
+      "city": "Springfield",
+      "homeState": "MO",
+      "employees": 38,
+      "insuranceLimit": 6000000,
+      "bondCapacity": 3600000,
+      "licenseStates": [
+        "MO",
+        "AR"
+      ],
+      "capabilities": [
+        "Structural Steel estimating",
+        "Schedule coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@crownsteelworks.example",
+      "yearsInBusiness": 11,
+      "description": "Crown Steelworks is a fictional regional structural steel subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Commercial Structural Steel Package",
+          "type": "Commercial",
+          "value": 1134600
+        },
+        {
+          "name": "Regional Structural Steel Upgrade",
+          "type": "Industrial",
+          "value": 786900
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 0.99,
+        "trir": 0.7,
+        "dart": 0.9,
+        "incidents3yr": 0
+      },
+      "avgAnnualVolume": 7400000,
+      "currentBacklog": 1600000,
+      "backlogUtilization": 0.22,
+      "onTimeRate": 0.82,
+      "qualityScore": 94,
+      "relationshipScore": 0,
+      "avgResponseHours": 56,
+      "invitedLast12Months": 12,
+      "bidsLast12Months": 6,
+      "awardsLast12Months": 4,
+      "insuranceExpiry": "2027-05-29",
+      "bondingStatus": "Review",
+      "certifications": [
+        "Safety orientation",
+        "Minority / supplier credential demo"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-26",
+      "name": "Heritage Steelworks",
+      "trades": [
+        "Structural Steel"
+      ],
+      "serviceStates": [
+        "NE",
+        "IA",
+        "KS"
+      ],
+      "markets": [
+        "Commercial",
+        "Industrial",
+        "Multifamily"
+      ],
+      "minPackage": 235000,
+      "maxPackage": 2260000,
+      "responseRate": 0.8,
+      "city": "Omaha",
+      "homeState": "NE",
+      "employees": 55,
+      "insuranceLimit": 8000000,
+      "bondCapacity": 5200000,
+      "licenseStates": [
+        "NE",
+        "IA"
+      ],
+      "capabilities": [
+        "Structural Steel estimating",
+        "Schedule coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@heritagesteelworks.example",
+      "yearsInBusiness": 16,
+      "description": "Heritage Steelworks is a fictional regional structural steel subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Commercial Structural Steel Package",
+          "type": "Commercial",
+          "value": 1401200
+        },
+        {
+          "name": "Regional Structural Steel Upgrade",
+          "type": "Industrial",
+          "value": 971800
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 1.03,
+        "trir": 1,
+        "dart": 1.1,
+        "incidents3yr": 1
+      },
+      "avgAnnualVolume": 10100000,
+      "currentBacklog": 3000000,
+      "backlogUtilization": 0.3,
+      "onTimeRate": 0.87,
+      "qualityScore": 82,
+      "relationshipScore": 0.2,
+      "avgResponseHours": 69,
+      "invitedLast12Months": 13,
+      "bidsLast12Months": 7,
+      "awardsLast12Months": 0,
+      "insuranceExpiry": "2027-06-17",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "OSHA 30 program"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-27",
+      "name": "Frontier Carpentry",
+      "trades": [
+        "Carpentry"
+      ],
+      "serviceStates": [
+        "IA",
+        "NE",
+        "MO"
+      ],
+      "markets": [
+        "Commercial",
+        "Multifamily"
+      ],
+      "minPackage": 200000,
+      "maxPackage": 2520000,
+      "responseRate": 0.765,
+      "city": "Des Moines",
+      "homeState": "IA",
+      "employees": 49,
+      "insuranceLimit": 8000000,
+      "bondCapacity": 5800000,
+      "licenseStates": [
+        "IA",
+        "NE"
+      ],
+      "capabilities": [
+        "Carpentry estimating",
+        "BIM coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@frontiercarpentry.example",
+      "yearsInBusiness": 14,
+      "description": "Frontier Carpentry is a fictional regional carpentry subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Commercial Carpentry Package",
+          "type": "Commercial",
+          "value": 1562400
+        },
+        {
+          "name": "Regional Carpentry Upgrade",
+          "type": "Multifamily",
+          "value": 1083600
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Conditional",
+      "safety": {
+        "emr": 1.08,
+        "trir": 1.3,
+        "dart": 1.3,
+        "incidents3yr": 2
+      },
+      "avgAnnualVolume": 12300000,
+      "currentBacklog": 4600000,
+      "backlogUtilization": 0.37,
+      "onTimeRate": 0.92,
+      "qualityScore": 89,
+      "relationshipScore": 0.4,
+      "avgResponseHours": 16,
+      "invitedLast12Months": 14,
+      "bidsLast12Months": 8,
+      "awardsLast12Months": 1,
+      "insuranceExpiry": "2027-07-06",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-28",
+      "name": "Ironwood Carpentry",
+      "trades": [
+        "Carpentry"
+      ],
+      "serviceStates": [
+        "KS",
+        "OK",
+        "MO"
+      ],
+      "markets": [
+        "Industrial",
+        "Commercial",
+        "Multifamily"
+      ],
+      "minPackage": 310000,
+      "maxPackage": 2950000,
+      "responseRate": 0.8350000000000001,
+      "city": "Wichita",
+      "homeState": "KS",
+      "employees": 66,
+      "insuranceLimit": 2000000,
+      "bondCapacity": 3700000,
+      "licenseStates": [
+        "KS",
+        "OK"
+      ],
+      "capabilities": [
+        "Carpentry estimating",
+        "BIM coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@ironwoodcarpentry.example",
+      "yearsInBusiness": 19,
+      "description": "Ironwood Carpentry is a fictional regional carpentry subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Industrial Carpentry Package",
+          "type": "Industrial",
+          "value": 1829000
+        },
+        {
+          "name": "Regional Carpentry Upgrade",
+          "type": "Commercial",
+          "value": 1268500
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 0.72,
+        "trir": 1.6,
+        "dart": 1.4,
+        "incidents3yr": 3
+      },
+      "avgAnnualVolume": 15700000,
+      "currentBacklog": 7000000,
+      "backlogUtilization": 0.45,
+      "onTimeRate": 0.82,
+      "qualityScore": 96,
+      "relationshipScore": 0.6,
+      "avgResponseHours": 29,
+      "invitedLast12Months": 15,
+      "bidsLast12Months": 9,
+      "awardsLast12Months": 2,
+      "insuranceExpiry": "2027-07-25",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-29",
+      "name": "Granite Envelope",
+      "trades": [
+        "Waterproofing"
+      ],
+      "serviceStates": [
+        "KS",
+        "MO",
+        "NE"
+      ],
+      "markets": [
+        "Commercial",
+        "Multifamily",
+        "Healthcare"
+      ],
+      "minPackage": 255000,
+      "maxPackage": 3210000,
+      "responseRate": 0.8,
+      "city": "Topeka",
+      "homeState": "KS",
+      "employees": 60,
+      "insuranceLimit": 2000000,
+      "bondCapacity": 4000000,
+      "licenseStates": [
+        "KS",
+        "MO"
+      ],
+      "capabilities": [
+        "Waterproofing estimating",
+        "Schedule coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@graniteenvelope.example",
+      "yearsInBusiness": 17,
+      "description": "Granite Envelope is a fictional regional waterproofing subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Commercial Waterproofing Package",
+          "type": "Commercial",
+          "value": 1990200
+        },
+        {
+          "name": "Regional Waterproofing Upgrade",
+          "type": "Multifamily",
+          "value": 1380300
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 0.77,
+        "trir": 1.9,
+        "dart": 0.3,
+        "incidents3yr": 0
+      },
+      "avgAnnualVolume": 9000000,
+      "currentBacklog": 4700000,
+      "backlogUtilization": 0.52,
+      "onTimeRate": 0.87,
+      "qualityScore": 84,
+      "relationshipScore": 0.8,
+      "avgResponseHours": 42,
+      "invitedLast12Months": 16,
+      "bidsLast12Months": 10,
+      "awardsLast12Months": 3,
+      "insuranceExpiry": "2027-08-13",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-30",
+      "name": "Lakeside Envelope",
+      "trades": [
+        "Waterproofing"
+      ],
+      "serviceStates": [
+        "MO",
+        "KS",
+        "OK",
+        "AR"
+      ],
+      "markets": [
+        "Commercial",
+        "Industrial",
+        "Healthcare"
+      ],
+      "minPackage": 380000,
+      "maxPackage": 3640000,
+      "responseRate": 0.8700000000000001,
+      "city": "Joplin",
+      "homeState": "MO",
+      "employees": 77,
+      "insuranceLimit": 4000000,
+      "bondCapacity": 5800000,
+      "licenseStates": [
+        "MO",
+        "KS"
+      ],
+      "capabilities": [
+        "Waterproofing estimating",
+        "Schedule coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@lakesideenvelope.example",
+      "yearsInBusiness": 22,
+      "description": "Lakeside Envelope is a fictional regional waterproofing subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Commercial Waterproofing Package",
+          "type": "Commercial",
+          "value": 2256800
+        },
+        {
+          "name": "Regional Waterproofing Upgrade",
+          "type": "Industrial",
+          "value": 1565200
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 0.81,
+        "trir": 2.3,
+        "dart": 0.5,
+        "incidents3yr": 1
+      },
+      "avgAnnualVolume": 11700000,
+      "currentBacklog": 7000000,
+      "backlogUtilization": 0.6,
+      "onTimeRate": 0.92,
+      "qualityScore": 91,
+      "relationshipScore": 1,
+      "avgResponseHours": 55,
+      "invitedLast12Months": 17,
+      "bidsLast12Months": 11,
+      "awardsLast12Months": 4,
+      "insuranceExpiry": "2027-09-01",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-31",
+      "name": "Heritage Roofing",
+      "trades": [
+        "Roofing",
+        "Waterproofing"
+      ],
+      "serviceStates": [
+        "MO",
+        "KS"
+      ],
+      "markets": [
+        "Multifamily",
+        "Commercial",
+        "Industrial"
+      ],
+      "minPackage": 310000,
+      "maxPackage": 3900000,
+      "responseRate": 0.8350000000000001,
+      "city": "Kansas City",
+      "homeState": "MO",
+      "employees": 71,
+      "insuranceLimit": 4000000,
+      "bondCapacity": 6200000,
+      "licenseStates": [
+        "MO",
+        "KS"
+      ],
+      "capabilities": [
+        "Roofing estimating",
+        "BIM coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@heritageroofing.example",
+      "yearsInBusiness": 20,
+      "description": "Heritage Roofing is a fictional regional roofing subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Multifamily Roofing Package",
+          "type": "Multifamily",
+          "value": 2418000
+        },
+        {
+          "name": "Regional Roofing Upgrade",
+          "type": "Commercial",
+          "value": 1677000
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Conditional",
+      "safety": {
+        "emr": 0.85,
+        "trir": 2.6,
+        "dart": 0.7,
+        "incidents3yr": 2
+      },
+      "avgAnnualVolume": 14200000,
+      "currentBacklog": 3100000,
+      "backlogUtilization": 0.22,
+      "onTimeRate": 0.82,
+      "qualityScore": 79,
+      "relationshipScore": 0,
+      "avgResponseHours": 68,
+      "invitedLast12Months": 3,
+      "bidsLast12Months": 2,
+      "awardsLast12Months": 0,
+      "insuranceExpiry": "2026-12-14",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "OSHA 30 program",
+        "Minority / supplier credential demo"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-32",
+      "name": "Meridian Roofing",
+      "trades": [
+        "Roofing",
+        "Waterproofing"
+      ],
+      "serviceStates": [
+        "KS",
+        "MO"
+      ],
+      "markets": [
+        "Commercial",
+        "Multifamily",
+        "Healthcare",
+        "Industrial"
+      ],
+      "minPackage": 455000,
+      "maxPackage": 4330000,
+      "responseRate": 0.905,
+      "city": "Overland Park",
+      "homeState": "KS",
+      "employees": 88,
+      "insuranceLimit": 6000000,
+      "bondCapacity": 8400000,
+      "licenseStates": [
+        "KS",
+        "MO"
+      ],
+      "capabilities": [
+        "Roofing estimating",
+        "BIM coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@meridianroofing.example",
+      "yearsInBusiness": 25,
+      "description": "Meridian Roofing is a fictional regional roofing subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Commercial Roofing Package",
+          "type": "Commercial",
+          "value": 2684600
+        },
+        {
+          "name": "Regional Roofing Upgrade",
+          "type": "Multifamily",
+          "value": 1861900
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 0.9,
+        "trir": 2.9,
+        "dart": 0.9,
+        "incidents3yr": 3
+      },
+      "avgAnnualVolume": 17600000,
+      "currentBacklog": 5200000,
+      "backlogUtilization": 0.3,
+      "onTimeRate": 0.87,
+      "qualityScore": 86,
+      "relationshipScore": 0.2,
+      "avgResponseHours": 15,
+      "invitedLast12Months": 4,
+      "bidsLast12Months": 3,
+      "awardsLast12Months": 1,
+      "insuranceExpiry": "2027-01-02",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-33",
+      "name": "Ironwood Openings",
+      "trades": [
+        "Doors & Hardware"
+      ],
+      "serviceStates": [
+        "MO",
+        "KS"
+      ],
+      "markets": [
+        "Multifamily",
+        "Commercial"
+      ],
+      "minPackage": 365000,
+      "maxPackage": 4590000,
+      "responseRate": 0.8700000000000001,
+      "city": "Columbia",
+      "homeState": "MO",
+      "employees": 82,
+      "insuranceLimit": 6000000,
+      "bondCapacity": 9000000,
+      "licenseStates": [
+        "MO",
+        "KS"
+      ],
+      "capabilities": [
+        "Doors & Hardware estimating",
+        "Schedule coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@ironwoodopenings.example",
+      "yearsInBusiness": 23,
+      "description": "Ironwood Openings is a fictional regional doors & hardware subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Multifamily Doors & Hardware Package",
+          "type": "Multifamily",
+          "value": 2845800
+        },
+        {
+          "name": "Regional Doors & Hardware Upgrade",
+          "type": "Commercial",
+          "value": 1973700
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 0.94,
+        "trir": 0.7,
+        "dart": 1.1,
+        "incidents3yr": 0
+      },
+      "avgAnnualVolume": 20600000,
+      "currentBacklog": 7600000,
+      "backlogUtilization": 0.37,
+      "onTimeRate": 0.92,
+      "qualityScore": 93,
+      "relationshipScore": 0.4,
+      "avgResponseHours": 28,
+      "invitedLast12Months": 5,
+      "bidsLast12Months": 4,
+      "awardsLast12Months": 2,
+      "insuranceExpiry": "2027-01-21",
+      "bondingStatus": "Review",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-34",
+      "name": "Pioneer Openings",
+      "trades": [
+        "Doors & Hardware"
+      ],
+      "serviceStates": [
+        "MO",
+        "IL"
+      ],
+      "markets": [
+        "Commercial",
+        "Multifamily",
+        "Healthcare"
+      ],
+      "minPackage": 525000,
+      "maxPackage": 5020000,
+      "responseRate": 0.9400000000000001,
+      "city": "St. Louis",
+      "homeState": "MO",
+      "employees": 99,
+      "insuranceLimit": 8000000,
+      "bondCapacity": 11500000,
+      "licenseStates": [
+        "MO",
+        "IL"
+      ],
+      "capabilities": [
+        "Doors & Hardware estimating",
+        "Schedule coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@pioneeropenings.example",
+      "yearsInBusiness": 28,
+      "description": "Pioneer Openings is a fictional regional doors & hardware subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Commercial Doors & Hardware Package",
+          "type": "Commercial",
+          "value": 3112400
+        },
+        {
+          "name": "Regional Doors & Hardware Upgrade",
+          "type": "Multifamily",
+          "value": 2158600
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Conditional",
+      "safety": {
+        "emr": 0.99,
+        "trir": 1,
+        "dart": 1.3,
+        "incidents3yr": 1
+      },
+      "avgAnnualVolume": 24600000,
+      "currentBacklog": 10900000,
+      "backlogUtilization": 0.44,
+      "onTimeRate": 0.82,
+      "qualityScore": 81,
+      "relationshipScore": 0.6,
+      "avgResponseHours": 41,
+      "invitedLast12Months": 6,
+      "bidsLast12Months": 5,
+      "awardsLast12Months": 3,
+      "insuranceExpiry": "2027-02-09",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-35",
+      "name": "Lakeside Interiors",
+      "trades": [
+        "Drywall",
+        "Painting"
+      ],
+      "serviceStates": [
+        "MO",
+        "AR",
+        "KS"
+      ],
+      "markets": [
+        "Commercial",
+        "Industrial",
+        "Multifamily"
+      ],
+      "minPackage": 420000,
+      "maxPackage": 5280000,
+      "responseRate": 0.905,
+      "city": "Springfield",
+      "homeState": "MO",
+      "employees": 93,
+      "insuranceLimit": 8000000,
+      "bondCapacity": 12100000,
+      "licenseStates": [
+        "MO",
+        "AR"
+      ],
+      "capabilities": [
+        "Drywall estimating",
+        "BIM coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@lakesideinteriors.example",
+      "yearsInBusiness": 26,
+      "description": "Lakeside Interiors is a fictional regional drywall subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Commercial Drywall Package",
+          "type": "Commercial",
+          "value": 3273600
+        },
+        {
+          "name": "Regional Drywall Upgrade",
+          "type": "Industrial",
+          "value": 2270400
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 1.03,
+        "trir": 1.3,
+        "dart": 1.4,
+        "incidents3yr": 2
+      },
+      "avgAnnualVolume": 28100000,
+      "currentBacklog": 14600000,
+      "backlogUtilization": 0.52,
+      "onTimeRate": 0.87,
+      "qualityScore": 88,
+      "relationshipScore": 0.8,
+      "avgResponseHours": 54,
+      "invitedLast12Months": 7,
+      "bidsLast12Months": 6,
+      "awardsLast12Months": 4,
+      "insuranceExpiry": "2027-02-28",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-36",
+      "name": "Redwood Interiors",
+      "trades": [
+        "Drywall",
+        "Painting"
+      ],
+      "serviceStates": [
+        "NE",
+        "IA",
+        "KS"
+      ],
+      "markets": [
+        "Commercial",
+        "Industrial",
+        "Multifamily"
+      ],
+      "minPackage": 600000,
+      "maxPackage": 5710000,
+      "responseRate": 0.66,
+      "city": "Omaha",
+      "homeState": "NE",
+      "employees": 110,
+      "insuranceLimit": 2000000,
+      "bondCapacity": 7100000,
+      "licenseStates": [
+        "NE",
+        "IA"
+      ],
+      "capabilities": [
+        "Drywall estimating",
+        "BIM coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@redwoodinteriors.example",
+      "yearsInBusiness": 31,
+      "description": "Redwood Interiors is a fictional regional drywall subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Commercial Drywall Package",
+          "type": "Commercial",
+          "value": 3540200
+        },
+        {
+          "name": "Regional Drywall Upgrade",
+          "type": "Industrial",
+          "value": 2455300
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Conditional",
+      "safety": {
+        "emr": 1.08,
+        "trir": 1.6,
+        "dart": 0.3,
+        "incidents3yr": 3
+      },
+      "avgAnnualVolume": 16000000,
+      "currentBacklog": 9500000,
+      "backlogUtilization": 0.59,
+      "onTimeRate": 0.92,
+      "qualityScore": 95,
+      "relationshipScore": 1,
+      "avgResponseHours": 67,
+      "invitedLast12Months": 8,
+      "bidsLast12Months": 7,
+      "awardsLast12Months": 0,
+      "insuranceExpiry": "2027-03-19",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "OSHA 30 program"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-37",
+      "name": "Meridian Coatings",
+      "trades": [
+        "Painting"
+      ],
+      "serviceStates": [
+        "IA",
+        "NE",
+        "MO"
+      ],
+      "markets": [
+        "Commercial",
+        "Multifamily",
+        "Healthcare"
+      ],
+      "minPackage": 480000,
+      "maxPackage": 5970000,
+      "responseRate": 0.9400000000000001,
+      "city": "Des Moines",
+      "homeState": "IA",
+      "employees": 104,
+      "insuranceLimit": 2000000,
+      "bondCapacity": 7500000,
+      "licenseStates": [
+        "IA",
+        "NE"
+      ],
+      "capabilities": [
+        "Painting estimating",
+        "Schedule coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@meridiancoatings.example",
+      "yearsInBusiness": 29,
+      "description": "Meridian Coatings is a fictional regional painting subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Commercial Painting Package",
+          "type": "Commercial",
+          "value": 3701400
+        },
+        {
+          "name": "Regional Painting Upgrade",
+          "type": "Multifamily",
+          "value": 2567100
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 0.72,
+        "trir": 1.9,
+        "dart": 0.5,
+        "incidents3yr": 0
+      },
+      "avgAnnualVolume": 19200000,
+      "currentBacklog": 4200000,
+      "backlogUtilization": 0.22,
+      "onTimeRate": 0.82,
+      "qualityScore": 83,
+      "relationshipScore": 0,
+      "avgResponseHours": 14,
+      "invitedLast12Months": 9,
+      "bidsLast12Months": 8,
+      "awardsLast12Months": 1,
+      "insuranceExpiry": "2027-04-07",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation",
+        "Minority / supplier credential demo"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-38",
+      "name": "Union Coatings",
+      "trades": [
+        "Painting"
+      ],
+      "serviceStates": [
+        "KS",
+        "OK",
+        "MO"
+      ],
+      "markets": [
+        "Industrial",
+        "Commercial",
+        "Multifamily",
+        "Healthcare"
+      ],
+      "minPackage": 670000,
+      "maxPackage": 6400000,
+      "responseRate": 0.6950000000000001,
+      "city": "Wichita",
+      "homeState": "KS",
+      "employees": 16,
+      "insuranceLimit": 4000000,
+      "bondCapacity": 10200000,
+      "licenseStates": [
+        "KS",
+        "OK"
+      ],
+      "capabilities": [
+        "Painting estimating",
+        "Schedule coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@unioncoatings.example",
+      "yearsInBusiness": 34,
+      "description": "Union Coatings is a fictional regional painting subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Industrial Painting Package",
+          "type": "Industrial",
+          "value": 3968000
+        },
+        {
+          "name": "Regional Painting Upgrade",
+          "type": "Commercial",
+          "value": 2752000
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 0.77,
+        "trir": 2.3,
+        "dart": 0.7,
+        "incidents3yr": 1
+      },
+      "avgAnnualVolume": 23300000,
+      "currentBacklog": 6900000,
+      "backlogUtilization": 0.3,
+      "onTimeRate": 0.87,
+      "qualityScore": 90,
+      "relationshipScore": 0.2,
+      "avgResponseHours": 27,
+      "invitedLast12Months": 10,
+      "bidsLast12Months": 9,
+      "awardsLast12Months": 2,
+      "insuranceExpiry": "2027-04-26",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-39",
+      "name": "Pioneer Flooring",
+      "trades": [
+        "Flooring"
+      ],
+      "serviceStates": [
+        "KS",
+        "MO",
+        "NE"
+      ],
+      "markets": [
+        "Commercial",
+        "Multifamily",
+        "Industrial"
+      ],
+      "minPackage": 35000,
+      "maxPackage": 460000,
+      "responseRate": 0.66,
+      "city": "Topeka",
+      "homeState": "KS",
+      "employees": 115,
+      "insuranceLimit": 4000000,
+      "bondCapacity": 700000,
+      "licenseStates": [
+        "KS",
+        "MO"
+      ],
+      "capabilities": [
+        "Flooring estimating",
+        "BIM coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@pioneerflooring.example",
+      "yearsInBusiness": 32,
+      "description": "Pioneer Flooring is a fictional regional flooring subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Commercial Flooring Package",
+          "type": "Commercial",
+          "value": 285200
+        },
+        {
+          "name": "Regional Flooring Upgrade",
+          "type": "Multifamily",
+          "value": 197800
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Conditional",
+      "safety": {
+        "emr": 0.81,
+        "trir": 2.6,
+        "dart": 0.9,
+        "incidents3yr": 2
+      },
+      "avgAnnualVolume": 1900000,
+      "currentBacklog": 700000,
+      "backlogUtilization": 0.37,
+      "onTimeRate": 0.92,
+      "qualityScore": 78,
+      "relationshipScore": 0.4,
+      "avgResponseHours": 40,
+      "invitedLast12Months": 11,
+      "bidsLast12Months": 10,
+      "awardsLast12Months": 3,
+      "insuranceExpiry": "2027-05-15",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-40",
+      "name": "Atlas Flooring",
+      "trades": [
+        "Flooring"
+      ],
+      "serviceStates": [
+        "MO",
+        "KS",
+        "OK",
+        "AR"
+      ],
+      "markets": [
+        "Commercial",
+        "Industrial"
+      ],
+      "minPackage": 95000,
+      "maxPackage": 890000,
+      "responseRate": 0.73,
+      "city": "Joplin",
+      "homeState": "MO",
+      "employees": 27,
+      "insuranceLimit": 6000000,
+      "bondCapacity": 1700000,
+      "licenseStates": [
+        "MO",
+        "KS"
+      ],
+      "capabilities": [
+        "Flooring estimating",
+        "BIM coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@atlasflooring.example",
+      "yearsInBusiness": 6,
+      "description": "Atlas Flooring is a fictional regional flooring subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Commercial Flooring Package",
+          "type": "Commercial",
+          "value": 551800
+        },
+        {
+          "name": "Regional Flooring Upgrade",
+          "type": "Industrial",
+          "value": 382700
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 0.85,
+        "trir": 2.9,
+        "dart": 1.1,
+        "incidents3yr": 3
+      },
+      "avgAnnualVolume": 4000000,
+      "currentBacklog": 1800000,
+      "backlogUtilization": 0.45,
+      "onTimeRate": 0.82,
+      "qualityScore": 85,
+      "relationshipScore": 0.6,
+      "avgResponseHours": 53,
+      "invitedLast12Months": 12,
+      "bidsLast12Months": 11,
+      "awardsLast12Months": 4,
+      "insuranceExpiry": "2027-06-03",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-41",
+      "name": "Redwood Fire Protection",
+      "trades": [
+        "Fire Protection"
+      ],
+      "serviceStates": [
+        "MO",
+        "KS"
+      ],
+      "markets": [
+        "Multifamily",
+        "Commercial"
+      ],
+      "minPackage": 90000,
+      "maxPackage": 1150000,
+      "responseRate": 0.6950000000000001,
+      "city": "Kansas City",
+      "homeState": "MO",
+      "employees": 21,
+      "insuranceLimit": 6000000,
+      "bondCapacity": 2200000,
+      "licenseStates": [
+        "MO",
+        "KS"
+      ],
+      "capabilities": [
+        "Fire Protection estimating",
+        "Schedule coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@redwoodfireprotection.example",
+      "yearsInBusiness": 35,
+      "description": "Redwood Fire Protection is a fictional regional fire protection subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Multifamily Fire Protection Package",
+          "type": "Multifamily",
+          "value": 713000
+        },
+        {
+          "name": "Regional Fire Protection Upgrade",
+          "type": "Commercial",
+          "value": 494500
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 0.9,
+        "trir": 0.7,
+        "dart": 1.3,
+        "incidents3yr": 0
+      },
+      "avgAnnualVolume": 5600000,
+      "currentBacklog": 2900000,
+      "backlogUtilization": 0.52,
+      "onTimeRate": 0.87,
+      "qualityScore": 92,
+      "relationshipScore": 0.8,
+      "avgResponseHours": 66,
+      "invitedLast12Months": 13,
+      "bidsLast12Months": 2,
+      "awardsLast12Months": 0,
+      "insuranceExpiry": "2027-06-22",
+      "bondingStatus": "Review",
+      "certifications": [
+        "OSHA 30 program"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-42",
+      "name": "Cedar Fire Protection",
+      "trades": [
+        "Fire Protection"
+      ],
+      "serviceStates": [
+        "KS",
+        "MO"
+      ],
+      "markets": [
+        "Commercial",
+        "Multifamily",
+        "Healthcare"
+      ],
+      "minPackage": 165000,
+      "maxPackage": 1580000,
+      "responseRate": 0.765,
+      "city": "Overland Park",
+      "homeState": "KS",
+      "employees": 38,
+      "insuranceLimit": 8000000,
+      "bondCapacity": 3600000,
+      "licenseStates": [
+        "KS",
+        "MO"
+      ],
+      "capabilities": [
+        "Fire Protection estimating",
+        "Schedule coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@cedarfireprotection.example",
+      "yearsInBusiness": 9,
+      "description": "Cedar Fire Protection is a fictional regional fire protection subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Commercial Fire Protection Package",
+          "type": "Commercial",
+          "value": 979600
+        },
+        {
+          "name": "Regional Fire Protection Upgrade",
+          "type": "Multifamily",
+          "value": 679400
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Conditional",
+      "safety": {
+        "emr": 0.94,
+        "trir": 1,
+        "dart": 1.4,
+        "incidents3yr": 1
+      },
+      "avgAnnualVolume": 8400000,
+      "currentBacklog": 5000000,
+      "backlogUtilization": 0.6,
+      "onTimeRate": 0.92,
+      "qualityScore": 80,
+      "relationshipScore": 1,
+      "avgResponseHours": 13,
+      "invitedLast12Months": 14,
+      "bidsLast12Months": 3,
+      "awardsLast12Months": 1,
+      "insuranceExpiry": "2027-07-11",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-43",
+      "name": "Union Plumbing",
+      "trades": [
+        "Plumbing"
+      ],
+      "serviceStates": [
+        "MO",
+        "KS"
+      ],
+      "markets": [
+        "Multifamily",
+        "Commercial"
+      ],
+      "minPackage": 145000,
+      "maxPackage": 1840000,
+      "responseRate": 0.73,
+      "city": "Columbia",
+      "homeState": "MO",
+      "employees": 32,
+      "insuranceLimit": 8000000,
+      "bondCapacity": 4200000,
+      "licenseStates": [
+        "MO",
+        "KS"
+      ],
+      "capabilities": [
+        "Plumbing estimating",
+        "BIM coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@unionplumbing.example",
+      "yearsInBusiness": 7,
+      "description": "Union Plumbing is a fictional regional plumbing subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Multifamily Plumbing Package",
+          "type": "Multifamily",
+          "value": 1140800
+        },
+        {
+          "name": "Regional Plumbing Upgrade",
+          "type": "Commercial",
+          "value": 791200
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 0.99,
+        "trir": 1.3,
+        "dart": 0.3,
+        "incidents3yr": 2
+      },
+      "avgAnnualVolume": 5200000,
+      "currentBacklog": 1100000,
+      "backlogUtilization": 0.21,
+      "onTimeRate": 0.82,
+      "qualityScore": 87,
+      "relationshipScore": 0,
+      "avgResponseHours": 26,
+      "invitedLast12Months": 15,
+      "bidsLast12Months": 4,
+      "awardsLast12Months": 2,
+      "insuranceExpiry": "2027-07-30",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation",
+        "Minority / supplier credential demo"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-44",
+      "name": "Crown Plumbing",
+      "trades": [
+        "Plumbing"
+      ],
+      "serviceStates": [
+        "MO",
+        "IL"
+      ],
+      "markets": [
+        "Commercial",
+        "Multifamily",
+        "Healthcare"
+      ],
+      "minPackage": 240000,
+      "maxPackage": 2270000,
+      "responseRate": 0.8,
+      "city": "St. Louis",
+      "homeState": "MO",
+      "employees": 49,
+      "insuranceLimit": 2000000,
+      "bondCapacity": 2800000,
+      "licenseStates": [
+        "MO",
+        "IL"
+      ],
+      "capabilities": [
+        "Plumbing estimating",
+        "BIM coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@crownplumbing.example",
+      "yearsInBusiness": 12,
+      "description": "Crown Plumbing is a fictional regional plumbing subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Commercial Plumbing Package",
+          "type": "Commercial",
+          "value": 1407400
+        },
+        {
+          "name": "Regional Plumbing Upgrade",
+          "type": "Multifamily",
+          "value": 976100
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 1.03,
+        "trir": 1.6,
+        "dart": 0.5,
+        "incidents3yr": 3
+      },
+      "avgAnnualVolume": 7300000,
+      "currentBacklog": 2200000,
+      "backlogUtilization": 0.3,
+      "onTimeRate": 0.87,
+      "qualityScore": 94,
+      "relationshipScore": 0.2,
+      "avgResponseHours": 39,
+      "invitedLast12Months": 16,
+      "bidsLast12Months": 5,
+      "awardsLast12Months": 3,
+      "insuranceExpiry": "2027-08-18",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-45",
+      "name": "Atlas Mechanical",
+      "trades": [
+        "HVAC",
+        "Plumbing"
+      ],
+      "serviceStates": [
+        "MO",
+        "AR",
+        "KS"
+      ],
+      "markets": [
+        "Commercial",
+        "Industrial",
+        "Multifamily",
+        "Healthcare"
+      ],
+      "minPackage": 200000,
+      "maxPackage": 2530000,
+      "responseRate": 0.765,
+      "city": "Springfield",
+      "homeState": "MO",
+      "employees": 43,
+      "insuranceLimit": 2000000,
+      "bondCapacity": 3200000,
+      "licenseStates": [
+        "MO",
+        "AR"
+      ],
+      "capabilities": [
+        "HVAC estimating",
+        "Schedule coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@atlasmechanical.example",
+      "yearsInBusiness": 10,
+      "description": "Atlas Mechanical is a fictional regional hvac subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Commercial HVAC Package",
+          "type": "Commercial",
+          "value": 1568600
+        },
+        {
+          "name": "Regional HVAC Upgrade",
+          "type": "Industrial",
+          "value": 1087900
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Conditional",
+      "safety": {
+        "emr": 1.08,
+        "trir": 1.9,
+        "dart": 0.7,
+        "incidents3yr": 0
+      },
+      "avgAnnualVolume": 9200000,
+      "currentBacklog": 3400000,
+      "backlogUtilization": 0.37,
+      "onTimeRate": 0.92,
+      "qualityScore": 82,
+      "relationshipScore": 0.4,
+      "avgResponseHours": 52,
+      "invitedLast12Months": 17,
+      "bidsLast12Months": 6,
+      "awardsLast12Months": 4,
+      "insuranceExpiry": "2027-09-06",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-46",
+      "name": "Frontier Mechanical",
+      "trades": [
+        "HVAC",
+        "Plumbing"
+      ],
+      "serviceStates": [
+        "NE",
+        "IA",
+        "KS"
+      ],
+      "markets": [
+        "Commercial",
+        "Industrial",
+        "Multifamily",
+        "Healthcare"
+      ],
+      "minPackage": 310000,
+      "maxPackage": 2960000,
+      "responseRate": 0.8350000000000001,
+      "city": "Omaha",
+      "homeState": "NE",
+      "employees": 60,
+      "insuranceLimit": 4000000,
+      "bondCapacity": 4700000,
+      "licenseStates": [
+        "NE",
+        "IA"
+      ],
+      "capabilities": [
+        "HVAC estimating",
+        "Schedule coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@frontiermechanical.example",
+      "yearsInBusiness": 15,
+      "description": "Frontier Mechanical is a fictional regional hvac subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Commercial HVAC Package",
+          "type": "Commercial",
+          "value": 1835200
+        },
+        {
+          "name": "Regional HVAC Upgrade",
+          "type": "Industrial",
+          "value": 1272800
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 0.72,
+        "trir": 2.3,
+        "dart": 0.9,
+        "incidents3yr": 1
+      },
+      "avgAnnualVolume": 12000000,
+      "currentBacklog": 5300000,
+      "backlogUtilization": 0.44,
+      "onTimeRate": 0.82,
+      "qualityScore": 89,
+      "relationshipScore": 0.6,
+      "avgResponseHours": 65,
+      "invitedLast12Months": 3,
+      "bidsLast12Months": 7,
+      "awardsLast12Months": 0,
+      "insuranceExpiry": "2026-12-19",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "OSHA 30 program"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-47",
+      "name": "Cedar Electric",
+      "trades": [
+        "Electrical",
+        "Low Voltage"
+      ],
+      "serviceStates": [
+        "IA",
+        "NE",
+        "MO"
+      ],
+      "markets": [
+        "Commercial",
+        "Multifamily",
+        "Industrial"
+      ],
+      "minPackage": 260000,
+      "maxPackage": 3220000,
+      "responseRate": 0.8,
+      "city": "Des Moines",
+      "homeState": "IA",
+      "employees": 54,
+      "insuranceLimit": 4000000,
+      "bondCapacity": 5200000,
+      "licenseStates": [
+        "IA",
+        "NE"
+      ],
+      "capabilities": [
+        "Electrical estimating",
+        "BIM coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@cedarelectric.example",
+      "yearsInBusiness": 13,
+      "description": "Cedar Electric is a fictional regional electrical subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Commercial Electrical Package",
+          "type": "Commercial",
+          "value": 1996400
+        },
+        {
+          "name": "Regional Electrical Upgrade",
+          "type": "Multifamily",
+          "value": 1384600
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 0.77,
+        "trir": 2.6,
+        "dart": 1.1,
+        "incidents3yr": 2
+      },
+      "avgAnnualVolume": 14400000,
+      "currentBacklog": 7500000,
+      "backlogUtilization": 0.52,
+      "onTimeRate": 0.87,
+      "qualityScore": 96,
+      "relationshipScore": 0.8,
+      "avgResponseHours": 12,
+      "invitedLast12Months": 4,
+      "bidsLast12Months": 8,
+      "awardsLast12Months": 1,
+      "insuranceExpiry": "2027-01-07",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-48",
+      "name": "Granite Electric",
+      "trades": [
+        "Electrical",
+        "Low Voltage"
+      ],
+      "serviceStates": [
+        "KS",
+        "OK",
+        "MO"
+      ],
+      "markets": [
+        "Industrial",
+        "Commercial",
+        "Multifamily"
+      ],
+      "minPackage": 385000,
+      "maxPackage": 3650000,
+      "responseRate": 0.8700000000000001,
+      "city": "Wichita",
+      "homeState": "KS",
+      "employees": 71,
+      "insuranceLimit": 6000000,
+      "bondCapacity": 7100000,
+      "licenseStates": [
+        "KS",
+        "OK"
+      ],
+      "capabilities": [
+        "Electrical estimating",
+        "BIM coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@graniteelectric.example",
+      "yearsInBusiness": 18,
+      "description": "Granite Electric is a fictional regional electrical subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Industrial Electrical Package",
+          "type": "Industrial",
+          "value": 2263000
+        },
+        {
+          "name": "Regional Electrical Upgrade",
+          "type": "Commercial",
+          "value": 1569500
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 0.81,
+        "trir": 2.9,
+        "dart": 1.3,
+        "incidents3yr": 3
+      },
+      "avgAnnualVolume": 17900000,
+      "currentBacklog": 10700000,
+      "backlogUtilization": 0.6,
+      "onTimeRate": 0.92,
+      "qualityScore": 84,
+      "relationshipScore": 1,
+      "avgResponseHours": 25,
+      "invitedLast12Months": 5,
+      "bidsLast12Months": 9,
+      "awardsLast12Months": 2,
+      "insuranceExpiry": "2027-01-26",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-49",
+      "name": "Crown Technology",
+      "trades": [
+        "Low Voltage"
+      ],
+      "serviceStates": [
+        "KS",
+        "MO",
+        "NE"
+      ],
+      "markets": [
+        "Commercial",
+        "Multifamily"
+      ],
+      "minPackage": 315000,
+      "maxPackage": 3910000,
+      "responseRate": 0.8350000000000001,
+      "city": "Topeka",
+      "homeState": "KS",
+      "employees": 65,
+      "insuranceLimit": 6000000,
+      "bondCapacity": 7600000,
+      "licenseStates": [
+        "KS",
+        "MO"
+      ],
+      "capabilities": [
+        "Low Voltage estimating",
+        "Schedule coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@crowntechnology.example",
+      "yearsInBusiness": 16,
+      "description": "Crown Technology is a fictional regional low voltage subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Commercial Low Voltage Package",
+          "type": "Commercial",
+          "value": 2424200
+        },
+        {
+          "name": "Regional Low Voltage Upgrade",
+          "type": "Multifamily",
+          "value": 1681300
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 0.85,
+        "trir": 0.7,
+        "dart": 1.4,
+        "incidents3yr": 0
+      },
+      "avgAnnualVolume": 20800000,
+      "currentBacklog": 4600000,
+      "backlogUtilization": 0.22,
+      "onTimeRate": 0.82,
+      "qualityScore": 91,
+      "relationshipScore": 0,
+      "avgResponseHours": 38,
+      "invitedLast12Months": 6,
+      "bidsLast12Months": 10,
+      "awardsLast12Months": 3,
+      "insuranceExpiry": "2027-02-14",
+      "bondingStatus": "Review",
+      "certifications": [
+        "Safety orientation",
+        "Minority / supplier credential demo"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-50",
+      "name": "Heritage Technology",
+      "trades": [
+        "Low Voltage"
+      ],
+      "serviceStates": [
+        "MO",
+        "KS",
+        "OK",
+        "AR"
+      ],
+      "markets": [
+        "Commercial",
+        "Industrial"
+      ],
+      "minPackage": 455000,
+      "maxPackage": 4340000,
+      "responseRate": 0.905,
+      "city": "Joplin",
+      "homeState": "MO",
+      "employees": 82,
+      "insuranceLimit": 8000000,
+      "bondCapacity": 10000000,
+      "licenseStates": [
+        "MO",
+        "KS"
+      ],
+      "capabilities": [
+        "Low Voltage estimating",
+        "Schedule coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@heritagetechnology.example",
+      "yearsInBusiness": 21,
+      "description": "Heritage Technology is a fictional regional low voltage subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Commercial Low Voltage Package",
+          "type": "Commercial",
+          "value": 2690800
+        },
+        {
+          "name": "Regional Low Voltage Upgrade",
+          "type": "Industrial",
+          "value": 1866200
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Conditional",
+      "safety": {
+        "emr": 0.9,
+        "trir": 1,
+        "dart": 0.3,
+        "incidents3yr": 1
+      },
+      "avgAnnualVolume": 12200000,
+      "currentBacklog": 3600000,
+      "backlogUtilization": 0.3,
+      "onTimeRate": 0.87,
+      "qualityScore": 79,
+      "relationshipScore": 0.2,
+      "avgResponseHours": 51,
+      "invitedLast12Months": 7,
+      "bidsLast12Months": 11,
+      "awardsLast12Months": 4,
+      "insuranceExpiry": "2027-03-05",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-51",
+      "name": "Frontier Life Safety",
+      "trades": [
+        "Fire Alarm"
+      ],
+      "serviceStates": [
+        "MO",
+        "KS"
+      ],
+      "markets": [
+        "Multifamily",
+        "Commercial"
+      ],
+      "minPackage": 370000,
+      "maxPackage": 4600000,
+      "responseRate": 0.8700000000000001,
+      "city": "Kansas City",
+      "homeState": "MO",
+      "employees": 76,
+      "insuranceLimit": 8000000,
+      "bondCapacity": 10600000,
+      "licenseStates": [
+        "MO",
+        "KS"
+      ],
+      "capabilities": [
+        "Fire Alarm estimating",
+        "BIM coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@frontierlifesafety.example",
+      "yearsInBusiness": 19,
+      "description": "Frontier Life Safety is a fictional regional fire alarm subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Multifamily Fire Alarm Package",
+          "type": "Multifamily",
+          "value": 2852000
+        },
+        {
+          "name": "Regional Fire Alarm Upgrade",
+          "type": "Commercial",
+          "value": 1978000
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 0.94,
+        "trir": 1.3,
+        "dart": 0.5,
+        "incidents3yr": 2
+      },
+      "avgAnnualVolume": 14800000,
+      "currentBacklog": 5500000,
+      "backlogUtilization": 0.37,
+      "onTimeRate": 0.92,
+      "qualityScore": 86,
+      "relationshipScore": 0.4,
+      "avgResponseHours": 64,
+      "invitedLast12Months": 8,
+      "bidsLast12Months": 2,
+      "awardsLast12Months": 0,
+      "insuranceExpiry": "2027-03-24",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "OSHA 30 program"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-52",
+      "name": "Ironwood Life Safety",
+      "trades": [
+        "Fire Alarm"
+      ],
+      "serviceStates": [
+        "KS",
+        "MO"
+      ],
+      "markets": [
+        "Commercial",
+        "Multifamily",
+        "Healthcare"
+      ],
+      "minPackage": 530000,
+      "maxPackage": 5030000,
+      "responseRate": 0.9400000000000001,
+      "city": "Overland Park",
+      "homeState": "KS",
+      "employees": 93,
+      "insuranceLimit": 2000000,
+      "bondCapacity": 6300000,
+      "licenseStates": [
+        "KS",
+        "MO"
+      ],
+      "capabilities": [
+        "Fire Alarm estimating",
+        "BIM coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@ironwoodlifesafety.example",
+      "yearsInBusiness": 24,
+      "description": "Ironwood Life Safety is a fictional regional fire alarm subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Commercial Fire Alarm Package",
+          "type": "Commercial",
+          "value": 3118600
+        },
+        {
+          "name": "Regional Fire Alarm Upgrade",
+          "type": "Multifamily",
+          "value": 2162900
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 0.99,
+        "trir": 1.6,
+        "dart": 0.7,
+        "incidents3yr": 3
+      },
+      "avgAnnualVolume": 18300000,
+      "currentBacklog": 8100000,
+      "backlogUtilization": 0.44,
+      "onTimeRate": 0.82,
+      "qualityScore": 93,
+      "relationshipScore": 0.6,
+      "avgResponseHours": 11,
+      "invitedLast12Months": 9,
+      "bidsLast12Months": 3,
+      "awardsLast12Months": 1,
+      "insuranceExpiry": "2027-04-12",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-53",
+      "name": "Granite Civil",
+      "trades": [
+        "Sitework",
+        "Paving"
+      ],
+      "serviceStates": [
+        "MO",
+        "KS"
+      ],
+      "markets": [
+        "Multifamily",
+        "Commercial",
+        "Healthcare"
+      ],
+      "minPackage": 425000,
+      "maxPackage": 5290000,
+      "responseRate": 0.905,
+      "city": "Columbia",
+      "homeState": "MO",
+      "employees": 87,
+      "insuranceLimit": 2000000,
+      "bondCapacity": 6600000,
+      "licenseStates": [
+        "MO",
+        "KS"
+      ],
+      "capabilities": [
+        "Sitework estimating",
+        "Schedule coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@granitecivil.example",
+      "yearsInBusiness": 22,
+      "description": "Granite Civil is a fictional regional sitework subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Multifamily Sitework Package",
+          "type": "Multifamily",
+          "value": 3279800
+        },
+        {
+          "name": "Regional Sitework Upgrade",
+          "type": "Commercial",
+          "value": 2274700
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Conditional",
+      "safety": {
+        "emr": 1.03,
+        "trir": 1.9,
+        "dart": 0.9,
+        "incidents3yr": 0
+      },
+      "avgAnnualVolume": 21500000,
+      "currentBacklog": 11200000,
+      "backlogUtilization": 0.52,
+      "onTimeRate": 0.87,
+      "qualityScore": 81,
+      "relationshipScore": 0.8,
+      "avgResponseHours": 24,
+      "invitedLast12Months": 10,
+      "bidsLast12Months": 4,
+      "awardsLast12Months": 2,
+      "insuranceExpiry": "2027-05-01",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-54",
+      "name": "Lakeside Civil",
+      "trades": [
+        "Sitework",
+        "Paving"
+      ],
+      "serviceStates": [
+        "MO",
+        "IL"
+      ],
+      "markets": [
+        "Commercial",
+        "Multifamily",
+        "Healthcare"
+      ],
+      "minPackage": 600000,
+      "maxPackage": 5720000,
+      "responseRate": 0.66,
+      "city": "St. Louis",
+      "homeState": "MO",
+      "employees": 104,
+      "insuranceLimit": 4000000,
+      "bondCapacity": 9200000,
+      "licenseStates": [
+        "MO",
+        "IL"
+      ],
+      "capabilities": [
+        "Sitework estimating",
+        "Schedule coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@lakesidecivil.example",
+      "yearsInBusiness": 27,
+      "description": "Lakeside Civil is a fictional regional sitework subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Commercial Sitework Package",
+          "type": "Commercial",
+          "value": 3546400
+        },
+        {
+          "name": "Regional Sitework Upgrade",
+          "type": "Multifamily",
+          "value": 2459600
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Conditional",
+      "safety": {
+        "emr": 1.08,
+        "trir": 2.3,
+        "dart": 1.1,
+        "incidents3yr": 1
+      },
+      "avgAnnualVolume": 25600000,
+      "currentBacklog": 15200000,
+      "backlogUtilization": 0.59,
+      "onTimeRate": 0.92,
+      "qualityScore": 88,
+      "relationshipScore": 1,
+      "avgResponseHours": 37,
+      "invitedLast12Months": 11,
+      "bidsLast12Months": 5,
+      "awardsLast12Months": 3,
+      "insuranceExpiry": "2027-05-20",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-55",
+      "name": "Heritage Paving",
+      "trades": [
+        "Paving"
+      ],
+      "serviceStates": [
+        "MO",
+        "AR",
+        "KS"
+      ],
+      "markets": [
+        "Commercial",
+        "Industrial",
+        "Multifamily"
+      ],
+      "minPackage": 480000,
+      "maxPackage": 5980000,
+      "responseRate": 0.9400000000000001,
+      "city": "Springfield",
+      "homeState": "MO",
+      "employees": 98,
+      "insuranceLimit": 4000000,
+      "bondCapacity": 9600000,
+      "licenseStates": [
+        "MO",
+        "AR"
+      ],
+      "capabilities": [
+        "Paving estimating",
+        "BIM coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@heritagepaving.example",
+      "yearsInBusiness": 25,
+      "description": "Heritage Paving is a fictional regional paving subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Commercial Paving Package",
+          "type": "Commercial",
+          "value": 3707600
+        },
+        {
+          "name": "Regional Paving Upgrade",
+          "type": "Industrial",
+          "value": 2571400
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 0.72,
+        "trir": 2.6,
+        "dart": 1.3,
+        "incidents3yr": 2
+      },
+      "avgAnnualVolume": 29300000,
+      "currentBacklog": 6400000,
+      "backlogUtilization": 0.22,
+      "onTimeRate": 0.82,
+      "qualityScore": 95,
+      "relationshipScore": 0,
+      "avgResponseHours": 50,
+      "invitedLast12Months": 12,
+      "bidsLast12Months": 6,
+      "awardsLast12Months": 4,
+      "insuranceExpiry": "2027-06-08",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation",
+        "Minority / supplier credential demo"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-56",
+      "name": "Meridian Paving",
+      "trades": [
+        "Paving"
+      ],
+      "serviceStates": [
+        "NE",
+        "IA",
+        "KS"
+      ],
+      "markets": [
+        "Commercial",
+        "Industrial",
+        "Multifamily"
+      ],
+      "minPackage": 675000,
+      "maxPackage": 6410000,
+      "responseRate": 0.6950000000000001,
+      "city": "Omaha",
+      "homeState": "NE",
+      "employees": 115,
+      "insuranceLimit": 6000000,
+      "bondCapacity": 12500000,
+      "licenseStates": [
+        "NE",
+        "IA"
+      ],
+      "capabilities": [
+        "Paving estimating",
+        "BIM coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@meridianpaving.example",
+      "yearsInBusiness": 30,
+      "description": "Meridian Paving is a fictional regional paving subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Commercial Paving Package",
+          "type": "Commercial",
+          "value": 3974200
+        },
+        {
+          "name": "Regional Paving Upgrade",
+          "type": "Industrial",
+          "value": 2756300
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 0.77,
+        "trir": 2.9,
+        "dart": 1.4,
+        "incidents3yr": 3
+      },
+      "avgAnnualVolume": 34100000,
+      "currentBacklog": 10100000,
+      "backlogUtilization": 0.3,
+      "onTimeRate": 0.87,
+      "qualityScore": 83,
+      "relationshipScore": 0.2,
+      "avgResponseHours": 63,
+      "invitedLast12Months": 13,
+      "bidsLast12Months": 7,
+      "awardsLast12Months": 0,
+      "insuranceExpiry": "2027-06-27",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "OSHA 30 program"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-57",
+      "name": "Ironwood Landscape",
+      "trades": [
+        "Landscaping"
+      ],
+      "serviceStates": [
+        "IA",
+        "NE",
+        "MO"
+      ],
+      "markets": [
+        "Commercial",
+        "Multifamily"
+      ],
+      "minPackage": 40000,
+      "maxPackage": 470000,
+      "responseRate": 0.66,
+      "city": "Des Moines",
+      "homeState": "IA",
+      "employees": 109,
+      "insuranceLimit": 6000000,
+      "bondCapacity": 900000,
+      "licenseStates": [
+        "IA",
+        "NE"
+      ],
+      "capabilities": [
+        "Landscaping estimating",
+        "Schedule coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@ironwoodlandscape.example",
+      "yearsInBusiness": 28,
+      "description": "Ironwood Landscape is a fictional regional landscaping subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Commercial Landscaping Package",
+          "type": "Commercial",
+          "value": 291400
+        },
+        {
+          "name": "Regional Landscaping Upgrade",
+          "type": "Multifamily",
+          "value": 202100
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Approved",
+      "safety": {
+        "emr": 0.81,
+        "trir": 0.7,
+        "dart": 0.3,
+        "incidents3yr": 0
+      },
+      "avgAnnualVolume": 1300000,
+      "currentBacklog": 500000,
+      "backlogUtilization": 0.38,
+      "onTimeRate": 0.92,
+      "qualityScore": 90,
+      "relationshipScore": 0.4,
+      "avgResponseHours": 10,
+      "invitedLast12Months": 14,
+      "bidsLast12Months": 8,
+      "awardsLast12Months": 1,
+      "insuranceExpiry": "2027-07-16",
+      "bondingStatus": "Review",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    },
+    {
+      "id": "ctr-58",
+      "name": "Pioneer Landscape",
+      "trades": [
+        "Landscaping"
+      ],
+      "serviceStates": [
+        "KS",
+        "OK",
+        "MO"
+      ],
+      "markets": [
+        "Industrial",
+        "Commercial",
+        "Multifamily"
+      ],
+      "minPackage": 95000,
+      "maxPackage": 900000,
+      "responseRate": 0.73,
+      "city": "Wichita",
+      "homeState": "KS",
+      "employees": 21,
+      "insuranceLimit": 8000000,
+      "bondCapacity": 2100000,
+      "licenseStates": [
+        "KS",
+        "OK"
+      ],
+      "capabilities": [
+        "Landscaping estimating",
+        "Schedule coordination"
+      ],
+      "qualified": true,
+      "email": "estimating@pioneerlandscape.example",
+      "yearsInBusiness": 33,
+      "description": "Pioneer Landscape is a fictional regional landscaping subcontractor used for BidMatch matching and prequalification testing.",
+      "pastProjects": [
+        {
+          "name": "Industrial Landscaping Package",
+          "type": "Industrial",
+          "value": 558000
+        },
+        {
+          "name": "Regional Landscaping Upgrade",
+          "type": "Commercial",
+          "value": 387000
+        }
+      ],
+      "createdAt": "2026-09-30T01:28:12.561Z",
+      "demoData": true,
+      "prequalStatus": "Conditional",
+      "safety": {
+        "emr": 0.85,
+        "trir": 1,
+        "dart": 0.5,
+        "incidents3yr": 1
+      },
+      "avgAnnualVolume": 2900000,
+      "currentBacklog": 1300000,
+      "backlogUtilization": 0.45,
+      "onTimeRate": 0.82,
+      "qualityScore": 78,
+      "relationshipScore": 0.6,
+      "avgResponseHours": 23,
+      "invitedLast12Months": 15,
+      "bidsLast12Months": 9,
+      "awardsLast12Months": 2,
+      "insuranceExpiry": "2027-08-04",
+      "bondingStatus": "Verified demo",
+      "certifications": [
+        "Safety orientation"
+      ],
+      "lastVerified": "2026-09-30T01:28:12.561Z",
+      "orgId": null
+    }
+  ],
+  "scopes": [],
+  "matches": [],
+  "invitations": [],
+  "bids": [],
+  "qa": [],
+  "events": [],
+  "orgSettings": {},
+  "billing": {},
+  "jobs": []
+}

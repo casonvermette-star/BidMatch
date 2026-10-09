@@ -7,7 +7,7 @@ From the `bidmatch-ai-v6` folder:
 ```bash
 git init
 git add .
-git commit -m "BidMatch AI V6 portfolio release"
+git commit -m "BidMatch AI V8 production-foundation release"
 git branch -M main
 git remote add origin YOUR_GITHUB_REPOSITORY_URL
 git push -u origin main

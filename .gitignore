@@ -1,0 +1,9 @@
+.env
+data/auth.json
+data/uploads/*
+!data/uploads/.gitkeep
+backups/*
+!backups/.gitkeep
+.DS_Store
+
+data/normalized-export.json

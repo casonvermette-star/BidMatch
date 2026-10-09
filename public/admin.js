@@ -75,7 +75,22 @@ function render(data){
   $('#adminActivity').innerHTML=activityList((data.recentActivity||[]).slice(0,10));
   $('#adminActivityFull').innerHTML=activityList(data.recentActivity||[]);
   const s=data.system||{};
-  $('#adminSystem').innerHTML=`<div class="health-list"><div class="health-row"><span>AI document layer</span><b class="${s.ai==='live'?'':'warn'}">${esc(String(s.ai||'disabled').toUpperCase())}</b></div><div class="health-row"><span>Database / storage</span><b class="${String(s.supabase).includes('live')?'':'warn'}">${esc(String(s.supabase||'local').toUpperCase())}</b></div><div class="health-row"><span>Email delivery</span><b class="${s.email==='live'?'':'warn'}">${esc(String(s.email||'disabled').toUpperCase())}</b></div><div class="health-row"><span>Subscription billing</span><b class="${s.billing==='live'?'':'warn'}">${esc(String(s.billing||'disabled').toUpperCase())}</b></div><div class="health-row"><span>Shared directory firms</span><b>${fmtNum(s.directoryContractors)}</b></div><div class="health-row"><span>Queued background jobs</span><b>${fmtNum(s.queuedJobs)}</b></div><div class="health-row"><span>Release</span><b>V${esc(s.version||'6.1')}</b></div></div>`;
+  $('#adminSystem').innerHTML=`<div class="health-list"><div class="health-row"><span>AI document layer</span><b class="${s.ai==='live'?'':'warn'}">${esc(String(s.ai||'disabled').toUpperCase())}</b></div><div class="health-row"><span>Database / storage</span><b class="${String(s.supabase).includes('live')?'':'warn'}">${esc(String(s.supabase||'local').toUpperCase())}</b></div><div class="health-row"><span>Email delivery</span><b class="${s.email==='live'?'':'warn'}">${esc(String(s.email||'disabled').toUpperCase())}</b></div><div class="health-row"><span>Subscription billing</span><b class="${s.billing==='live'?'':'warn'}">${esc(String(s.billing||'disabled').toUpperCase())}</b></div><div class="health-row"><span>Shared directory firms</span><b>${fmtNum(s.directoryContractors)}</b></div><div class="health-row"><span>Queued background jobs</span><b>${fmtNum(s.queuedJobs)}</b></div><div class="health-row"><span>Release</span><b>V${esc(s.version||'8.0.0')}</b></div></div>`;
+}
+
+
+async function createOrganization(event){
+  event.preventDefault();
+  const box=$('#adminCreateOrgResult');
+  box.classList.add('hidden');
+  try{
+    const result=await adminApi('/api/admin/organizations',{method:'POST',body:JSON.stringify({orgName:$('#adminOrgName').value,ownerEmail:$('#adminOwnerEmail').value})});
+    box.innerHTML=`<strong>Workspace created.</strong><p>${esc(result.org?.name||'Client workspace')} · ${esc(result.ownerEmail||'')}</p><p>${result.delivered?'Owner invitation email sent.':'Email was not sent automatically. Share the secure invitation link below.'}</p><div class="admin-invite-link"><input value="${esc(result.inviteUrl||'')}" readonly /><button class="btn tiny ghost" type="button" id="copyOwnerInvite">Copy</button></div><small>Invite expires ${fmtDate(result.expiresAt)}</small>${result.emailError?`<p class="warning">${esc(result.emailError)}</p>`:''}`;
+    box.classList.remove('hidden');
+    $('#copyOwnerInvite')?.addEventListener('click',async()=>{await navigator.clipboard.writeText(result.inviteUrl||'');$('#copyOwnerInvite').textContent='Copied';});
+    $('#adminOrgName').value='';$('#adminOwnerEmail').value='';
+    await refresh();
+  }catch(error){box.innerHTML=`<div class="warning">${esc(error.message)}</div>`;box.classList.remove('hidden');}
 }
 
 async function refresh(){
@@ -93,5 +108,6 @@ function switchView(name){
 $('#adminLoginForm').addEventListener('submit',login);
 $('#adminLogoutBtn').addEventListener('click',logout);
 $('#adminRefreshBtn').addEventListener('click',refresh);
+$('#adminCreateOrgForm')?.addEventListener('submit',createOrganization);
 $$('[data-admin-view]').forEach(b=>b.addEventListener('click',()=>switchView(b.dataset.adminView)));
 bootstrap();

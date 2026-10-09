@@ -1,167 +1,179 @@
-# BidMatch AI V6.1.1 — Client Portal + Separate Platform Admin
+# BidMatch AI V8.0.0 — Cloud Runtime
 
-BidMatch AI is a portfolio-ready construction procurement SaaS prototype with two deliberately separate applications served by the same backend:
+BidMatch AI is a personal full-stack SaaS project exploring AI-assisted construction preconstruction workflows: project/document intake, scope generation, subcontractor qualification and matching, bid-list management, outreach, proposal submission, bid leveling, team roles, and a separate platform-admin console.
 
-- **Client Portal** (`/`) — general-contractor workspace for projects, bid documents, scope packages, subcontractor qualification/matching, outreach, bid leveling, exports, team access, and workspace settings.
-- **Platform Admin** (`/admin`) — isolated platform-owner console for organizations, users, cross-workspace usage metrics, subscription status, integration health, and audit activity.
+V8 is the cloud-runtime checkpoint. It keeps local mode for development, but adds a normalized Supabase/PostgreSQL runtime so the cloud database can become the live source of truth.
 
-A client workspace owner is **not** a platform administrator. Client login credentials cannot access the platform-admin API. The admin console has its own email/password configuration and its own signed session cookie.
+## What changed in V8
 
-## Windows quick start
-
-This build includes native Windows launchers. After installing Node.js 20+, extract the ZIP and double-click `start-windows.bat` for the client app. To test the separate platform admin console on a Windows computer, run `configure-admin-windows.bat` once and then `start-admin-windows.bat`. See `README-WINDOWS.md` for the complete instructions.
-
-The shareable ZIP intentionally excludes `.env`, so private local admin credentials and API keys are not transferred to another computer.
+- `DATA_BACKEND=local|supabase` runtime switch
+- normalized Supabase tables load directly into the application runtime
+- row-level normalized persistence instead of the old single-row JSON snapshot mirror
+- current Supabase `sb_secret_...` server-key support
+- legacy `service_role` compatibility only for migration
+- private Supabase Storage remains server-only
+- explicit migration workflow before switching an existing workspace to cloud mode
+- full-server cloud-runtime regression test
+- local mode still works without any paid service
 
 ## Run locally
 
-Requirements: Node.js 20+.
+Requires Node.js 20+.
 
-### Client portal
+### macOS
+
+Double-click `start.command`.
+
+Admin: `start-admin.command`.
+
+### Windows
+
+Double-click `start-windows.bat`.
+
+Admin: `start-admin-windows.bat`.
+
+### Terminal
 
 ```bash
 npm start
 ```
 
-or on macOS double-click `start.command`.
+Client: `http://localhost:3000`
 
-Open `http://localhost:3000`.
+Admin: `http://localhost:3000/admin`
 
-### Platform admin
-
-With the BidMatch server running, open:
-
-```text
-http://localhost:3000/admin
-```
-
-On macOS you can also double-click `start-admin.command`. It will reuse an already-running BidMatch server when possible.
-
-The downloadable local package includes a private `.env` with the initial admin account configured. `.env` is excluded by `.gitignore`, so the admin credential is not pushed when you upload the repo to GitHub.
-
-To change the separate platform-admin email/password, double-click:
-
-```text
-configure-admin.command
-```
-
-Then restart the app.
-
-## Authentication model
-
-### Client roles
-
-- **Owner** — full workspace control and billing.
-- **Admin** — team/settings/import/backup administration.
-- **Estimator** — project/scoping/bidding workflow.
-- **Viewer** — read-only workspace access.
-
-These roles exist only inside a client organization.
-
-### Platform owner
-
-The platform owner is configured separately with:
-
-```text
-PLATFORM_ADMIN_EMAIL
-PLATFORM_ADMIN_PASSWORD_HASH
-PLATFORM_ADMIN_SESSION_SECRET
-```
-
-The browser receives a separate HttpOnly admin session cookie after a successful `/admin` login. No client signup, invite, or workspace role can grant platform-admin access.
-
-## Test
+## Tests
 
 ```bash
 npm test
 ```
 
-The smoke suite verifies:
+The V8 test suite checks the original end-to-end client/admin workflow plus normalized Supabase round-tripping and a full server boot against a Supabase-compatible cloud runtime.
 
-- project workflow
-- contractor qualification and bid leveling
-- contractor CSV import
-- team roles
-- tenant isolation
-- client accounts being blocked from platform-admin APIs
-- separate platform-admin authentication
-- cross-workspace admin aggregation
+## Supabase setup — existing local workspace
 
-## Portfolio / GitHub setup
+### 1. Create a Supabase project
 
-This repo is ready to upload to GitHub. Important files:
+Use a dedicated staging project first.
 
-- `.gitignore` — keeps `.env`, auth data, uploads, and backups out of source control.
-- `.github/workflows/ci.yml` — runs the smoke test on pushes and pull requests.
-- `docs/index.html` — static portfolio page for GitHub Pages.
-- `LINKEDIN_PROJECT.md` — concise project description for a LinkedIn Projects entry/post.
-- `Dockerfile` and `render.yaml` — deployment starting points for a public live demo.
+### 2. Create the schema
 
-### GitHub Pages portfolio
+In Supabase → SQL Editor, run:
 
-GitHub Pages can host the **static portfolio page**, not the Node backend.
+```text
+docs/supabase-production-v8.sql
+```
 
-1. Push the repository to GitHub.
-2. Open **Settings → Pages** in the repository.
-3. Choose **Deploy from a branch**.
-4. Select your default branch and the `/docs` folder.
-5. Save.
+Or run the files in `/migrations` in numeric order.
 
-For the interactive client portal and `/admin` console, deploy the Node application to a host that runs server-side JavaScript.
+### 3. Save the Supabase connection
 
-See `docs/GITHUB_AND_DEPLOY.md`.
+macOS:
 
-## Platform Admin metrics
+```text
+configure-supabase.command
+```
 
-The separate admin console exposes aggregate operational visibility such as:
+Windows:
 
-- total client workspaces
-- platform users
-- projects, documents, invitations, and bids
-- workspace-level subscription status
-- imported contractor counts
-- AI/database/email/billing integration health
-- queued background jobs
-- recent cross-platform audit activity
+```text
+configure-supabase-windows.bat
+```
 
-Ordinary client users remain tenant-scoped and cannot use this admin API.
+This saves `SUPABASE_URL`, `SUPABASE_SECRET_KEY`, and the private bucket name while deliberately leaving `DATA_BACKEND=local`.
 
-## Optional integrations
+### 4. Dry-run the migration
 
-The app runs without paid services in local fallback mode. Optional production integrations are configured in `.env` using `.env.example`:
+```bash
+npm run migrate:dry
+```
 
-- OpenAI — document analysis / Q&A hooks
-- Supabase — Postgres persistence and document storage
-- Resend — invitation/follow-up email delivery
-- Stripe — subscription checkout/webhook hooks
+Review:
 
-Never commit `.env`, API keys, real customer files, or production auth data.
+```text
+data/normalized-export.json
+```
+
+### 5. Apply the migration
+
+```bash
+npm run migrate:apply
+```
+
+This writes normalized rows and uploads local project-document bytes that are still available.
+
+### 6. Switch the runtime
+
+macOS:
+
+```text
+switch-to-supabase.command
+```
+
+Windows:
+
+```text
+switch-to-supabase-windows.bat
+```
+
+Or set:
+
+```text
+DATA_BACKEND=supabase
+```
+
+### 7. Restart BidMatch
+
+After restart, `/api/health` should report:
+
+```json
+{"dataBackend":"supabase"}
+```
+
+The client Launch screen should report the database as `Supabase normalized · live`.
+
+## Fresh cloud workspace
+
+For a brand-new project with no local data, run the SQL schema, configure the connection, set `DATA_BACKEND=supabase`, and start the app. The first client owner can then be created normally. A fresh cloud workspace will not contain the fictional demo contractor directory unless you migrate/seed it.
+
+## Production verification
+
+```bash
+npm run verify:production
+```
+
+Production should use:
+
+```text
+APP_ENV=production
+DATA_BACKEND=supabase
+REQUIRE_LOGIN=true
+SUPABASE_URL=https://<project>.supabase.co
+SUPABASE_SECRET_KEY=sb_secret_...
+SUPABASE_STORAGE_BUCKET=bidmatch-documents
+```
+
+Never place `SUPABASE_SECRET_KEY`, Stripe secrets, OpenAI keys, Resend keys, admin password hashes, or session secrets in frontend JavaScript or GitHub.
+
+## Important scaling note
+
+V8 makes normalized PostgreSQL the live cloud persistence model and performs row-level writes. The Node process still keeps a working in-memory representation of the active dataset, and multi-table changes are not wrapped in one database transaction. For the first controlled beta, run **one application server instance**. Horizontal multi-instance scaling and a durable background worker are later hardening steps.
 
 ## Repository structure
 
 ```text
-public/
-  index.html          Client portal
-  app.js              Client application
-  admin.html          Separate platform-admin application
-  admin.js            Admin application
-  styles.css          Shared UI styling
-lib/
-  auth.mjs            Client/workspace auth
-  admin-auth.mjs      Separate platform-admin auth
-  integrations.mjs    External services
-server.mjs            API + workflow engine
-data/                  Local demo datastore
-docs/                  Architecture + GitHub Pages portfolio
-.github/workflows/     CI
-configure-admin.command
-start.command
-start-admin.command
-Dockerfile
-render.yaml
-LINKEDIN_PROJECT.md
+public/                 client + separate admin UI
+lib/                    auth, Supabase runtime, integrations
+migrations/             versioned PostgreSQL migrations
+scripts/                migration + production verification
+server.mjs              API + workflow engine
+data/                    local development/cache data
+docs/                    architecture + production setup
+tests/                   local + cloud-runtime regression tests
+Dockerfile               container deployment starter
+render.yaml              deployment starter
 ```
 
-## Portfolio positioning
+## Current positioning
 
-This is best presented as a **full-stack multi-tenant SaaS prototype / engineering portfolio project**, not as a production construction marketplace with verified real contractors. Bundled contractor identities and prequalification values are fictional demo data.
+This remains an active personal software-engineering / SaaS portfolio project. The bundled demo contractor records and synthetic bids are fictional test data and are not verified real-company records.

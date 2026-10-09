@@ -39,7 +39,7 @@ find_node() {
 
 NODE_BIN="$(find_node || true)"
 if [ -z "$NODE_BIN" ]; then
-  echo "BidMatch AI V6.1.2 could not find Node.js."
+  echo "BidMatch AI V8.0.0 could not find Node.js."
   echo
   echo "Install Node.js 20 or newer, then run this launcher again."
   echo "After installing, you can confirm it in Terminal with: node --version"
@@ -77,7 +77,7 @@ if [ "$PORT_TO_USE" -gt 3010 ]; then
 fi
 
 URL="http://localhost:$PORT_TO_USE"
-echo "Starting BidMatch AI V6.1.2..."
+echo "Starting BidMatch AI V8.0.0..."
 echo "Node.js: $NODE_VERSION"
 echo "App folder: $APP_DIR"
 echo "URL: $URL"
@@ -117,7 +117,7 @@ if [ "$READY" -ne 1 ]; then
   exit 1
 fi
 
-echo "BidMatch AI V6.1.2 is running. Keep this Terminal window open while using the app."
+echo "BidMatch AI V8.0.0 is running. Keep this Terminal window open while using the app."
 echo "Opening $URL"
 open "$URL" >/dev/null 2>&1 || true
 

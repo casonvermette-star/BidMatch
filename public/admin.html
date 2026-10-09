@@ -35,7 +35,7 @@
         <button class="nav" data-admin-view="users">Users</button>
         <button class="nav" data-admin-view="activity">Audit activity</button>
       </nav>
-      <div class="workspace-card"><span class="workspace-label">CONSOLE</span><strong>BidMatch Operations</strong><small>V6.1.1 separate admin app</small></div>
+      <div class="workspace-card"><span class="workspace-label">CONSOLE</span><strong>BidMatch Operations</strong><small>V8.0.0 production foundation</small></div>
       <div class="account-card"><div><strong id="adminAccountEmail">—</strong><span>PLATFORM OWNER</span></div><button class="btn tiny ghost" id="adminLogoutBtn">Log out</button></div>
     </aside>
 
@@ -60,7 +60,17 @@
       </section>
 
       <section id="adminOrganizationsView" class="view">
-        <div class="card"><div class="card-head"><div><p class="eyebrow">TENANTS</p><h3>All client organizations</h3></div></div><div id="adminOrganizationsFull"></div></div>
+        <div class="grid admin-org-grid">
+          <div class="card"><div class="card-head"><div><p class="eyebrow">ONBOARD CLIENT</p><h3>Create a client workspace</h3></div></div>
+            <form id="adminCreateOrgForm" class="auth-form admin-create-org-form">
+              <label>Company / organization name<input id="adminOrgName" required maxlength="120" placeholder="Example Construction LLC" /></label>
+              <label>Owner email<input id="adminOwnerEmail" type="email" required placeholder="owner@example.com" /></label>
+              <button class="btn primary" type="submit">Create workspace & owner invite</button>
+            </form>
+            <div id="adminCreateOrgResult" class="admin-create-result hidden"></div>
+          </div>
+          <div class="card admin-span-2"><div class="card-head"><div><p class="eyebrow">TENANTS</p><h3>All client organizations</h3></div></div><div id="adminOrganizationsFull"></div></div>
+        </div>
       </section>
       <section id="adminUsersView" class="view">
         <div class="card"><div class="card-head"><div><p class="eyebrow">ACCOUNTS</p><h3>All client users</h3></div></div><div id="adminUsersFull"></div></div>

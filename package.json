@@ -1,15 +1,19 @@
 {
-  "name": "bidmatch-ai-v6-1",
-  "version": "6.1.2",
+  "name": "bidmatch-ai-v8",
+  "version": "8.0.0",
   "private": true,
   "type": "module",
   "scripts": {
     "start": "node server.mjs",
     "dev": "node --watch server.mjs",
-    "test": "node tests/smoke.mjs"
+    "test": "node tests/smoke.mjs && node tests/normalized-store.mjs && node tests/cloud-runtime.mjs",
+    "export:normalized": "node scripts/export-normalized.mjs",
+    "migrate:dry": "node scripts/migrate-local-to-supabase.mjs",
+    "migrate:apply": "node scripts/migrate-local-to-supabase.mjs --apply",
+    "verify:production": "node scripts/verify-production.mjs"
   },
   "engines": {
     "node": ">=20"
   },
-  "description": "AI-assisted construction procurement platform with separate client and platform-admin applications."
+  "description": "Cloud-runtime build for an AI-assisted construction procurement SaaS with normalized Supabase/PostgreSQL persistence."
 }

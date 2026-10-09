@@ -3,7 +3,7 @@ set -u
 APP_DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$APP_DIR" || exit 1
 
-echo "BidMatch AI V5 diagnostics"
+echo "BidMatch AI V8.0.0 diagnostics"
 echo "======================="
 echo "Folder: $APP_DIR"
 echo "macOS: $(sw_vers -productVersion 2>/dev/null || echo unknown)"

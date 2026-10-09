@@ -14,18 +14,18 @@ find_node(){
   return 1
 }
 NODE_BIN="$(find_node || true)"
-if [ -z "$NODE_BIN" ]; then echo "BidMatch AI V6.1.2 could not find Node.js."; pause_on_error; exit 1; fi
+if [ -z "$NODE_BIN" ]; then echo "BidMatch AI V8.0.0 could not find Node.js."; pause_on_error; exit 1; fi
 [ -f .env ] || cp .env.example .env
 
-# Reuse an already-running V6.1+ server only when it actually exposes
+# Reuse an already-running V8+ server only when it actually exposes
 # the separate Platform Admin application. Older BidMatch versions may
 # answer /api/health but do not have /admin, so do not reuse them.
 for PORT_CHECK in $(seq 3000 3010); do
   HEALTH="$(curl -fsS "http://127.0.0.1:$PORT_CHECK/api/health" 2>/dev/null || true)"
-  if printf '%s' "$HEALTH" | grep -Eq '"version":"6\.1(\.[0-9]+)?"' && \
+  if printf '%s' "$HEALTH" | grep -Eq '"version":"7\.0(\.[0-9]+)?"' && \
      curl -fsS "http://127.0.0.1:$PORT_CHECK/admin" 2>/dev/null | grep -q 'SEPARATE ADMIN CONSOLE'; then
     URL="http://localhost:$PORT_CHECK/admin"
-    echo "Using the existing BidMatch V6.1 admin server at $URL"
+    echo "Using the existing BidMatch V8 admin server at $URL"
     open "$URL" >/dev/null 2>&1 || true
     exit 0
   fi
@@ -39,7 +39,7 @@ done
 if [ "$PORT_TO_USE" -gt 3010 ]; then echo "No free local port found."; pause_on_error; exit 1; fi
 
 URL="http://localhost:$PORT_TO_USE/admin"
-echo "Starting BidMatch AI V6.1.2 Platform Admin..."
+echo "Starting BidMatch AI V8.0.0 Platform Admin..."
 echo "Admin URL: $URL"
 PORT="$PORT_TO_USE" "$NODE_BIN" server.mjs & SERVER_PID=$!
 cleanup(){ kill "$SERVER_PID" >/dev/null 2>&1 || true; }

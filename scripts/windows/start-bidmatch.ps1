@@ -39,7 +39,7 @@ function Test-CompatibleServer([int]$Port) {
   try {
     $health = Invoke-RestMethod -Uri "http://127.0.0.1:$Port/api/health" -TimeoutSec 1
     if (-not $health.ok) { return $false }
-    if ([string]$health.version -notmatch '^6\.1(\.[0-9]+)?$') { return $false }
+    if ([string]$health.version -notmatch '^7\.0(\.[0-9]+)?$') { return $false }
     $page = Invoke-WebRequest -Uri "http://127.0.0.1:$Port/admin" -TimeoutSec 1 -UseBasicParsing
     return ($page.Content -match 'SEPARATE ADMIN CONSOLE')
   } catch {
@@ -71,7 +71,7 @@ if ($Mode -eq 'Admin') {
   foreach ($p in 3000..3010) {
     if (Test-CompatibleServer $p) {
       $url = "http://localhost:$p/admin"
-      Write-Host "Using the existing BidMatch V6.1 admin server at $url" -ForegroundColor Green
+      Write-Host "Using the existing BidMatch V8 admin server at $url" -ForegroundColor Green
       Start-Process $url
       exit 0
     }
@@ -90,7 +90,7 @@ $env:PORT = [string]$Port
 $baseUrl = "http://localhost:$Port"
 $url = if ($Mode -eq 'Admin') { "$baseUrl/admin" } else { $baseUrl }
 
-Write-Host "Starting BidMatch AI V6.1.2 ($Mode)..." -ForegroundColor Cyan
+Write-Host "Starting BidMatch AI V8.0.0 ($Mode)..." -ForegroundColor Cyan
 Write-Host "Node.js: $NodeVersion"
 Write-Host "App folder: $AppDir"
 Write-Host "URL: $url"

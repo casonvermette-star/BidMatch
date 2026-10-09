@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BidMatch AI · Client Portal</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div id="authGate" class="auth-gate hidden">
+    <div class="auth-card">
+      <div class="brand auth-brand"><div class="brandmark">BM</div><div><strong>BidMatch AI</strong><span>Secure workspace access</span></div></div>
+      <div id="authBootstrap" class="auth-panel hidden">
+        <p class="eyebrow">FIRST-RUN SETUP</p><h2>Create your workspace</h2><p class="muted">Create the owner account for this BidMatch installation.</p>
+        <form id="bootstrapForm" class="auth-form"><label>Company / workspace<input id="bootstrapOrg" required placeholder="Demo General Contractor" /></label><label>Your name<input id="bootstrapName" required placeholder="Estimator name" /></label><label>Email<input id="bootstrapEmail" type="email" required placeholder="you@company.com" /></label><label>Password<input id="bootstrapPassword" type="password" minlength="10" required placeholder="10+ characters, letters + numbers" /></label><button class="btn primary" type="submit">Create workspace</button></form>
+      </div>
+      <div id="authLogin" class="auth-panel hidden">
+        <p class="eyebrow">WORKSPACE LOGIN</p><h2>Sign in</h2><form id="loginForm" class="auth-form"><label>Email<input id="loginEmail" type="email" required /></label><label>Password<input id="loginPassword" type="password" required /></label><button class="btn primary" type="submit">Sign in</button></form><div class="auth-secondary-actions"><button id="showForgotBtn" class="btn ghost" type="button">Forgot password?</button><button id="showRegisterBtn" class="btn ghost hidden" type="button">Create a new workspace</button></div>
+      </div>
+      <div id="authForgot" class="auth-panel hidden">
+        <p class="eyebrow">ACCOUNT RECOVERY</p><h2>Reset password</h2><p class="muted">Enter your account email. If it exists, BidMatch will send a time-limited reset link when email delivery is configured.</p>
+        <form id="forgotForm" class="auth-form"><label>Email<input id="forgotEmail" type="email" required /></label><button class="btn primary" type="submit">Request reset link</button></form><button id="forgotBackBtn" class="btn ghost" type="button">Back to sign in</button><div id="forgotResult" class="muted"></div>
+      </div>
+      <div id="authReset" class="auth-panel hidden">
+        <p class="eyebrow">ACCOUNT RECOVERY</p><h2>Choose a new password</h2><form id="resetPasswordForm" class="auth-form"><label>New password<input id="resetPassword" type="password" minlength="10" required placeholder="10+ characters, letters + numbers" /></label><label>Confirm password<input id="resetPasswordConfirm" type="password" minlength="10" required /></label><button class="btn primary" type="submit">Update password</button></form>
+      </div>
+      <div id="authRegister" class="auth-panel hidden">
+        <p class="eyebrow">NEW WORKSPACE</p><h2>Create company workspace</h2><p class="muted">Self-service signup is enabled on this deployment.</p>
+        <form id="registerForm" class="auth-form"><label>Company / workspace<input id="registerOrg" required /></label><label>Your name<input id="registerName" required /></label><label>Email<input id="registerEmail" type="email" required /></label><label>Password<input id="registerPassword" type="password" minlength="10" required /></label><button class="btn primary" type="submit">Create workspace</button></form><button id="backToLoginBtn" class="btn ghost" type="button">Back to sign in</button>
+      </div>
+      <div id="authInvite" class="auth-panel hidden">
+        <p class="eyebrow">TEAM INVITATION</p><h2>Join workspace</h2><div id="inviteDetails" class="muted"></div><form id="acceptInviteForm" class="auth-form"><label>Your name<input id="inviteName" required /></label><label>Password<input id="invitePassword" type="password" minlength="10" required /></label><button class="btn primary" type="submit">Create account</button></form>
+      </div>
+      <div id="authError" class="warning hidden"></div>
+    </div>
+  </div>
+
+  <div class="shell" id="appShell">
+    <aside class="sidebar">
+      <div class="brand"><div class="brandmark">BM</div><div><strong>BidMatch AI</strong><span>Preconstruction intelligence</span></div></div>
+      <nav>
+        <p class="nav-label">CLIENT PORTAL</p>
+        <button class="nav active" data-view="dashboard">Overview</button>
+        <button class="nav" data-view="projects">Projects</button>
+        <button class="nav" data-view="contractors">Contractors</button>
+        <button class="nav" data-view="settings">Workspace settings</button>
+        <button class="nav" data-view="launch">Team & launch</button>
+
+      </nav>
+      <div class="workspace-card">
+        <span class="workspace-label">WORKSPACE</span>
+        <strong>Demo General Contractor</strong>
+        <small>V8 client portal</small>
+      </div>
+      <div class="side-note"><span class="dot" id="aiDot"></span><div><strong id="aiStatus">Checking AI…</strong><span id="sendStatus"></span></div></div>
+      <div class="account-card"><div><strong id="accountName">—</strong><span id="accountRole">—</span></div><button class="btn tiny ghost" id="logoutBtn">Log out</button></div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <div><p class="eyebrow">CONSTRUCTION PROCUREMENT</p><h1 id="viewTitle">Command Center</h1></div>
+        <div class="header-actions"><button class="btn ghost" id="resetBtn">Reset demo</button><button class="btn primary" id="newProjectBtn">+ New project</button></div>
+      </header>
+
+      <section id="dashboardView" class="view active">
+        <div class="hero">
+          <div><span class="pill">V8 · Client portal</span><h2>From bid documents to a leveled subcontractor shortlist.</h2><p>Upload plans and specs, extract scopes, rank subcontractors, manage outreach, compare proposals, and ask questions against the project record.</p></div>
+          <button class="btn primary large" id="heroNewProject">Create project</button>
+        </div>
+        <div class="metric-grid" id="metricGrid"></div>
+        <div class="grid dashboard-grid">
+          <div class="card"><div class="card-head"><div><p class="eyebrow">PROJECTS</p><h3>Active pipeline</h3></div></div><div id="projectList"></div></div>
+          <div class="card"><div class="card-head"><div><p class="eyebrow">SYSTEM</p><h3>Automation health</h3></div></div><div id="healthPanel"></div></div>
+        </div>
+      </section>
+
+      <section id="projectsView" class="view">
+        <div class="card"><div class="card-head"><div><p class="eyebrow">ALL PROJECTS</p><h3>Bid pipeline</h3></div><button class="btn primary" data-open-project>+ Add project</button></div><div id="projectsTable"></div></div>
+      </section>
+
+      <section id="contractorsView" class="view">
+        <div class="card">
+          <div class="card-head"><div><p class="eyebrow">CONTRACTOR NETWORK</p><h3>Subcontractor intelligence</h3></div><div class="header-actions"><button class="btn ghost" id="importContractorsBtn">Import CSV</button><a class="btn ghost" href="/api/contractors/template.csv">CSV template</a><div class="search-wrap"><input id="contractorSearch" placeholder="Search trade, company, market…" /></div></div></div>
+          <div class="table-wrap"><table><thead><tr><th>Company</th><th>Trades</th><th>Prequal</th><th>Safety</th><th>Workload</th><th>Capacity</th><th>Response</th></tr></thead><tbody id="contractorRows"></tbody></table></div>
+        </div>
+      </section>
+
+      <section id="settingsView" class="view">
+        <div class="settings-grid">
+          <div class="card"><div class="card-head"><div><p class="eyebrow">WORKSPACE SETTINGS</p><h3>Qualification defaults</h3></div></div>
+            <form id="settingsForm" class="settings-form">
+              <label>Organization name<input id="settingOrgName" /></label>
+              <label>Default insurance requirement ($)<input id="settingInsurance" type="number" min="0" step="100000" /></label>
+              <label>Bonding required above package ($)<input id="settingBondThreshold" type="number" min="0" step="100000" /></label>
+              <label>Hard capacity multiplier<input id="settingCapacityMultiplier" type="number" min="1" max="3" step="0.05" /></label>
+              <label>Automatic bid-list size<input id="settingTopMatches" type="number" min="1" max="10" step="1" /></label>
+              <button class="btn primary" type="submit">Save settings</button>
+            </form>
+          </div>
+          <div class="card"><div class="card-head"><div><p class="eyebrow">SYSTEM HEALTH</p><h3>Integration status</h3></div></div><div id="settingsHealth"></div></div>
+        </div>
+      </section>
+
+
+      <section id="launchView" class="view">
+        <div class="settings-grid">
+          <div class="card"><div class="card-head"><div><p class="eyebrow">LAUNCH READINESS</p><h3>Production checklist</h3></div><button class="btn ghost" id="backupBtn">Create backup</button></div><div id="launchReadiness"></div></div>
+          <div class="card"><div class="card-head"><div><p class="eyebrow">TEAM & ACCESS</p><h3>Workspace members</h3></div><button class="btn primary" id="inviteTeamBtn">Invite teammate</button></div><div id="teamPanel"></div></div>
+          <div class="card"><div class="card-head"><div><p class="eyebrow">SUBSCRIPTION</p><h3>Billing</h3></div></div><div id="billingPanel"></div></div>
+          <div class="card"><div class="card-head"><div><p class="eyebrow">DEPLOYMENT</p><h3>What is connected</h3></div></div><div id="deploymentPanel"></div></div>
+        </div>
+      </section>
+
+      <section id="projectDetailView" class="view">
+        <button class="back" id="backToProjects">← Back to projects</button>
+        <div id="projectDetail"></div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="projectDialog">
+    <form method="dialog" id="projectForm">
+      <div class="dialog-head"><div><p class="eyebrow">PROJECT INTAKE</p><h2>Create project</h2></div><button class="icon-btn" type="button" data-close-project>×</button></div>
+      <div class="form-grid">
+        <label class="wide">Project name<input name="name" required placeholder="Parkview Apartments" /></label>
+        <label>Location<input name="location" required placeholder="Kansas City, MO" /></label>
+        <label>Project type<select name="projectType"><option>Multifamily</option><option>Commercial</option><option>Healthcare</option><option>Industrial</option><option>Hospitality</option></select></label>
+        <label>Estimated value<input name="estimatedValue" type="number" min="0" step="1000" placeholder="18000000" /></label>
+        <label>Bid due<input name="bidDue" type="date" /></label>
+        <label class="wide">Project description<textarea name="description" rows="4" placeholder="Describe building type, size, major systems and known scope."></textarea></label>
+        <label class="wide">Bid documents
+          <div class="dropzone" id="projectDropzone"><strong>Drop plans, specs, addenda or bid instructions here</strong><span>or click to select project files · PDF/TXT/MD/CSV · default limit 50 MB each</span><input id="projectFiles" type="file" multiple accept=".pdf,.txt,.md,.csv" /></div>
+          <div class="file-list" id="projectFileList"></div>
+        </label>
+      </div>
+      <div class="dialog-actions"><button class="btn ghost" type="button" data-close-project>Cancel</button><button class="btn primary" type="submit">Create project</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="addDocsDialog">
+    <form method="dialog" id="addDocsForm">
+      <div class="dialog-head"><div><p class="eyebrow">PROJECT DOCUMENTS</p><h2>Add bid documents</h2></div><button class="icon-btn" type="button" data-close-docs>×</button></div>
+      <div class="dropzone roomy" id="addDocsDropzone"><strong>Drop additional plans, specs or addenda</strong><span>PDF/TXT/MD/CSV · default limit 50 MB each</span><input id="addDocsFiles" type="file" multiple accept=".pdf,.txt,.md,.csv" /></div>
+      <div class="file-list" id="addDocsList"></div>
+      <div class="dialog-actions"><button class="btn ghost" type="button" data-close-docs>Cancel</button><button class="btn primary" type="submit">Upload documents</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="bidDialog">
+    <form method="dialog" id="bidForm">
+      <div class="dialog-head"><div><p class="eyebrow">PROPOSAL INGESTION</p><h2>Parse a subcontractor bid</h2></div><button class="icon-btn" type="button" data-close-bid>×</button></div>
+      <div class="form-grid">
+        <label>Scope<select id="bidScope" required></select></label>
+        <label>Contractor<select id="bidContractor" required></select></label>
+        <label class="wide">Proposal text<textarea id="proposalText" rows="12" required placeholder="Base bid: $1,284,300\nInclusions: distribution, lighting, branch power\nExclusions: fire alarm, low voltage\nBond included\nTax included\nSchedule: per project schedule"></textarea></label>
+      </div>
+      <div class="dialog-actions"><button class="btn ghost" type="button" data-close-bid>Cancel</button><button class="btn primary" type="submit">Parse & level</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="contractorDialog" class="profile-dialog"><div id="contractorProfile"></div></dialog>
+
+  <dialog id="scopeDialog">
+    <form method="dialog" id="scopeForm">
+      <div class="dialog-head"><div><p class="eyebrow">BID PACKAGE</p><h2 id="scopeDialogTitle">Edit scope</h2></div><button class="icon-btn" type="button" data-close-scope>×</button></div>
+      <input type="hidden" id="scopeId" />
+      <div class="form-grid">
+        <label>Trade<input id="scopeTrade" required placeholder="Electrical" /></label>
+        <label>CSI division<input id="scopeDivision" placeholder="26" /></label>
+        <label>Estimated package<input id="scopeEstimate" type="number" min="0" step="1000" /></label>
+        <label>Confidence %<input id="scopeConfidence" type="number" min="0" max="100" step="1" /></label>
+        <label>Insurance required ($)<input id="scopeInsurance" type="number" min="0" step="100000" /></label>
+        <label>Hard capacity multiplier<input id="scopeCapacityMultiplier" type="number" min="1" max="3" step="0.05" /></label>
+        <label class="check-label"><input id="scopeRequiresLicense" type="checkbox" /> Require listed state license</label>
+        <label class="check-label"><input id="scopeBondRequired" type="checkbox" /> Require bond capacity for full package</label>
+        <label class="wide">Scope summary<textarea id="scopeSummary" rows="3" placeholder="Describe the bid package."></textarea></label>
+        <label class="wide">Requirements — one per line<textarea id="scopeRequirements" rows="7" placeholder="Power distribution and lighting
+Coordinate fire alarm interfaces
+Include temporary power"></textarea></label>
+      </div>
+      <div class="dialog-actions"><button class="btn danger" type="button" id="deleteScopeBtn">Delete scope</button><span class="dialog-spacer"></span><button class="btn ghost" type="button" data-close-scope>Cancel</button><button class="btn primary" type="submit">Save & rescore</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="adjustBidDialog">
+    <form method="dialog" id="adjustBidForm">
+      <div class="dialog-head"><div><p class="eyebrow">BID LEVELING</p><h2>Manual adjustment</h2></div><button class="icon-btn" type="button" data-close-adjust>×</button></div>
+      <input type="hidden" id="adjustBidId" />
+      <div class="adjust-summary" id="adjustSummary"></div>
+      <div class="form-grid">
+        <label>Manual adjustment ($)<input id="adjustAmount" type="number" step="1000" placeholder="0" /></label>
+        <label class="wide">Reason / leveling note<textarea id="adjustReason" rows="4" placeholder="Add allowance for missing controls package"></textarea></label>
+      </div>
+      <div class="dialog-actions"><button class="btn ghost" type="button" data-close-adjust>Cancel</button><button class="btn primary" type="submit">Apply adjustment</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="importContractorsDialog">
+    <form method="dialog" id="importContractorsForm">
+      <div class="dialog-head"><div><p class="eyebrow">CONTRACTOR DIRECTORY</p><h2>Import contractor CSV</h2></div><button class="icon-btn" type="button" data-close-import>×</button></div>
+      <p class="muted">Use the template headers. Separate multiple trades, states, or markets with semicolons.</p>
+      <textarea id="contractorCsv" rows="14" placeholder="name,email,trades,serviceStates,markets,..."></textarea>
+      <div class="dialog-actions"><button class="btn ghost" type="button" data-close-import>Cancel</button><button class="btn primary" type="submit">Import contractors</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="inviteTeamDialog">
+    <form method="dialog" id="inviteTeamForm">
+      <div class="dialog-head"><div><p class="eyebrow">TEAM ACCESS</p><h2>Invite teammate</h2></div><button class="icon-btn" type="button" data-close-team>×</button></div>
+      <div class="form-grid"><label>Email<input id="teamEmail" type="email" required /></label><label>Role<select id="teamRole"><option value="estimator">Estimator</option><option value="admin">Admin</option><option value="viewer">Viewer</option></select></label></div>
+      <div id="teamInviteResult" class="muted"></div>
+      <div class="dialog-actions"><button class="btn ghost" type="button" data-close-team>Cancel</button><button class="btn primary" type="submit">Create invite</button></div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast"></div>
+  <script src="/app.js" type="module"></script>
+</body>
+</html>

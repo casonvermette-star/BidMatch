@@ -1,0 +1,27 @@
+-- Performance and operational indexes.
+create index if not exists idx_users_org on app_users(organization_id);
+create unique index if not exists uq_app_users_email_lower on app_users(lower(email));
+create index if not exists idx_sessions_user on app_sessions(user_id);
+create index if not exists idx_sessions_expiry on app_sessions(expires_at);
+create index if not exists idx_invites_org on app_invites(organization_id);
+create index if not exists idx_invites_expiry on app_invites(expires_at);
+create index if not exists idx_password_resets_user on password_resets(user_id);
+create index if not exists idx_password_resets_expiry on password_resets(expires_at);
+create index if not exists idx_projects_org on projects(organization_id);
+create index if not exists idx_projects_due on projects(bid_due);
+create index if not exists idx_docs_project on project_documents(project_id);
+create index if not exists idx_docs_kind on project_documents(project_id, kind);
+create index if not exists idx_contractors_org on contractors(organization_id);
+create index if not exists idx_contractors_trades on contractors using gin(trades);
+create index if not exists idx_contractors_states on contractors using gin(service_states);
+create index if not exists idx_scopes_project on scopes(project_id);
+create index if not exists idx_matches_project on contractor_matches(project_id);
+create index if not exists idx_matches_scope_score on contractor_matches(scope_id, score desc);
+create index if not exists idx_invitations_project on invitations(project_id);
+create index if not exists idx_invitations_status on invitations(status);
+create index if not exists idx_invitations_public_expiry on invitations(public_token_expires_at);
+create index if not exists idx_bids_project on bids(project_id);
+create index if not exists idx_qa_project on project_questions(project_id);
+create index if not exists idx_audit_org_created on audit_events(organization_id, created_at desc);
+create index if not exists idx_audit_project_created on audit_events(project_id, created_at desc);
+create index if not exists idx_jobs_due on background_jobs(status, run_at);

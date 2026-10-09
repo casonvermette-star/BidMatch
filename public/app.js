@@ -172,8 +172,10 @@ function renderProjectDetail() {
   const accepted = invitations.filter(inv => ['accepted','submitted'].includes(inv.status)).length;
   const coverage = scopes.length ? Math.round(scopes.filter(scope => matches.some(match => match.scopeId === scope.id && match.qualificationStatus === 'eligible')).length / scopes.length * 100) : 0;
   const stageNames = {intake:'Intake',scoping:'Scoping',bidding:'Bidding',leveling:'Leveling','award-ready':'Award ready',closed:'Closed'};
+  const fullSummary = project.analysis?.summary || project.description || 'Project intake created. Run automation to build the scope and contractor model.';
+  const summaryPreview = fullSummary.length > 420 ? `${fullSummary.slice(0, 417).trim()}…` : fullSummary;
   $('#projectDetail').innerHTML = `<div class="detail-hero">
-    <div class="detail-top"><div><p class="eyebrow">${esc(project.projectType || 'PROJECT')}</p><h2>${esc(project.name)}</h2><p>${esc(project.location)}</p><p class="detail-summary">${esc(project.analysis?.summary || project.description || 'Project intake created. Run automation to build the scope and contractor model.')}</p></div>
+    <div class="detail-top"><div class="detail-copy"><p class="eyebrow">${esc(project.projectType || 'PROJECT')}</p><h2>${esc(project.name)}</h2><p class="detail-location">${esc(project.location)}</p><p class="detail-summary">${esc(summaryPreview)}</p>${fullSummary.length > 420 ? `<details class="detail-description"><summary>View full project description</summary><p>${esc(fullSummary)}</p></details>` : ''}</div>
       <div class="detail-actions"><button class="btn primary" id="runAutomation">${scopes.length ? 'Re-analyze & match' : 'Run automation'}</button><button class="btn ghost" id="addScope">+ Scope</button><button class="btn ghost" id="addDocs">+ Documents</button><button class="btn ghost" id="addBid">+ Parse bid</button><button class="btn ghost" id="demoBids">Generate demo bids</button></div>
     </div>
     <div class="workflow-strip"><div class="workflow-stages">${(workflow.stages || ['intake','scoping','bidding','leveling','award-ready','closed']).map(stage => `<button class="workflow-stage ${workflow.stage === stage ? 'active' : ''}" data-stage="${stage}">${stageNames[stage] || stage}</button>`).join('')}</div>${workflow.nextActions?.length ? `<div class="next-actions"><strong>Next:</strong> ${workflow.nextActions.map(esc).join(' · ')}</div>` : ''}</div>
@@ -198,6 +200,7 @@ function renderProjectDetail() {
   $('#demoBids').onclick = generateDemoBids;
   $$('[data-contractor-profile]').forEach(el => el.onclick = event => { event.stopPropagation(); showContractor(el.dataset.contractorProfile); });
   $$('[data-invite-status]').forEach(el => el.onclick = () => updateInvite(el.dataset.inviteId, el.dataset.inviteStatus));
+  $$('[data-invite-link]').forEach(el => el.onclick = () => copyInvitationLink(el.dataset.inviteLink));
   $$('[data-edit-scope]').forEach(el => el.onclick = () => openScopeDialog(el.dataset.editScope));
   $$('[data-bid-list]').forEach(el => el.onclick = event => { event.stopPropagation(); updateBidList(el.dataset.scopeId, el.dataset.contractorId, el.dataset.bidList, el.dataset.qualification); });
   $$('[data-adjust-bid]').forEach(el => el.onclick = () => openAdjustmentDialog(el.dataset.adjustBid));
@@ -220,7 +223,9 @@ function renderOverview(project, documents, scopes, invitations, bids = [], work
 
 function renderDocuments(documents) {
   if (!documents.length) return `<div class="card"><div class="empty">No documents attached. Use “+ Documents” to add plans, specifications, addenda, or bid instructions.</div></div>`;
-  return `<div class="card"><div class="card-head"><div><p class="eyebrow">BID SET</p><h3>${documents.length} attached document${documents.length === 1 ? '' : 's'}</h3></div><span class="muted">PDF understanding requires a working API balance; text files can also feed local fallback.</span></div><div class="doc-grid">${documents.map(doc => `<div class="doc-card"><strong>${esc(doc.name)}</strong><span>${esc(doc.mime || 'file')} · ${fmtBytes(doc.size)}</span><span>Added ${fmtDate(doc.createdAt)}</span></div>`).join('')}</div></div>`;
+  const projectDocs = documents.filter(doc => doc.kind !== 'bid-proposal').length;
+  const proposals = documents.filter(doc => doc.kind === 'bid-proposal').length;
+  return `<div class="card"><div class="card-head"><div><p class="eyebrow">DOCUMENTS</p><h3>${documents.length} attached document${documents.length === 1 ? '' : 's'}</h3><p class="muted">${projectDocs} project file${projectDocs===1?'':'s'}${proposals ? ` · ${proposals} subcontractor proposal${proposals===1?'':'s'}` : ''}</p></div><span class="muted">PDF understanding requires a working API balance; text files can also feed local fallback.</span></div><div class="doc-grid">${documents.map(doc => { const proposal=doc.kind==='bid-proposal'; return `<div class="doc-card"><div class="chips"><span class="chip ${proposal?'warn':'good'}">${proposal?'Bid proposal':'Project document'}</span></div><strong>${esc(doc.name)}</strong><span>${esc(doc.mime || 'file')} · ${fmtBytes(doc.size)}</span><span>Added ${fmtDate(doc.createdAt)}</span><a class="btn tiny ghost doc-download" href="/api/projects/${encodeURIComponent(currentProject)}/documents/${encodeURIComponent(doc.id)}/download">Download</a></div>`; }).join('')}</div></div>`;
 }
 
 function renderScopes(scopes, matches, invitations) {
@@ -260,7 +265,7 @@ function renderScopes(scopes, matches, invitations) {
 function renderOutreach(invitations) {
   if (!invitations.length) return `<div class="card"><div class="empty">Invitations appear after matching or when you add a contractor to a bid list.</div></div>`;
   const queued = invitations.filter(inv => inv.status === 'queued').length;
-  return `<div class="card"><div class="card-head"><div><p class="eyebrow">OUTREACH QUEUE</p><h3>${invitations.length} invitations</h3></div><button class="btn primary" id="sendQueuedInvites" ${queued ? '' : 'disabled'}>Send ${queued} queued</button></div><div class="table-wrap"><table><thead><tr><th>Contractor</th><th>Scope</th><th>Status</th><th>Delivery</th><th>Actions</th></tr></thead><tbody>${invitations.map(inv => `<tr><td><strong class="clickable" data-contractor-profile="${inv.contractorId}">${esc(inv.contractor?.name || '')}</strong><br><span class="muted">${esc(inv.contractor?.email || '')}</span></td><td>${esc(inv.scope?.trade || '')}</td><td><span class="status ${inv.status}">${esc(inv.status)}</span></td><td>${inv.sentExternally ? `External · ${inv.sentAt ? fmtDate(inv.sentAt) : 'sent'}` : inv.contractor?.email?.endsWith('.example') ? 'Demo email · never sent' : inv.manual ? 'Manual bid list · queued' : 'Automation queue'}</td><td><div class="chips"><button class="btn small" data-invite-id="${inv.id}" data-invite-status="accepted">Accept</button><button class="btn small" data-invite-id="${inv.id}" data-invite-status="declined">Decline</button></div></td></tr>`).join('')}</tbody></table></div></div>`;
+  return `<div class="card"><div class="card-head"><div><p class="eyebrow">OUTREACH QUEUE</p><h3>${invitations.length} invitations</h3><p class="muted">Each bidder can receive a private portal link for documents, accept/decline, and proposal submission.</p></div><button class="btn primary" id="sendQueuedInvites" ${queued ? '' : 'disabled'}>Send ${queued} queued</button></div><div class="table-wrap"><table><thead><tr><th>Contractor</th><th>Scope</th><th>Status</th><th>Delivery</th><th>Actions</th></tr></thead><tbody>${invitations.map(inv => `<tr><td><strong class="clickable" data-contractor-profile="${inv.contractorId}">${esc(inv.contractor?.name || '')}</strong><br><span class="muted">${esc(inv.contractor?.email || '')}</span></td><td>${esc(inv.scope?.trade || '')}</td><td><span class="status ${inv.status}">${esc(inv.status)}</span></td><td>${inv.sentExternally ? `External · ${inv.sentAt ? fmtDate(inv.sentAt) : 'sent'}` : inv.contractor?.email?.endsWith('.example') ? 'Demo email · never sent' : inv.manual ? 'Manual bid list · queued' : 'Automation queue'}</td><td><div class="chips"><button class="btn small" data-invite-link="${inv.id}">Copy portal link</button><button class="btn small" data-invite-id="${inv.id}" data-invite-status="accepted">Accept</button><button class="btn small" data-invite-id="${inv.id}" data-invite-status="declined">Decline</button></div></td></tr>`).join('')}</tbody></table></div></div>`;
 }
 
 function renderLeveling(leveling) {
@@ -311,6 +316,15 @@ async function updateInvite(id, status) {
   try {
     currentBundle = await api(`/api/projects/${currentProject}/invitations/${id}/status`, { method:'POST', body:JSON.stringify({ status }) });
     renderProjectDetail(); toast(`Invitation marked ${status}.`);
+  } catch (error) { toast(error.message); }
+}
+
+async function copyInvitationLink(id) {
+  try {
+    const result = await api(`/api/projects/${currentProject}/invitations/${id}/link`, { method:'POST', body:'{}' });
+    if (navigator.clipboard?.writeText) await navigator.clipboard.writeText(result.url);
+    else { const input=document.createElement('textarea'); input.value=result.url; input.style.position='fixed'; input.style.opacity='0'; document.body.appendChild(input); input.select(); document.execCommand('copy'); input.remove(); }
+    toast(`Private subcontractor portal link copied · expires ${fmtDate(result.expiresAt)}.`);
   } catch (error) { toast(error.message); }
 }
 
@@ -459,12 +473,16 @@ function setupDropzone(zoneId, inputId, mode) {
 }
 
 function mergeFiles(current, incoming) {
+  const maxFileMB = Number(state?.config?.uploadLimits?.maxFileMB || 50);
+  const maxFiles = Number(state?.config?.uploadLimits?.maxProjectFiles || 30);
   const map = new Map(current.map(file => [`${file.name}-${file.size}`, file]));
   for (const file of incoming) {
-    if (file.size > 12 * 1024 * 1024) { toast(`${file.name} is larger than 12 MB.`); continue; }
+    if (file.size > maxFileMB * 1024 * 1024) { toast(`${file.name} is larger than ${maxFileMB} MB.`); continue; }
     map.set(`${file.name}-${file.size}`, file);
   }
-  return [...map.values()].slice(0, 8);
+  const merged=[...map.values()];
+  if(merged.length>maxFiles) toast(`Only the first ${maxFiles} project files will be added.`);
+  return merged.slice(0, maxFiles);
 }
 
 function renderSelectedFiles(mode) {
@@ -524,7 +542,7 @@ async function renderLaunch() {
     ['Backup/export tooling', launch.backup, true]
   ];
   $('#launchReadiness').innerHTML = `<div class="health-list">${rows.map(([label,value,ok]) => `<div class="health-row"><span>${esc(label)}</span><b class="${ok?'':'warn'}">${esc(String(value||'not configured').toUpperCase())}</b></div>`).join('')}</div>`;
-  $('#deploymentPanel').innerHTML = `<div class="health-list"><div class="health-row"><span>Supabase Postgres / Storage</span><b class="${state.config.integrations?.supabase?'':'warn'}">${state.config.integrations?.supabase?'CONFIGURED':'LOCAL MODE'}</b></div><div class="health-row"><span>Resend email</span><b class="${state.config.integrations?.resend?'':'warn'}">${state.config.integrations?.resend?'CONFIGURED':'NOT CONNECTED'}</b></div><div class="health-row"><span>Stripe subscriptions</span><b class="${state.config.integrations?.stripe?'':'warn'}">${state.config.integrations?.stripe?'CONFIGURED':'NOT CONNECTED'}</b></div><div class="health-row"><span>Environment</span><b>V6.1 CLIENT PORTAL</b></div></div>`;
+  $('#deploymentPanel').innerHTML = `<div class="health-list"><div class="health-row"><span>Supabase Postgres / Storage</span><b class="${state.config.integrations?.supabase?'':'warn'}">${state.config.integrations?.supabase?'CONFIGURED':'LOCAL MODE'}</b></div><div class="health-row"><span>Resend email</span><b class="${state.config.integrations?.resend?'':'warn'}">${state.config.integrations?.resend?'CONFIGURED':'NOT CONNECTED'}</b></div><div class="health-row"><span>Stripe subscriptions</span><b class="${state.config.integrations?.stripe?'':'warn'}">${state.config.integrations?.stripe?'CONFIGURED':'NOT CONNECTED'}</b></div><div class="health-row"><span>Environment</span><b>V8 CLOUD RUNTIME</b></div></div>`;
   $('#billingPanel').innerHTML = `<div class="health-list"><div class="health-row"><span>Subscription status</span><b class="${['active','trialing','checkout-complete'].includes(state.billing?.status)?'':'warn'}">${esc(String(state.billing?.status||'not configured').toUpperCase())}</b></div></div>${state.config.integrations?.stripe ? `<button class="btn primary launch-action" id="billingCheckoutBtn">Open subscription checkout</button>` : `<p class="muted">Add Stripe keys and a recurring price ID in .env to enable checkout.</p>`}`;
   if ($('#billingCheckoutBtn')) $('#billingCheckoutBtn').onclick = async () => { try { const x=await api('/api/billing/checkout',{method:'POST',body:'{}'}); if(x.url) window.location.href=x.url; } catch(error){toast(error.message);} };
   try {
@@ -536,14 +554,17 @@ async function renderLaunch() {
 
 function showAuthPanel(name) {
   $('#authGate').classList.remove('hidden');
-  ['#authBootstrap','#authLogin','#authInvite','#authRegister'].forEach(id => $(id).classList.add('hidden'));
+  ['#authBootstrap','#authLogin','#authInvite','#authRegister','#authForgot','#authReset'].forEach(id => $(id).classList.add('hidden'));
   $(name).classList.remove('hidden');
 }
 function hideAuthGate() { $('#authGate').classList.add('hidden'); }
 function authError(message='') { const el=$('#authError'); el.textContent=message; el.classList.toggle('hidden',!message); }
 
 async function initializeApp() {
-  const inviteToken = new URLSearchParams(location.search).get('invite');
+  const params = new URLSearchParams(location.search);
+  const resetToken = params.get('reset');
+  if (resetToken) { showAuthPanel('#authReset'); return; }
+  const inviteToken = params.get('invite');
   if (inviteToken) {
     try { const info=await api(`/api/auth/invite?token=${encodeURIComponent(inviteToken)}`); $('#inviteDetails').textContent=`${info.email} · ${info.role} · ${info.org?.name||'BidMatch workspace'}`; showAuthPanel('#authInvite'); }
     catch(error){ authError(error.message); showAuthPanel('#authLogin'); }
@@ -598,6 +619,10 @@ $('#inviteTeamForm').onsubmit = async event => { event.preventDefault(); try { c
 $('#bootstrapForm').onsubmit = async event => { event.preventDefault(); authError(''); try { await api('/api/auth/bootstrap',{method:'POST',body:JSON.stringify({orgName:$('#bootstrapOrg').value,name:$('#bootstrapName').value,email:$('#bootstrapEmail').value,password:$('#bootstrapPassword').value})}); hideAuthGate(); await refresh(); } catch(error){authError(error.message);} };
 $('#loginForm').onsubmit = async event => { event.preventDefault(); authError(''); try { await api('/api/auth/login',{method:'POST',body:JSON.stringify({email:$('#loginEmail').value,password:$('#loginPassword').value})}); hideAuthGate(); await refresh(); } catch(error){authError(error.message);} };
 $('#showRegisterBtn').onclick = () => { authError(''); showAuthPanel('#authRegister'); };
+$('#showForgotBtn').onclick = () => { authError(''); $('#forgotResult').textContent=''; $('#forgotEmail').value=$('#loginEmail').value||''; showAuthPanel('#authForgot'); };
+$('#forgotBackBtn').onclick = () => { authError(''); showAuthPanel('#authLogin'); };
+$('#forgotForm').onsubmit = async event => { event.preventDefault(); authError(''); try { const result=await api('/api/auth/forgot-password',{method:'POST',body:JSON.stringify({email:$('#forgotEmail').value})}); $('#forgotResult').innerHTML=`${esc(result.message||'If the account exists, check the email inbox.')}${result.resetUrl?`<br><small>Development reset link: <a href="${esc(result.resetUrl)}">open reset page</a></small>`:''}`; } catch(error){authError(error.message);} };
+$('#resetPasswordForm').onsubmit = async event => { event.preventDefault(); authError(''); const password=$('#resetPassword').value, confirmPassword=$('#resetPasswordConfirm').value;if(password!==confirmPassword){authError('Passwords do not match.');return;}const token=new URLSearchParams(location.search).get('reset')||'';try{await api('/api/auth/reset-password',{method:'POST',body:JSON.stringify({token,password})});history.replaceState({},'',location.pathname);$('#loginPassword').value='';showAuthPanel('#authLogin');authError('Password updated. Sign in with your new password.');}catch(error){authError(error.message);} };
 $('#backToLoginBtn').onclick = () => { authError(''); showAuthPanel('#authLogin'); };
 $('#registerForm').onsubmit = async event => { event.preventDefault(); authError(''); try { await api('/api/auth/register-workspace',{method:'POST',body:JSON.stringify({orgName:$('#registerOrg').value,name:$('#registerName').value,email:$('#registerEmail').value,password:$('#registerPassword').value})}); hideAuthGate(); await refresh(); } catch(error){authError(error.message);} };
 $('#acceptInviteForm').onsubmit = async event => { event.preventDefault(); authError(''); const token=new URLSearchParams(location.search).get('invite')||''; try { await api('/api/auth/accept-invite',{method:'POST',body:JSON.stringify({token,name:$('#inviteName').value,password:$('#invitePassword').value})}); history.replaceState({},'',location.pathname); hideAuthGate(); await refresh(); } catch(error){authError(error.message);} };

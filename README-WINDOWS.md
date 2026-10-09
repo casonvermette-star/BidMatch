@@ -1,81 +1,27 @@
-# BidMatch AI — Windows quick start
+# BidMatch AI V8 — Windows
 
-This package supports Windows 10/11 and macOS.
+Install Node.js 20+ and extract the ZIP completely.
 
-## 1. Install Node.js
+Client portal: `start-windows.bat`
 
-Install Node.js 20 or newer from the official Node.js website:
+Platform admin: configure once with `configure-admin-windows.bat`, then run `start-admin-windows.bat`.
 
-https://nodejs.org/
+AI setup: `configure-ai-windows.bat`.
 
-The LTS installer is recommended. After installation, open **Command Prompt** and run:
+## Supabase cloud runtime
 
-```bat
-node --version
-```
+1. Run `docs/supabase-production-v8.sql` in the Supabase SQL Editor.
+2. Run `configure-supabase-windows.bat`.
+3. Open Terminal/PowerShell in the project folder and run `npm run migrate:dry`.
+4. Review `data/normalized-export.json`.
+5. Run `npm run migrate:apply`.
+6. Run `switch-to-supabase-windows.bat`.
+7. Restart `start-windows.bat`.
 
-A version such as `v22.x` or `v24.x` is fine.
+Production configuration: `configure-production-windows.bat`.
 
-## 2. Unzip the entire folder
+Verification: `node scripts/verify-production.mjs`.
 
-Do not run the app from inside the ZIP preview. Right-click the ZIP, choose **Extract All**, then open the extracted folder.
+Diagnostics: `diagnose-windows.bat`.
 
-## 3. Open the client application
-
-Double-click:
-
-```text
-start-windows.bat
-```
-
-A terminal window will stay open while BidMatch is running. Your browser should open automatically at a local address such as `http://localhost:3000`.
-
-## 4. Open the separate platform admin console
-
-This shareable package intentionally does **not** include another person's private `.env` credentials.
-
-First double-click:
-
-```text
-configure-admin-windows.bat
-```
-
-Create an email/password for the local admin console. Then double-click:
-
-```text
-start-admin-windows.bat
-```
-
-The browser will open `/admin` on the active BidMatch port.
-
-## Optional AI configuration
-
-The application works in fallback mode without paid API access. To configure an OpenAI API key on this computer, double-click:
-
-```text
-configure-ai-windows.bat
-```
-
-Never commit or share the generated `.env` file.
-
-## Troubleshooting
-
-Double-click:
-
-```text
-diagnose-windows.bat
-```
-
-It checks Node.js, JavaScript syntax, and common local ports.
-
-### Windows warning when opening a `.bat`
-
-Windows may display a SmartScreen warning for downloaded scripts because the files are not code-signed. Inspect the files if desired, then use **More info → Run anyway** only if you trust the package you received.
-
-### Browser says localhost refused to connect
-
-Keep the launcher terminal window open. The local Node server stops when the launcher is closed.
-
-### Port 3000 is already in use
-
-The launcher automatically searches ports 3000 through 3010 and opens the correct URL.
+Do not share `.env`, `data/auth.json`, uploaded customer files, or any private keys.
