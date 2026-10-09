@@ -42,7 +42,6 @@ jobs:
 
           node -e "const p=require('$SRC/package.json'); if(p.version !== '8.0.0') { console.error('Expected V8.0.0, found', p.version); process.exit(1); }"
 
-          # Never allow private runtime credentials/data into the repository payload.
           test ! -e "$SRC/.env"
           test ! -e "$SRC/data/auth.json"
           test ! -e "$SRC/data/normalized-export.json"
@@ -60,13 +59,18 @@ jobs:
           set -euo pipefail
           SRC="/tmp/bidmatch-v8/bidmatch-ai-v8-cloud-runtime"
 
-          # Keep data/db.json because it is the fictional demo/test fixture required
-          # by local mode and the smoke tests. Remove only private/runtime data.
+          # Keep the fictional demo/test database used by local mode and smoke tests.
+          # Remove only private/runtime data.
           rm -f "$SRC/.env"
           rm -f "$SRC/data/auth.json" "$SRC/data/normalized-export.json"
           rm -rf "$SRC/data/uploads" "$SRC/backups"
           mkdir -p "$SRC/data/uploads" "$SRC/backups"
           touch "$SRC/data/uploads/.gitkeep" "$SRC/backups/.gitkeep"
+
+          # GitHub's Actions token cannot create/update workflow files without the
+          # separate workflows permission. Preserve the repository's existing
+          # .github directory and install CI separately after the V8 source lands.
+          rm -rf "$SRC/.github"
 
       - name: Replace old V6 source with V8
         shell: bash
@@ -74,8 +78,6 @@ jobs:
           set -euo pipefail
           SRC="/tmp/bidmatch-v8/bidmatch-ai-v8-cloud-runtime"
 
-          # Preserve Git metadata, the bootstrap payload, and the currently-running
-          # workflow. Replace the rest of the old flattened V6 tree.
           find . -mindepth 1 -maxdepth 1 \
             ! -name .git \
             ! -name .github \
@@ -84,10 +86,8 @@ jobs:
 
           cp -a "$SRC"/. .
 
-          # Bootstrap archive is no longer needed after V8 has been copied in.
           rm -rf .bootstrap
 
-          # Final safety check before committing.
           test ! -e .env
           test ! -e data/auth.json
           test ! -e data/normalized-export.json
